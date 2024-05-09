@@ -1,0 +1,298 @@
+<HTML>
+
+<!-- Mirrored from www.gbkr.com/subjects/library/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:07 GMT -->
+<HEAD>
+<TITLE>www.gbkr.com - Java library</TITLE>
+<LINK HREF="../../style/page.css" REL="stylesheet" TYPE="text/css">
+<SCRIPT SRC="../../script/xbrowser.js"></SCRIPT>
+<SCRIPT SRC="../../script/page.js"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV ID="CONTENT">
+<H1>The Java application library</H1>
+<P>At FinScope we built a general purpose library alongside our automated trading product. We used Open
+Source components for their obvious virtues as well as to save time. It's now time
+to repay the favour. After some revisions and improvements I am now <A HREF="download.html">releasing</A>
+the library to the community.</P>
+<P>The primary purpose of this library is to make scalable, flexible and message-based applications
+quicker and easier to write.
+Since writing any application places demands on the memory, I have tried to add as little as possible to what
+is already publicly available.</P>
+<P>The packages in this library mirror the Java or third party packages they are intended to work with. Where possible
+I use the same package names. There are some other conventions I have adopted. First, the root package
+contains only the core classes and resources needed to make something work;
+utilities and other, non-essential, embellishments are in
+a subpackage named <CODE>.etc</CODE>. Second, each package is internationalised with a resource bundle:
+see the section on <A HREF="#configuration">configuration</A> for more details on this.</P>
+<P>The packages in the library are:</P>
+<DIV CLASS="in">
+<TABLE>
+<COL CLASS="left">
+<COL CLASS="gap">
+<COL CLASS="left">
+<TR><TH>Package name<TH><TH>Role
+<TR><TD><CODE><A HREF="#configuration">configuration</A></CODE><TD><TD>Defining how classes can be configured and internationalised.
+<TR CLASS="shade"><TD><A HREF="#dataset"><CODE>dataset</CODE></A><TD><TD>A generic data container.
+<TR><TD><A HREF="#http"><CODE>http</CODE></A><TD><TD>Embedding the Simple HTTP engine in applications.
+<TR CLASS="shade"><TD><A HREF="#javascript"><CODE>javascript</CODE></A><TD><TD>Embedding JavaScript in applications.
+<TR><TD><A HREF="#jms"><CODE>jms</CODE></A><TD><TD>Java Messaging made even simpler.
+<TR CLASS="shade"><TD><A HREF="#logging"><CODE>logging</CODE></A><TD><TD>An implementation of Java logging.
+<TR><TD><A HREF="#maths"><CODE>maths</CODE></A><TD><TD>Further maths.
+<TR CLASS="shade"><TD><A HREF="#multicast"><CODE>multicast</CODE></A><TD><TD>An framework for multicasting.
+<TR><TD><A HREF="#pattern"><CODE>pattern</CODE></A><TD><TD>Design pattern implementations.
+<TR CLASS="shade"><TD><A HREF="#util"><CODE>util</CODE></A><TD><TD>Utilities
+</TABLE>
+</DIV>
+<P>These packages are described in the remainder of this page. Names in <CODE>code font</CODE>
+refer to classes and resources in the library.</P>
+<DIV CLASS="blank"></DIV>
+<HR>
+<A NAME="configuration">
+<H2>Configuration</H2>
+<P>Java Properties objects are the foundation for configuration throughout the
+library. The <CODE>Configurable</CODE> interface marks its implementers as being able to be configured
+using a properties object. As Properties only supports string values,
+a <CODE>JavaProperties</CODE> class provides a facade onto a properties object with
+Java type specific access methods.</P>
+<P><CODE>ClassPathConfiguration</CODE> is a singleton which can load properties files (note, with the
+suffix <CODE>.conf</CODE> rather than <CODE>.properties</CODE>) from the class path, either for a name or specific class.</P>
+<P>Each package in the library is internationalised through using a resource bundle for text specific to
+that package.
+The <CODE>LanguageResources</CODE> class is a singleton that loads a number of resource bundles and
+uses these as text resources or message formats. <CODE>LanguageResources</CODE> has a subclass in each
+package which offers a shortcut singleton to the specific resource bundle for that package. All text output,
+for logging or exceptions, is translated from the bundle. The resource bundle is even used for XML
+formatting in the <A HREF="#http">http package</A>.</P>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="dataset">
+<H2>Datasets</H2>
+<P>Many applications end up implementing a generic container for name-value pairs and this library
+is no exception. The <CODE>DataSet</CODE> class provides Java type accessor methods to a TreeMap: the package
+also defines an adapter interface to allow datasets to be quickly transformed. See, for example, the
+<A HREF="#jms">JMS package</A> for a JMS map message DataSet adapter.</P>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="http">
+<H2>Embedded HTTP</H2>
+<P>Applications can be made more usable through making them HTTP aware. This does not always mean
+writing them as a web application; an alternative is to embed an HTTP engine into the application.
+The <A HREF="http://simpleweb.sourceforge.net/">Simple</A> HTTP engine is a particularly straightforward
+and efficient way of going this. The principal class in this library package, <CODE>HttpServer</CODE> makes
+embedding Simple a little easier through wrapping the server oriented
+Simple objects in a singleton.<CODE>HttpServer</CODE> allows servlets to be loaded and
+the HTTP service to be started and stopped. The <CODE>LoggingServlet</CODE> in the package extension
+illustrates both how Java <A HREF="#logging">logging</A> can be controlled through HTTP and how the package language resource
+bundle can be used for XML formatting.</P>
+<P>The Simple classes are a prerequisite for this package.</P>
+<P>Using the <CODE>HttpServer</CODE> requires minimal coding. First, get the singleton and configure
+it with a properties file.</P>
+<PRE>
+public void begin() {
+    HttpServer http = HttpServer.getInstance();
+    http.configure(this.properties);
+    ...
+</PRE>
+<P>The properties file, which of course may include other application properties, must contain
+the HTTP port number for the service, for example;</P>
+<PRE>
+http.port = 30000
+</PRE>
+<P>Next load implementations of the Simple BasicService class and assign them to their uri's. Then start
+the service and, when needed, stop it.</P>
+<PRE>
+    ...
+    http.load(LoggingServlet.class, "/admin/logging");
+    http.load(StopServlet.class, "/admin/stop", this);
+    http.start();
+}
+
+public void end() {
+    HttpServer.getInstance().stop();
+}
+</PRE>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="javascript">
+<H2>Embedded JavaScript</H2>
+<P>The <CODE>javascript</CODE> package provides convenience classes for embedding the mozilla
+<A HREF="http://www.mozilla.org/rhino/">Rhino</A> JavaScript interpreter. The two classes in this
+package implement the tiered scopes suggested by mozilla for improved performance: the <CODE>JavaScript</CODE>
+singleton initialises a root scope with the standard JavaScript objects; while the <CODE>Scope</CODE> class
+fills the gap with Rhino in that there is no supplied object to represent a scope. <CODE>Scope</CODE> offers
+convenience methods for evaluating strings and files, and for instantiating JavaScript objects, arrays and Dates
+within the scope.</P>
+<P>The <CODE>.etc</CODE> package contains a class for implementing various Java and library methods through
+a host object in JavScript.</P>
+<P>The Rhino classes are a prerequisite for this package.</P>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="jms">
+<H2>Java Messaging</H2>
+<P>This package provides two closely cooperating classes for using JMS topics. The <CODE>JMSSession</CODE>
+singleton handles all the connectivity with the JMS provider, and is also a factory for
+making and keeping <CODE>JMSTopic</CODE> objects. Each <CODE>JMSTopic</CODE> provides a single point
+for subscribing, publishing and requesting messages over a topic.</P>
+<P>The package uses a JMS correlation id scheme which allows both requests and responses over the same JMS topic.</P>
+<P>An example implementation with these classes. Get the session singleton and configure it with properties.
+Then open the session.</P>
+<PRE>
+public void begin() {
+    JMSSession jms = JMSSession.getInstance();
+    jms.configure(this.properties);
+    jms.open();
+}
+</PRE>
+<P>The properties need to contain slightly more than with the <CODE>http</CODE> package.
+Here is an example for Fiorano;</P>
+<PRE>
+#
+# JMS provider configuration.
+#
+java.naming.security.principal    = anonymous
+java.naming.security.credentials  = anonymous
+java.naming.provider.url          = http://localhost:1856
+java.naming.factory.initial       = fiorano.jms.runtime.naming.FioranoInitialContextFactory
+#
+# Session configuration.
+#
+connection.factory                = PrimaryTCF
+</PRE>
+<P>Once the session is open, add any subscribers (implementors of the JMS MessageListener
+interface) for topics using the <CODE>JMSTopic</CODE> class, then start receiving messages.</P>
+<PRE>
+public void subscribe() {
+    JMSSession jms = JMSSession.getInstance();
+    JMSTopic ticker = jms.getTopic("ticker");
+    ticker.subscribe(new TickerListener(this));
+    jms.startReceiving();
+}
+</PRE>
+<P>Each JMS topic should have the message time to live and priority configured in the same JMS
+properties as above. For example, with the 'ticker' topic;</P>
+<PRE>
+#
+# TICKER topic configuration.
+#
+ticker.time.to.live = 60000
+ticker.priority     = 4
+</PRE>
+<P>The <CODE>JMSTopic</CODE> instances provide publishing and requesting methods as well;</P>
+<PRE>
+public void publish() {
+    JMSTopic ticker = JMSSession.getInstance().getTopic("ticker");
+    MapMessage msg = ticker.makeMapMessage();
+    ...
+    ticker.publish(msg);
+}
+
+public void request() {
+    JMSTopic ticker = JMSSession.getInstance().getTopic("ticker");
+    MapMessage request = ticker.makeMapMessage();
+    ...
+    MapMessage reply = ticker.request(request);
+}
+</PRE>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="logging">
+<H2>Java logging</H2>
+<P>The decision on logging was difficult not because it is controversial - the library uses
+logging to advise on all status and exceptions - but because of preferences in the underlying logging
+package. I have used log4j and will doubtless extend the library logging package to use it; but for
+now this package is a simple implementation of Java logging.</P>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="maths">
+<H2>Maths</H2>
+<P>The <CODE>maths</CODE> package principally contains classes oriented towards finance, including
+a Black-Scholes options model. Subpackages also define a range of average price calculators
+(simple and exponential moving averages, plus VWAP and TWAP); and stock price models.</P>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="multicast">
+<H2>Multicasting</H2>
+<P>The <CODE>multicast</CODE> package implements a framework for multicasting which is similar
+to JMS. A <CODE>MulticastSession</CODE> class defines the IP address and character conversion
+for the session, plus methods for sending multicast packets using a given protocol.
+The <CODE>.etc</CODE> package defines two such protocols: an elementary protocol and another,
+<CODE>MulticastSessionProtocol</CODE> which prevents published packets from being received
+by an observer with the same session id.</P>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="pattern">
+<H2>Some of the Gamma, Helm, Johnson and Vlissides design patterns - and others</H2>
+<P>Of course, the prime reference for this is the Design Patterns book (ISBN 0-201-63361-2).
+I have followed the naming conventions of the authors wherever possible. Some of the patterns
+are simply marker interfaces, for example those for Singleton and Visitor. The memento pattern
+is more elaborate, as there are interfaces for both the Memento and the MementoOriginator. The
+Memento interface also allows for an (optional) persistence mechanism using byte arrays.</P>
+<P>One pattern that is not in Design Patterns is closure. I was introduced to this by Mark Chaplin and
+have persisted with it because of its benefits. The principle of closures is that a class owning a
+collection of objects
+does not expose an iterator on that collection but instead implements methods which allow
+a visitor-like class to see each member in the collection. The advantages are that the owner
+keeps control over synchronisation, casting and the sequence and selection for the iteration: the
+exposed methods are much like a query language on the collection. The downside (for some) is that
+the implementation of the visitor usually requires inner classes.</P>
+<P>For example; a closure on some class ...</P>
+<PRE>
+public interface ThingClosure extends Closure {
+    public void visit(Thing thing);
+}
+</PRE>
+<P>... with some things owned by another class ...</P>
+<PRE>
+public class ThingOwner {
+
+    private Thing[] things;
+
+    public void forEachOddThing(ThingClosure closure) {
+        for (int i = 0; i < this.things.length; i += 2) {
+            closure.visit(things[i]);
+        }
+    }
+
+}
+</PRE>
+<P>... and an application which needs to see these things.</P>
+<PRE>
+public class Application {
+
+    private ThingOwner owner;
+
+    public void execute() {
+        this.owner.forEachOddThing(new ThingClosure() {
+            public void visit(Thing thing) {
+                //do something
+            }
+        });
+    }
+
+}
+</PRE>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+<HR>
+<A NAME="util">
+<H2>The util package</H2>
+<P>This package contains some classes with useful methods for dealing with byte arrays,
+<CODE>Bytes</CODE>, and strings, <CODE>Strings</CODE>. There is also a text formatting
+class and a Java Date equivalent for universal time, <CODE>UTC</CODE>.</P>
+<P STYLE="text-align:right;"><A HREF="#top" CLASS="small">top</A></P>
+</DIV>
+<DIV ID="LINK">
+<H1>&nbsp;</H1>
+<P>
+<A HREF="../../index.html">Home</A><BR>
+<SCRIPT>writeEvaluate();</SCRIPT>
+</P>
+<DIV ID="FOOTNOTE">
+www.gbkr.com<BR>
+First published 2004-09-29<BR>
+Last revised 2004-10-20
+</DIV>
+</DIV>
+</BODY>
+
+<!-- Mirrored from www.gbkr.com/subjects/library/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:08 GMT -->
+</HTML>

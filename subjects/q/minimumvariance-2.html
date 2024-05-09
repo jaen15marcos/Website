@@ -1,0 +1,70 @@
+<HTML>
+
+<!-- Mirrored from www.gbkr.com/subjects/q/minimumvariance-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:02:59 GMT -->
+<HEAD>
+<TITLE>www.gbkr.com - Minimum variance postscript</TITLE>
+<LINK HREF="../../style/page.css" REL="stylesheet" TYPE="text/css">
+<SCRIPT SRC="../../script/xbrowser.js"></SCRIPT>
+<SCRIPT SRC="../../script/page.js"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV ID="CONTENT">
+<H1>Minimum variance - postscript</H1>
+<P>The article on the <A HREF="minimumvariance.html">minimum variance portfolio</A> showed that calculation step by step in a q session. This postscript provides functions to calculate the sparse covariance matrix and the minimum variance weights. It also defines another function to reshape a portfolio to the minimum variance weights.</P>
+<P>All the functions are in <A HREF="portfolio.q">portfolio.q</A>.</P>
+<H2>Covariance matrix and minimum variance weights</H2>
+<P>The <CODE>.portfolio.covariance</CODE> and <CODE>.portfolio.minvariance</CODE> functions cover all the steps in the previous article. Both return tables as a declaration rather than an SQL statement, i.e.</P>
+<PRE>
+([] sym1: first each p; sym2: last each p; cv: {cov [R first x; R last x]} each p)
+</PRE>
+<P>Both also use anonymous functions to build columns in those tables. All the data for these anonymous functions could be passed through parameters but the costs are more complicated expressions and memory; parameters are passed by value and, for example, <CODE>.portfolio.covariance</CODE> would pass the dictionary of all returns, <CODE>R</CODE>, each call. An alternative is to place the data in a global or context variable, exploiting the fact that kdb+ is single threaded.</P>
+<P><CODE>.portfolio.minvariance</CODE> has a feature often seen in q applications: using a list as the single parameter so that various function signatures are possible. The parameter may either be a table or a list of a table and a list of symbols, for example:</P>
+<PRE>
+.portfolio.minvariance .portfolio.covariance prices
+.portfolio.minvariance (.portfolio.covariance prices; `BARC.L`HSBA.L`LLOY.L`RBS.L)
+</PRE>
+<P>Another common alternative is to use a dictionary.</P>
+<H2>Reshaping a portfolio</H2>
+<P>The <CODE>.portfolio.reweight</CODE> function takes current portfolio holdings, reference prices and the target weights and calculates the smallest portfolio with those weights. As an example:
+<PRE>
+q)prices: `minute`sym`prx xcol ("USF"; enlist csv) 0: `:portfolio/bids.csv
+q)strikes:: 0 ! select last prx by sym from prices
+q)holdings: ([] sym: strikes `sym; qty: 1000 * 1 + (count strikes) ? 100)
+q)weights: .portfolio.minvariance .portfolio.covariance prices
+q).portfolio.reweight [holdings; strikes; weights]
+sym    qty   prx    w          wt        qt    qd
+----------------------------------------------------
+BARC.L 27000 720.5  0.09331659 0.1504934 5971  21029
+HSBA.L 8000  925.5  0.03551628 0.2589832 8000  0
+LLOY.L 94000 560    0.2525091  0.1894035 9669  84331
+RBS.L  60000 1974   0.5681454  0.222591  3224  56776
+VOD.L  73000 144.25 0.05051261 0.1785288 35382 37618
+</PRE>
+<P>If this were a programme trade, the reduced portfolio of quantities <CODE>qt</CODE> could then be simultaneously executed in slices (to maintain minimum variance) whilst the quantities <CODE>qd</CODE> could be traded independently through shortfall or <A HREF="spec.html">participation</A> strategies, and/or dark pools.</P>
+<P>It would also be welcome to see prices regain their levels from this snapshot in December 2006.</P>
+<DIV CLASS="blank"></DIV>
+<H2>Further reading</H2>
+<TABLE>
+<COL><COL CLASS="gap"><COL CLASS="left">
+<TR><TD>1.<TD><TD><A HREF="http://www.kx.com/" TARGET="gbkr">www.kx.com</A>
+<TR><TD>2.<TD><TD>Further updates, and more q code, can be found at <A HREF="https://code.kx.com/trac/browser/contrib/gbaker" TARGET="gbkr">code.kx.com</A>. This is a secure site: for browsing the user name is <EM>anonymous</EM> with password <EM>anonymous</EM>.
+</TABLE>
+<BR>
+</DIV>
+<DIV ID="LINK">
+<H1>&nbsp;</H1>
+<P>
+<A HREF="../../index.html">Home</A><BR>
+<A HREF="index.html">Subject home</A><BR>
+<SCRIPT>writeEvaluate();</SCRIPT>
+</P>
+<DIV ID="FOOTNOTE">
+www.gbkr.com<BR>
+First published 2009-02-26<BR>
+Last revised 2009-02-26
+</DIV>
+</DIV>
+</BODY>
+
+<!-- Mirrored from www.gbkr.com/subjects/q/minimumvariance-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:03:01 GMT -->
+</HTML>

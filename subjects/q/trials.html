@@ -1,0 +1,94 @@
+<HTML>
+
+<!-- Mirrored from www.gbkr.com/subjects/q/trials.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:02:23 GMT -->
+<HEAD>
+<TITLE>www.gbkr.com - Market trials</TITLE>
+<LINK HREF="../../style/page.css" REL="stylesheet" TYPE="text/css">
+<SCRIPT SRC="../../script/xbrowser.js"></SCRIPT>
+<SCRIPT SRC="../../script/page.js"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV ID="CONTENT">
+<H1>Market trials</H1>
+<P>This series looks at building a near full-scale application in q and, in the process, tries to answer questions on the amount of code a q application requires, and how that code can be organised so that it is both comprehensible and straightforward to change. The target application is a participation strategy and some of its associated testing framework.</P>
+<P>In this final installment the participation strategy is run in some trials against the qx market. Previously in this series: the <A HREF="participation-2.html">"near" execution tactic</A>.</P>
+<H2>Trials</H2>
+<P>The participation strategy was run with a 25% rate and a variety of order quantities against an order book supported by a market maker and a "noise" trader (more on this later). Three allocation schemes are explored: allocating four units of <CODE>minsize</CODE> with a low of two (4:2); plus schemes 6:4 and 10:5. The average results of three runs for each quantity and scheme are summarised in the chart below.</P>
+<IMG SRC="trials.png"><BR>
+<P>The performance against VWAP is shown to highlight the impact of execution on both the near and far side of the book. Some observations:</P>
+<OL>
+<LI>The market maker maintained at least 10,000 on each side. The "noise" trader randomly sent buy and sell IOC's for 1,000 to 5,000 shares but also, more radically, would clear either the bid or ask to raise or lower the mid-price. This had the most impact on smaller orders: if the bid or ask is cleared when the participation is nearly complete, perfect tracking becomes impossible. 
+<LI>At the other extreme, <CODE>maxtake</CODE> was a frequent throttle on participation with 10-20 <CODE>maxtake</CODE> alarms per run, indicating shortages of liquidity in qx.
+<LI>The 6:4 and 10:5 schemes allowed larger orders, having longer execution times, to achieve average prices below VWAP. The tradeoff is more variation in tracking the participation rate.
+</OL>
+<H2>Code</H2>
+<P><A HREF="noise.html"><CODE>noise.q</CODE></A></P>
+<P>The noise trader is another variant of <CODE>user.q</CODE>, this time a script that regularly interacts at random with the market. Timing is through the <CODE>.z.ts</CODE> function: these trials are not dependent on time between trades, so there is no variation introduced there. The actions are chosen from amongst a number of <CODE>.process.upd</CODE> functions: by now this should not be a surprise. Randomisation is powered through the useful <CODE>rand</CODE> function in q to choose the action, direction, quantity and number of ticks for price changes.</P>
+<H2>Other changes</H2>
+<P>Until now cancels have not been acknowledged by qx. That worked for market making and simple pegging but causes serious issues for reallocation between tactics and for "completing" behaviour. Consequently <CODE>qx.q</CODE> now acknowledges cancels.</P>
+<OL>
+<LI><CODE>member.q</CODE> gets a cancels function.
+<LI>Any member sending <CODE>upd[`cancel]</CODE> to qx will receive a table of id's - even if those id's are no longer in qx.
+<LI>Unmatched IOC's are now fed back through <CODE>upd[`cancels]</CODE>, so the logic for zero quantity filling can be dropped.
+<LI>Cancels are fed back to the tactics through <CODE>.tactic.cancelled</CODE>.
+</OL>
+<P><CODE>allocation.q</CODE> now recognises the situation where the far allocation is complete while the near allocation is not, and reallocates the remaining quantity. A defect in checking the low threshold is also fixed.</P>
+<P>The redundant <CODE>minqty</CODE> column has been dropped from the <CODE>controlnear</CODE> table. Moreover, <CODE>minqty</CODE> has been renamed throughout to <CODE>minsize</CODE>: <CODE>minqty</CODE> has a specific meaning in FIX and will be resurrected for implementing completing behaviour.</P>
+<P>Other defects fixed include: a feedback problem with the market maker responding to the quote sent by qx on a cancel; and a couple of situations in <CODE>near.q</CODE> and <CODE>far.q</CODE> where direct references were being made to columns of a keyed table.</P>
+<H2>Conclusions</H2>
+<P>This installment has added 23% more lines of code. The full codebase is now:</P>
+<CENTER>
+<TABLE>
+<COL CLASS="left"><COL CLASS="gap"><COL><COL CLASS="gap"><COL>
+<TR><TH><TH><TH>Lines of code
+<TR><TD><A HREF="qx.q"><CODE>qx.q</CODE></A><TD><TD>113
+<TR><TD><A HREF="participation.html"><CODE>participation.q</CODE></A><TD><TD>108
+<TR><TD><A HREF="near.html"><CODE>near.q</CODE></A><TD><TD>86
+<TR><TD><A HREF="far.html"><CODE>far.q</CODE></A><TD><TD>85
+<TR><TD><A HREF="marketmaker.q"><CODE>marketmaker.q</CODE></A><TD><TD>75
+<TR><TD><A HREF="noise.html"><CODE>noise.q</CODE></A><TD><TD>48
+<TR><TD><A HREF="allocation.q"><CODE>allocation.q</CODE></A><TD><TD>21
+<TR><TD><A HREF="schema.q"><CODE>schema.q</CODE></A><TD><TD>18
+<TR><TD><A HREF="filter.q"><CODE>filter.q</CODE></A><TD><TD>18
+<TR><TD><A HREF="user.q"><CODE>user.q</CODE></A><TD><TD>13
+<TR><TD><A HREF="tactic.q"><CODE>tactic.q</CODE></A><TD><TD>13
+<TR><TD><A HREF="player.q"><CODE>player.q</CODE></A><TD><TD>12
+<TR><TD><A HREF="seq.html"><CODE>seq.q</CODE></A><TD><TD>9
+<TR><TD><A HREF="global.q"><CODE>global.q</CODE></A><TD><TD>6
+<TR><TD><A HREF="member.html"><CODE>member.q</CODE></A><TD><TD>5
+<TR><TD><A HREF="util.q"><CODE>util.q</CODE></A><TD><TD>3
+<TR><TD><A HREF="process.q"><CODE>process.q</CODE></A><TD><TD>2
+<TR CLASS="shade"><TD><TD><TD><EM>635</EM>
+</TABLE>
+</CENTER>
+<BR>
+<P>This is remarkably little code given the range of functionality within the qx market, strategy and other tools. Most of the code is written in a declarative style using the SQL-like statements of q, for both ease of understanding and the efficiency of operating on multiple rows at a time. The seemless working with kdb+ time series tables during testing would be a significant advantage in a full implementation. The use of processes, script files and coding patterns, like <CODE>upd</CODE>, has also contributed to the ease of development, although this is not unique to q.</P>
+<P>On the downside, the most frequent cause of error has been forgetting the data types in variables (recall those keyed and unkeyed tables): dynamic typing in q means these mistakes cannot be detected at "compilation". This is another good reason to introduce conventions for passing data between functions.</P>
+<P>Use of kdb+ in banks has long been focused on collecting time series data in real time. Hopefully this series demonstrates that the combination of high performance, low latency and powerful language constructs means that kdb+ is an ideal platform on which to directly build execution and trading algorithms.</P>
+<P>Regarding the strategy itself, the independence of tactics and the allocation mechanism to activate them, its evolution as a general purpose "bot" for a variety of execution styles ... that would require another series of articles.</P>
+<DIV CLASS="blank"></DIV>
+<H2>Further reading</H2>
+<TABLE>
+<COL><COL CLASS="gap"><COL CLASS="left">
+<TR><TD>1.<TD><TD><A HREF="http://www.kx.com/" TARGET="gbkr">www.kx.com</A>
+<TR><TD>2.<TD><TD>Further updates, and more q code, can be found at <A HREF="https://code.kx.com/trac/browser/contrib/gbaker" TARGET="gbkr">code.kx.com</A>. This is a secure site: for browsing the user name is <EM>anonymous</EM> with password <EM>anonymous</EM>.
+</TABLE>
+<BR>
+</DIV>
+<DIV ID="LINK">
+<H1>&nbsp;</H1>
+<P>
+<A HREF="../../index.html">Home</A><BR>
+<A HREF="index.html">Subject home</A><BR>
+<SCRIPT>writeEvaluate();</SCRIPT>
+</P>
+<DIV ID="FOOTNOTE">
+www.gbkr.com<BR>
+First published 2009-02-18<BR>
+Last revised 2009-02-18
+</DIV>
+</DIV>
+</BODY>
+
+<!-- Mirrored from www.gbkr.com/subjects/q/trials.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:02:59 GMT -->
+</HTML>

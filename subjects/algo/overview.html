@@ -1,0 +1,94 @@
+<HTML>
+
+<!-- Mirrored from www.gbkr.com/subjects/algo/overview.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:12 GMT -->
+<HEAD>
+<TITLE>www.gbkr.com - Overview</TITLE>
+<LINK HREF="../../style/page.css" REL="stylesheet" TYPE="text/css">
+<SCRIPT SRC="../../script/xbrowser.js"></SCRIPT>
+<SCRIPT SRC="../../script/page.js"></SCRIPT>
+</HEAD>
+<BODY>
+<DIV ID="CONTENT">
+<H1>Overview</H1>
+<H2>Execution or trading?</H2>
+Unfortunately the terms are often used loosely: think of 'portfolio trading' or 'optimal trading strategy'. Here we focus on execution,
+in keeping with the services offered by banks and brokers. However, it is best defined as the opposite of trading, which:
+<UL><LI>Decides on the asset or assets to be bought or sold
+<LI>Decides on the quantities and target to trade at
+<LI>Decides in what circumstances the trade will be unwound and inventory flattened, maybe days, weeks or months later.
+<LI>Is rewarded by the overall profit or effectiveness of the trade.
+</UL>
+<P>In the above sense, trading is the responsibility of asset managers, proprietary traders and others who choose to take positions
+in assets. If they choose to use machines to exercise that responsibility, then the activity is perhaps more clearly labelled
+<I>model based trading</I>.</P>
+<P>With algorithmic execution, as with all execution, we are looking at situations where only some <I>discretion</I> is left in completing
+the order, and the reward is commission or average efficiency in minimising the variance from executed prices and benchmarks.</P>
+<H2>Rules or strategies?</H2>
+<P>For many years, brokers have provided to their clients types of order beyond the <A HREF="../execution/orders.html">
+limit orders</A> offered by an exchange. The classic example is the stop order; a normal limit order which, once the market trades through a price, is
+automatically cancelled by the broker-dealer and replaced by a market order. These enhanced order types are still <I>non-discretionary</I>,
+just as if the investor had made the decision directly using publicly available information in real time. More are shown in the table below</P>
+<TABLE>
+<COL CLASS="left">
+<COL CLASS="left">
+<TR><TH>Exchange orders<TH>Broker-dealer orders
+<TR>
+<TD CLASS="shade" STYLE="padding:1mm"><EM>Market</EM><BR><EM>Limit</EM><BR><EM>Iceberg</EM>
+<TD CLASS="shade" STYLE="padding:1mm"><EM>Stop loss</EM>: at the given price, submit the order as a market order.<BR>
+<EM>Stop</EM>: at a given price, change the limit order into a market order.<BR>
+<EM>Stop limit</EM>: at a given price, submit the order as a limit order.<BR>
+<EM>Regular peg</EM>: keep the limit price equal to the best price on the same side.<BR>
+<EM>Reverse peg</EM>: keep the limit price equal to the best price on the other side, less an offset.<BR>
+<EM>Others</EM>: the FIX protocol has order types for pegging at the mid price, last traded price and VWAP;
+GL Tactics has a reversal order type, where for example, a buy order will be suspended on a price fall until the price
+has recovered a given amount.
+</TABLE>
+<DIV CLASS="blank"></DIV>
+<P>The table is a necessary simplification of a complex world: for example, NASDAQ directly supports regular and reverse peg orders.
+Although some algorithmic execution systems include these enhanced order types, they are in essence rules rather than strategies
+for execution.</P>
+<P>Algorithmic strategies automate all of the decisions on when to make prices or to take from the order book, and in what quanties, until
+the original order quantity is filled. VWAP strategies have been operating since the 1980s, throughout the period when VWAP was the dominant
+execution <A HREF="../pretrade/index.html">benchmark</A>. Although banks seem to have overdone product branding, with dozens of strategies
+available, in essence there is a core family of single asset strategies:</P>
+<DL>
+<DT><EM>VWAP</EM>
+<DD>Allocate the order quantity over time in proportion to expected market volume.
+<DT><EM>TWAP</EM>
+<DD>Allocate the order quantity equally over time. This could be regarded as a special case of VWAP, using an expectation of constant
+trading. However, strict TWAP would aim to trade at each change of quote.
+<DT><EM>Arrival Price</EM>
+<DD>Allocate order quantity in decreasing proportion to expected market volume. The allocation may again be a special case of
+VWAP, with an exponentially declining expectation of market volume <A HREF="#1">[1]</A> , or it may follow Almgren <A HREF="#2">[2]</A>
+<A HREF="#3">[3]</A>. 
+<DT><EM>Participation</EM>
+<DD>Execute whenever the asset trades in the market.
+</DL>
+<DIV CLASS="blank"></DIV>
+<H2>Further reading</H2>
+<TABLE>
+<COL><COL CLASS="gap"><COL CLASS="left"><COL CLASS="gap"><COL>
+<TR><TD><A NAME="1">1.<TD><TD>Kissell and Glantz <I>Optimal Trading Strategies</I>, 2003
+<TR><TD><A NAME="2">2.<TD><TD>Almgren and Chriss <I>Optimal Execution of Portfolio Transactions</I>
+<TR><TD><A NAME="3">3.<TD><TD>Almgren <I>Optimal Execution with Nonlinear Impact Functions and Trading-Enhanced Risk</I>
+<TR><TD VALIGN="TOP"><A NAME="4">4.<TD><TD VALIGN="TOP">Gordon Baker and Shashi Tiwari <A HREF="../../pdf/200411AlgorithmicTrading.pdf" TARGET="gbkr">Algorithmic Trading - Perceptions and Challenges</A>, EDHEC Risk Newsletter 2004-11<BR>
+Reproduced with the permission of EDHEC Risk.<TD><TD><IMG SRC="../../images/pdficon.gif">
+</TABLE>
+</DIV>
+<DIV ID="LINK">
+<H1>&nbsp;</H1>
+<P>
+<A HREF="../../index.html">Home</A><BR>
+<A HREF="index.html">Subject home</A><BR>
+<SCRIPT>writeEvaluate();</SCRIPT>
+</P>
+<DIV ID="FOOTNOTE">
+www.gbkr.com<BR>
+First published 2004-11-03<BR>
+Last revised 2007-03-09
+</DIV>
+</DIV>
+</BODY>
+
+<!-- Mirrored from www.gbkr.com/subjects/algo/overview.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:14 GMT -->
+</HTML>

@@ -1,0 +1,141 @@
+<HTML>
+
+<!-- Mirrored from www.gbkr.com/subjects/misc/list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:10 GMT -->
+<HEAD>
+<TITLE>www.gbkr.com - List calculator</TITLE>
+<LINK HREF="../../style/page.css" REL="stylesheet" TYPE="text/css">
+<SCRIPT SRC="../../script/xbrowser.js"></SCRIPT>
+<SCRIPT SRC="../../script/page.js"></SCRIPT>
+<SCRIPT>
+
+function calc() {
+	var app = document.listapplet;
+	if (parselist(document.forms['calcForm'].elements[0], app) == 0) {
+		return;
+	}
+	app.calc();
+	XWrite(document, 'countDiv', app.count());
+	XWrite(document, 'sumDiv', app.sum().toFixed(4));
+	XWrite(document, 'maxDiv', app.max().toFixed(4));
+	XWrite(document, 'minDiv', app.min().toFixed(4));
+	var mu = app.mean();
+	XWrite(document, 'meanDiv', mu.toFixed(4));
+	var sigma = app.standardDeviation();
+	XWrite(document, 'devDiv', sigma.toFixed(4));
+	var x = mu + sigma;
+	XWrite(document, 'devpDiv', x.toFixed(4));
+	x += sigma;
+	XWrite(document, 'devppDiv', x.toFixed(4));
+	x += sigma;
+	XWrite(document, 'devpppDiv', x.toFixed(4));
+	x = mu - sigma;
+	XWrite(document, 'devmDiv', x.toFixed(4));
+	x -= sigma;
+	XWrite(document, 'devmmDiv', x.toFixed(4));
+	x -= sigma;
+	XWrite(document, 'devmmmDiv', x.toFixed(4));
+	app.clear();
+}
+
+function parselist(ctrl, app) {
+	var n = 0;
+	var text = ctrl.value
+	if (text.indexOf('\r') > 0)
+		text = text.split('\r').join('');
+	var lines = text.split('\n');
+	var x = 0;
+	for (var i = 0; i < lines.length; i++) {
+		x = parseFloat(lines[i]);
+		if (!isNaN(x)) {
+			app.add(x);
+			n++;
+		}
+	}
+	return n;
+}
+
+</SCRIPT>
+</HEAD>
+<BODY ONLOAD="calc();">
+<DIV ID="CONTENT">
+<H1>List calculator</H1>
+<FORM ID="calcForm">
+<P>Type or paste each value on a new line in the text area below, then <A HREF="#" ONCLICK="calc();">click here</A> to
+calculate the statistics shown to the right. Blank lines and other text are ignored.</P>
+<TABLE>
+<COL><COL CLASS="gap">
+<COL><COL CLASS="gap">
+<COL><COL CLASS="gap">
+<COL><COL CLASS="gap">
+<COL><COL CLASS="gap">
+<COL><COL CLASS="gap">
+<COL>
+<TR><TD ROWSPAN="12"><TEXTAREA ROWS="12" COLS="16">
+1
+2
+3</TEXTAREA>
+<TR><TD>&nbsp;
+<TR CLASS="colour"><TD><TD><TD><TD><TD><TD><TD><TD><TD><TD CLASS="small">&mu; + 3&sigma;<TD><TD><DIV CLASS="small" ID="devpppDiv"></DIV>
+<TR CLASS="colour"><TD><TD><TD><TD><TD><TD><TD><TD><TD><TD CLASS="small">&mu; + 2&sigma;<TD><TD><DIV CLASS="small" ID="devppDiv"></DIV>
+<TR CLASS="colour"><TD><TD CLASS="small"><DIV ID="countDiv">n</DIV><TD><TD><TD><TD>&lceil;<TD><TD CLASS="small"><DIV ID="maxDiv"></DIV><TD><TD CLASS="small">&mu; + &sigma;<TD><TD CLASS="small"><DIV ID="devpDiv"></DIV>
+<TR><TD><TD>&sum;<TD>=<TD><DIV ID="sumDiv"></DIV><TD><TD>&mu;<TD>=<TD><DIV ID="meanDiv"></DIV><TD><TD>&sigma;<TD>=<TD><DIV ID="devDiv"></DIV>
+<TR CLASS="colour"><TD><TD CLASS="small">1<TD><TD><TD><TD>&lfloor;<TD><TD CLASS="small"><DIV ID="minDiv"></DIV><TD><TD CLASS="small">&mu; - &sigma;<TD><TD CLASS="small"><DIV ID="devmDiv"></DIV>
+<TR CLASS="colour"><TD><TD><TD><TD><TD><TD><TD><TD><TD><TD CLASS="small">&mu; - 2&sigma;<TD><TD CLASS="small"><DIV ID="devmmDiv"></DIV>
+<TR CLASS="colour"><TD><TD><TD><TD><TD><TD><TD><TD><TD><TD CLASS="small">&mu; - 3&sigma;<TD><TD CLASS="small"><DIV ID="devmmmDiv"></DIV>
+<TR><TD>&nbsp;
+<TR><TD>&nbsp;
+<TR><TD>&nbsp;
+<TR><TD>&nbsp;
+</TABLE>
+<!--"CONVERTED_APPLET"-->
+<!-- HTML CONVERTER -->
+<OBJECT
+    classid = "clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+    codebase = "http://java.sun.com/products/plugin/autodl/jinstall-1_4-windows-i586.cab#Version=1,4,0,0"
+    WIDTH = "10" HEIGHT = "10" NAME = "listapplet" >
+    <PARAM NAME = CODE VALUE = "com.gbkr.applets.ListApplet" >
+    <PARAM NAME = ARCHIVE VALUE = "com.gbkr.list.jar" >
+    <PARAM NAME = NAME VALUE = "listapplet" >
+    <PARAM NAME = "type" VALUE = "application/x-java-applet;version=1.4">
+    <PARAM NAME = "scriptable" VALUE = "false">
+
+    <COMMENT>
+	<EMBED
+            type = "application/x-java-applet;version=1.4"
+            CODE = "com.gbkr.applets.html"
+            ARCHIVE = "com.gbkr.list.jar"
+            NAME = "listapplet"
+            WIDTH = "10"
+            HEIGHT = "10"
+	    scriptable = false
+	    pluginspage = "http://java.sun.com/products/plugin/index.html#download">
+	    <NOEMBED>
+
+            </NOEMBED>
+	</EMBED>
+    </COMMENT>
+</OBJECT>
+<!--
+<APPLET CODE = "com.gbkr.applets.ListApplet" ARCHIVE = "com.gbkr.list.jar" WIDTH = "10" HEIGHT = "10" NAME = "listapplet">
+</APPLET>
+-->
+<!--"END_CONVERTED_APPLET"-->
+</FORM>
+</DIV>
+<DIV ID="LINK">
+<H1>&nbsp;</H1>
+<P>
+<A HREF="../../index.html">Home</A><BR>
+<A HREF="index.html">Subject home</A><BR>
+<SCRIPT>writeEvaluate();</SCRIPT>
+</P>
+<DIV ID="FOOTNOTE">
+www.gbkr.com<BR>
+First published 2004-10-27<BR>
+Last revised 2004-10-28
+</DIV>
+</DIV>
+</BODY>
+
+<!-- Mirrored from www.gbkr.com/subjects/misc/list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:12 GMT -->
+</HTML>

@@ -1,0 +1,248 @@
+<HTML>
+
+<!-- Mirrored from www.gbkr.com/subjects/misc/queues.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:08 GMT -->
+<HEAD>
+<TITLE>www.gbkr.com - Queueing</TITLE>
+<LINK HREF="../../style/page.css" REL="stylesheet" TYPE="text/css">
+<SCRIPT SRC="../../script/xbrowser.js"></SCRIPT>
+<SCRIPT SRC="../../script/page.js"></SCRIPT>
+<SCRIPT SRC="queues.js"></SCRIPT>
+<SCRIPT>
+
+var TIMING_AS_STRING = new Array();
+TIMING_AS_STRING['ms'] = 'millisecond';
+TIMING_AS_STRING['s'] = 'second';
+TIMING_AS_STRING['m'] = 'minute';
+TIMING_AS_STRING['h'] = 'hour';
+
+var timing = 's';
+
+function onLoad() {
+	showAR();
+	showSV();
+	showSR();
+	showST();
+	showSC();
+	showTimeUnit();
+	showFigures();
+}
+
+function showTimeUnit() {
+	var x = TIMING_AS_STRING[timing];
+	XWrite(document, 'ARunit', x);
+	XWrite(document, 'SRunit', x);
+	XWrite(document, 'STunit', x);
+	XWrite(document, 'RTunit', x);
+}
+
+function setTimeUnit(ctrl) {
+	x = timing;
+	timing = ctrl.options[ctrl.selectedIndex].value;
+	showTimeUnit();
+	arrivalRate = translate(arrivalRate, x, timing);
+	showAR();
+	serviceRate = translate(serviceRate, x, timing);
+	showSR();
+	showST();
+}
+
+function translate(rate, fromunit, tounit) {
+	var x = rate;
+	switch (fromunit) {
+		case 'ms':
+			switch (tounit) {
+				case 'ms': break;
+				case 's': x *= 1000; break;
+				case 'm': x *= 60000; break;
+				case 'h': x *= 3600000;
+			}
+			break;
+		case 's':
+			switch (tounit) {
+				case 'ms': x /= 1000; break;
+				case 's': break;
+				case 'm': x *= 60; break;
+				case 'h': x *= 3600;
+			}
+			break;
+		case 'm':
+			switch (tounit) {
+				case 'ms': x /= 60000; break;
+				case 's': x /= 60; break;
+				case 'm': break;
+				case 'h': x *= 60;
+			}
+			break;
+		case 'h':
+			switch (tounit) {
+				case 'ms': x /= 3600000; break;
+				case 's': x /= 3600; break;
+				case 'm': x /= 60; break;
+				case 'h': ;
+			}
+	}
+	return x;
+}
+
+function showAR() {
+	document.forms[0].elements['ctrlAR'].value = arrivalRate.toFixed();
+}
+
+function showSV() {
+	document.forms[0].elements['ctrlSV'].value = servers.toFixed();
+}
+
+function showSR() {
+	document.forms[0].elements['ctrlSR'].value = serviceRate.toFixed();
+}
+
+function showST() {
+	document.forms[0].elements['ctrlST'].value = serviceTime().toFixed(4);
+}
+
+function showSC() {
+	document.forms[0].elements['ctrlSC'].value = serviceVariation.toFixed(1);
+}
+
+function setAR(ctrl) {
+	numeric(ctrl, arrivalRate);
+	arrivalRate = ctrl.value;
+	showFigures();
+}
+
+function setSV(ctrl) {
+	var x = parseInt(ctrl.value);
+	if (isNaN(x) || x <= 0) {
+		ctrl.value = servers;
+	} else {
+		ctrl.value = x;
+		servers = ctrl.value;
+		showFigures();
+	}
+}
+
+function setSR(ctrl) {
+	numeric(ctrl, serviceRate);
+	serviceRate = ctrl.value;
+	showST();
+	showFigures();
+}
+
+function setST(ctrl) {
+	numeric(ctrl, serviceTime());
+	serviceRate = 1 / ctrl.value;
+	showSR();
+	showFigures();
+}
+
+function setSC(ctrl) {
+	numeric(ctrl, serviceVariation);
+	serviceVariation = ctrl.value;
+	showFigures();
+}
+
+function numeric(ctrl, revert) {
+	var x = parseFloat(ctrl.value);
+	if (isNaN(x) || x <= 0) {
+		ctrl.value = revert;
+	} else {
+		ctrl.value = x;
+	}
+}
+
+function showFigures() {
+	XWrite(document, 'traffic', traffic().toFixed(2));
+	var u = utilised();
+	var x = (100 * u).toFixed() + '%';
+	if (u > 0.5) {
+		x = '<EM>' + x + '</EM>';
+	}
+	XWrite(document, 'utilisation', x);
+	XWrite(document, 'erlangb', (100 * erlangB(servers, u)).toFixed(2) + '%');
+	XWrite(document, 'erlangc', (100 * erlangC(servers, u)).toFixed(2) + '%');
+	var length = queueLength('M');
+	x = responseTime(length);
+	XWrite(document, 'RT', x.toFixed(4));
+	x *= serviceRate;
+	x = x >= 2 && x < Number.POSITIVE_INFINITY ? '&nbsp;(<EM>' + x.toFixed() + ' x service time</EM>)' : '';
+	XWrite(document, 'RTtext', x);
+	x = length >= 0.1 ? length.toFixed(1) : 'zero';
+	XWrite(document, 'QL', x);
+	if (serviceVariation != 1) {
+		length = queueLength('G');
+		var string = new Array();
+		string.push('<P>With a general distribution of service times on a single server, the mean queue length would be ');
+		string.push(length.toFixed(1));
+		string.push(' and response time ');
+		string.push(responseTime(length).toFixed(4));
+		string.push(' ');
+		string.push(TIMING_AS_STRING[timing]);
+		string.push('s.</P>');
+		XWrite(document, 'M/G/1', string.join(''));
+	} else {
+		XWrite(document, 'M/G/1', '');
+	}
+}
+
+</SCRIPT>
+</HEAD>
+<BODY ONLOAD="onLoad();">
+<DIV ID="CONTENT">
+<H1>Queue calculator</H1>
+<FORM ID="frm">
+<TABLE>
+<COL><COL CLASS="gap"><COL CLASS="left">
+<TR>
+<TD>Time is measured in
+<TD>
+<TD><SELECT ONCHANGE="setTimeUnit(this);"><OPTION VALUE="ms">milliseconds</OPTION><OPTION VALUE="s" SELECTED>seconds</OPTION><OPTION VALUE="m">minutes</OPTION><OPTION VALUE="h">hours</OPTION></SELECT>
+<TR>
+<TD>Mean arrival rate
+<TD>
+<TD><INPUT ID="ctrlAR" TYPE="TEXT" ONCHANGE="setAR(this);"> per <SPAN ID="ARunit"></SPAN>
+<TR>
+<TD>Number of servers
+<TD>
+<TD><INPUT ID="ctrlSV" TYPE="TEXT" ONCHANGE="setSV(this);">
+<TR>
+<TD>Mean service rate of each server ...
+<TD>
+<TD><INPUT ID="ctrlSR" TYPE="TEXT" ONCHANGE="setSR(this);"> per <SPAN ID="SRunit"></SPAN>
+<TR>
+<TD>... alternatively the mean service time
+<TD>
+<TD><INPUT ID="ctrlST" TYPE="TEXT" ONCHANGE="setST(this);"> <SPAN ID="STunit"></SPAN>s
+<TR>
+<TD>Service time standard deviation
+<TD>
+<TD><INPUT ID="ctrlSC" TYPE="TEXT" ONCHANGE="setSC(this);"> &times; mean
+</TABLE>
+</FORM>
+<BR>
+<P>Server utilisation is <SPAN ID="utilisation"></SPAN>&nbsp;and the total traffic is <SPAN ID="traffic"></SPAN>&nbsp;Erlangs. Assuming the system has exponential interarrival and service times:</P>
+<UL>
+<LI>The mean response time (waiting plus servicing) will be <SPAN ID="RT"></SPAN>&nbsp;<SPAN ID="RTunit"></SPAN>s<SPAN ID="RTtext"></SPAN>.
+<LI>The mean queue length will be <SPAN ID="QL"></SPAN>.
+<LI>The probability of an arrival being queued (Erlang C), is <SPAN ID="erlangc"></SPAN>.
+<LI>If arrivals that cannot be serviced immediately were lost instead of queued, the probability of loss (Erlang B) would be <SPAN ID="erlangb"></SPAN>.
+</UL>
+<DIV ID="M/G/1"></DIV>
+<DIV CLASS="blank"></DIV>
+</DIV>
+<DIV ID="LINK">
+<H1>&nbsp;</H1>
+<P>
+<A HREF="../../index.html">Home</A><BR>
+<A HREF="index.html">Subject home</A><BR>
+<SCRIPT>writeEvaluate();</SCRIPT>
+</P>
+<DIV ID="FOOTNOTE">
+www.gbkr.com<BR>
+First published 2009-03-23<BR>
+Last revised 2009-03-24
+</DIV>
+</DIV>
+</BODY>
+
+<!-- Mirrored from www.gbkr.com/subjects/misc/queues.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:10 GMT -->
+</HTML>
