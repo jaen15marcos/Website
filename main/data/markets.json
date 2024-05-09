@@ -1,0 +1,128 @@
+{
+	"XASX": {
+		"name": "ASX (Group 1)",
+		"currency": "AUD",
+		"ticks": [
+			{ "until": "0.1", "tick": "0.001", "decimals": "3" },
+			{ "until": "2", "tick": "0.005", "decimals": "3" },
+			{ "until": "0", "tick": "0.01", "decimals": "2" }
+		],
+		"hours": "6",
+		"sessions": [
+			{ "from": "07:00", "until": "09:59:45", "matching": "", "atlimit": "NAC", "atmarket": "" },
+			{ "from": "09:59:45", "until": "10:00:15", "matching": "auction", "atlimit": "", "atmarket": "" },
+			{ "from": "09:59:45", "until": "16:00", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "16:00", "until": "16:10", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "16:10", "until": "16:12", "matching": "auction", "atlimit": "", "atmarket": "" }
+		]
+	},
+	"XHKG": {
+		"name": "HKEx",
+		"currency": "HKD",
+		"ticks": [
+			{ "until": "0.25", "tick": "0.001", "decimals": "3" },
+			{ "until": "0.50", "tick": "0.005", "decimals": "3" },
+			{ "until": "10.0", "tick": "0.01", "decimals": "2" },
+			{ "until": "20.0", "tick": "0.02", "decimals": "2" },
+			{ "until": "100.0", "tick": "0.05", "decimals": "2" },
+			{ "until": "200.0", "tick": "0.1", "decimals": "1" },
+			{ "until": "500.0", "tick": "0.2", "decimals": "1" },
+			{ "until": "1000.0", "tick": "0.5", "decimals": "1" },
+			{ "until": "2000.0", "tick": "1", "decimals": "0" },
+			{ "until": "5000.0", "tick": "2", "decimals": "0" },
+			{ "until": "0", "tick": "5", "decimals": "0" }
+		],
+		"hours": "5.5",
+		"sessions": [
+			{ "from": "09:00", "until": "09:15", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "09:15", "until": "09:20", "matching": "", "atlimit": "", "atmarket": "N" },
+			{ "from": "09:20", "until": "09:28", "matching": "auction", "atlimit": "", "atmarket": "" },
+			{ "from": "09:28", "until": "09:30", "matching": "", "atlimit": "", "atmarket": "" },
+			{ "from": "09:30", "until": "12:00", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "12:00", "until": "12:30", "matching": "", "atlimit": "", "atmarket": "" },
+			{ "from": "12:30", "until": "13:00", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "13:00", "until": "16:00", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" }
+		]
+	},
+	"XJPX": {
+		"name": "JPX (Topix100)",
+		"currency": "JPY",
+		"ticks": [
+			{ "until": "1000", "tick": "0.1", "decimals": "1" },
+			{ "until": "5000", "tick": "0.5", "decimals": "1" },
+			{ "until": "10000", "tick": "1", "decimals": "0" },
+			{ "until": "50000", "tick": "5", "decimals": "0" },
+			{ "until": "100000", "tick": "10", "decimals": "0" },
+			{ "until": "500000", "tick": "50", "decimals": "0" },
+			{ "until": "1000000", "tick": "100", "decimals": "0" },
+			{ "until": "5000000", "tick": "500", "decimals": "0" },
+			{ "until": "10000000", "tick": "1000", "decimals": "0" },
+			{ "until": "50000000", "tick": "5000", "decimals": "0" },
+			{ "until": "0", "tick": "10000", "decimals": "0" }
+		],
+		"hours": "4.5",
+		"sessions": [
+			{ "from": "08:00", "until": "09:00", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "09:00", "until": "09:03", "matching": "auction", "atlimit": "", "atmarket": "" },
+			{ "from": "09:00", "until": "11:30", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "11:30", "until": "11:33", "matching": "auction", "atlimit": "", "atmarket": "" },
+			{ "from": "11:30", "until": "12:05", "matching": "", "atlimit": "", "atmarket": "" },
+			{ "from": "12:05", "until": "12:30", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "12:30", "until": "12:33", "matching": "auction", "atlimit": "", "atmarket": "" },
+			{ "from": "12:30", "until": "15:00", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "15:00", "until": "15:03", "matching": "auction", "atlimit": "", "atmarket": "" }
+		]
+	},
+	"XKRX": {
+		"name": "KRX",
+		"currency": "KRW",
+		"ticks": [
+			{ "until": "1000", "tick": "1", "decimals": "0" },
+			{ "until": "5000", "tick": "5", "decimals": "0" },
+			{ "until": "10000", "tick": "10", "decimals": "0" },
+			{ "until": "50000", "tick": "50", "decimals": "0" },
+			{ "until": "0", "tick": "100", "decimals": "0" }
+		],
+		"hours": "6",
+		"sessions": [
+			{ "from": "08:00", "until": "09:00", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "09:00", "until": "09:00", "matching": "auction", "atlimit": "", "atmarket": "" },
+			{ "from": "09:00", "until": "15:00", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" }
+		]
+	},
+	"XSES": {
+		"name": "SGX",
+		"currency": "SGD",
+		"ticks": [
+			{ "until": "0.2", "tick": "0.001", "decimals": "3" },
+			{ "until": "2", "tick": "0.005", "decimals": "3" },
+			{ "until": "0", "tick": "0.01", "decimals": "2" }
+		],
+		"hours": "8",
+		"sessions": [
+			{ "from": "08:30", "until": "08:58", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "08:58", "until": "09:00", "matching": "auction", "atlimit": "", "atmarket": "" },
+			{ "from": "09:00", "until": "17:00", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "17:00", "until": "17:04", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "17:04", "until": "17:06", "matching": "auction", "atlimit": "", "atmarket": "" }
+		]
+	},
+	"XTAI": {
+		"name": "TWSE",
+		"currency": "TWD",
+		"ticks": [
+			{ "until": "10", "tick": "0.01", "decimals": "2" },
+			{ "until": "50", "tick": "0.05", "decimals": "2" },
+			{ "until": "100", "tick": "0.1", "decimals": "1" },
+			{ "until": "500", "tick": "0.5", "decimals": "1" },
+			{ "until": "1000", "tick": "1", "decimals": "0" },
+			{ "until": "0", "tick": "5", "decimals": "0" }
+		],
+		"hours": "4.5",
+		"sessions": [
+			{ "from": "08:30", "until": "09:00", "matching": "", "atlimit": "NAC", "atmarket": "NAC" },
+			{ "from": "09:00", "until": "13:30", "matching": "continuous", "atlimit": "NAC", "atmarket": "NAC" }
+		]
+	}
+}
+	

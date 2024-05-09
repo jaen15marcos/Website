@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from www.gbkr.com/main/subjects/util/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:11 GMT -->
+<meta charset="utf-8">
+
+<title>gbkr.com</title>
+
+<link rel="stylesheet" href="../../style/page.css">
+
+<script src="../../script/page.js"></script>
+
+<body onload="setNav()">
+
+<header>
+Utilities
+</header>
+
+<nav>
+<ul>
+<li><a href="../../../index.html">Home</a></li>
+<li><a href="#" onclick="onNavClick()">Calculate</a></li>
+</ul>
+<form id="nav-form">
+<input id="nav-input" type="text" maxlength="80" onchange="onNavInput()" style="visibility:hidden;">
+<div id="nav-div"></div>
+</form>
+</nav>
+
+<article>
+
+<ul>
+<li>Market reference <a href="markets.html">browsing</a>
+<li>Limit price <a href="limits.html">calculations</a>
+</ul>
+
+<hr>
+
+<p>The pages above use information on market structure which has been coded into a JSON 
+file, <a href="../../data/markets.json">markets.json</a>. This structural information
+can be read and used in a variety of languages.</p>
+
+<p>With Javascript:</p>
+<pre>
+var x = JSON.parse(jsonString);
+</pre>
+<p>The variable x will be an object with properties for each of the top level
+attributes in the JSON structure.</p>
+
+<p>With kdb+ version 3.2:</p>
+<pre>
+x: .j.k raze read0 jsonFilename;
+</pre>
+<p>The variable x will be a dictionary with keys for each of the top level attributes.</p>
+
+</article>
+
+<footer>
+<ul>
+<li>www.gbkr.com</li>
+<li>First published 2014.11.21</li>
+<li>Last revised 2015.01.30</li>
+</ul>
+</footer>
+
+</body>
+
+<!-- Mirrored from www.gbkr.com/main/subjects/util/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:15 GMT -->
+</html>

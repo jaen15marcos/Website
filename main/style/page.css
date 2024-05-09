@@ -1,0 +1,280 @@
+/*
+	Set the font size at the root to allow 'rem' measurements.
+*/
+
+html
+{
+	font-size:			16px;
+}
+
+
+
+/*
+	Placement of major elements
+*/
+
+body
+{
+	margin-left:		3rem;
+	margin-right:		6rem;
+}
+
+article
+{
+	margin-left:		2rem;
+	margin-right:		16rem;
+}
+
+nav
+{
+	position:			absolute;
+	top:				6.5rem;
+	right:				6.0rem;
+}
+
+
+
+/*
+	Colour
+	------
+*/
+
+body
+{
+	background:			white;
+	color:				black;
+}
+
+header,
+a:link,
+a:visited,
+nav input[type=text],
+footer
+{
+	color:				dodgerblue; /* Use slategray as a grey scale alternative */
+}
+
+fieldset
+{
+	border-color:		dodgerblue;
+}
+
+nav,
+a:hover
+{
+	color:				chocolate;
+}
+
+pre
+{
+	background:			whitesmoke;
+}
+
+
+
+/*
+	White space
+	-----------
+*/
+
+body,
+hr,
+#footnotes,
+footer
+{
+	margin-top:			3rem;
+}
+
+figure
+{
+	margin-top:			2rem;
+}
+
+header,
+figure
+{
+	margin-bottom:		2rem;
+}
+
+pre
+{
+	margin-top:			1rem;
+}
+
+figcaption,
+pre,
+nav input[type=text]
+{
+	margin-bottom:		1rem;
+}
+
+figure,
+pre
+{
+	margin-left:		1rem;
+	margin-right:		1rem;
+}
+
+
+/*
+	Fonts
+	-----
+*/
+
+body,
+nav input[type=text]
+{
+	font-family:		helvetica,arial,sans serif;
+}
+
+pre
+{
+	font-family:		menlo,consolas,monospace;
+}
+
+
+
+/*
+	Font sizes
+	----------
+*/
+
+header
+{
+	font-size:			2rem;
+	font-weight:		100;
+}
+
+legend
+{
+	font-size:			1rem;
+	font-weight:		100;
+}
+
+body,
+nav input[type=text]
+{
+	font-size:			0.8rem;
+}	
+
+pre
+{
+	font-size:			0.7rem;
+}
+
+sup,
+#footnotes,
+footer
+{
+	font-size:			0.6rem;
+	font-weight:		100;
+}
+
+nav,
+nav input[type=text],
+figcaption
+{
+	font-weight:		100;
+}
+
+
+/*
+	Lists
+	-----
+*/
+
+article ul,
+footer ul,
+nav ul
+{
+	list-style-type:	none;
+}
+
+nav ul,
+footer ul
+{
+	padding-left:		0;
+}
+
+article ul,
+#footnotes ol
+{
+	padding-left:		1rem;
+}
+
+article ul li:before
+{
+	content:			"\2013";
+	display:			inline-block;
+	width:				1rem;
+	margin-left:		-1rem;
+}
+
+article li,
+nav li
+{
+	margin-bottom:		0.2rem;
+}
+
+
+
+/*
+	Tables
+	------
+*/
+
+table
+{
+	border-spacing:		0;
+}
+
+tr
+{
+	vertical-align:		top;
+}
+
+
+
+/*
+	Text alignment
+	--------------
+*/
+
+nav,
+nav input[type=text],
+footer
+{
+	text-align:			right;
+}
+
+
+
+/*
+	Other
+	-----
+*/
+
+fieldset
+{
+	border-style:		solid;
+	border-width:		thin;
+}
+
+hr
+{
+	border:				0;
+}
+
+pre
+{
+	padding:			0.2rem;
+	overflow-x:			scroll;
+}
+
+sup
+{
+	vertical-align:		baseline;
+}
+
+
+

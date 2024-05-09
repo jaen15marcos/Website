@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from www.gbkr.com/main/subjects/util/limits.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:51 GMT -->
+<meta charset="utf-8">
+
+<title>gbkr.com</title>
+
+<link rel="stylesheet" href="../../style/page.css">
+<style>
+
+fieldset,
+#calculate-link {
+	margin-top:		2rem;
+}
+
+.large-number {
+	width:			5rem;
+	text-align:		right;
+}
+
+.small-number {
+	width:			2rem;
+	text-align:		right;
+}
+
+.notes {
+	color:			dodgerblue;
+	font-weight:	100;
+}
+
+#error-div {
+	margin-top:		2rem;
+	color:			chocolate;
+}
+
+tr td:first-child {
+	text-align:		center;
+	padding-right:	2rem;
+}
+
+.large {
+	font-size:		2rem;
+	font-weight:	100;
+}
+
+</style>
+
+<script src="../../script/page.js"></script>
+<script src="../../script/markets.js"></script>
+<script>
+
+function setMain() {
+	document.getElementById('main-form').addEventListener('submit', suppressEvent, false);
+	getJSON(MARKETS_JSON, loadMarkets);
+}
+
+function loadMarkets(json) {
+	MARKETS = JSON.parse(json);
+	var html = '<select id="market-select">'
+	html += makeSelectMarketOptions();
+	html += '</select>';
+	document.getElementById('market-span').innerHTML = html;
+	calc();
+}
+
+function calc() {
+	document.getElementById('error-div').innerHTML = '';
+	/*
+		Order
+	*/
+	var mic = document.getElementById('market-select').value;
+	localStorage.setItem('mic', mic);
+	var market = MARKETS[mic];
+	document.getElementById('order-note-span').innerHTML =
+		'(market open ' + market.hours + ' hours a day)';
+	var buying = document.getElementById('direction-select').value == 'Buy';
+	var quantity = parseFloat(document.getElementById('quantity-input').value);
+	var hours = parseFloat(document.getElementById('hours-input').value);
+	var err = isNaN(quantity) || isNaN(hours);
+	if (err) {
+		document.getElementById('error-div').innerHTML = 'Order?';
+		return;
+	}
+	/*
+		Prices
+	*/
+	var bidElement = document.getElementById('bid-input');
+	var askElement = document.getElementById('ask-input');
+	var bid = parseFloat(bidElement.value);
+	var ask = parseFloat(askElement.value);
+	err = isNaN(bid) || isNaN(ask);
+	if (!err) {
+		err = (bid <= 0) || (ask <= 0);
+	}
+	if (err) {
+		document.getElementById('error-div').innerHTML = 'Market prices?';
+		return;
+	}
+	var b = banded(bid, market.ticks);
+	bid = b.rounded(bid);
+	bidElement.value = b.fixed(bid);
+	var a = banded(ask, market.ticks);
+	ask = a.rounded(ask);
+	askElement.value = a.fixed(ask);
+	var mid = (bid + ask) / 2;
+	document.getElementById('prices-note-span').innerHTML =
+		'(tick size ' + market.currency + ' ' + b.tick() +
+		', mid-price ' + mid.toFixed(3) + ')';
+	/*
+		Reference
+	*/
+	var volume = parseFloat(document.getElementById('volume-input').value);
+	var volatility = parseFloat(document.getElementById('volatility-input').value);
+	var err = isNaN(volume) || isNaN(volatility);
+	if (!err) {
+		err = (volume < quantity) || (volatility < 0)
+	}
+	if (err) {
+		document.getElementById('error-div').innerHTML = 'Reference?';
+		return;
+	}
+	/*
+		Calculations
+	*/
+	volatility /= 100;
+	volatility /= Math.sqrt(market.hours);
+
+	var participation = quantity / volume;
+	document.getElementById('participation-span').innerHTML = (100 * participation).toFixed(1);
+
+	var rel = document.getElementById('relative-select').value;
+	var p = 0;
+	if (rel == 'mid') {
+		p = mid;
+	} else {
+		p = buying ? ask : bid;
+	}
+	
+	var optionPrice = atm(buying, p, volatility, hours);
+	var opb = banded(optionPrice, market.ticks);
+	var impactPrice = impact(buying, p, volatility, hours, participation);
+	var ipb = banded(impactPrice, market.ticks);
+	document.getElementById('op-span').innerHTML = opb.fixed(opb.rounded(optionPrice));
+	document.getElementById('op-full-span').innerHTML = optionPrice.toFixed(3);
+	document.getElementById('ip-span').innerHTML = ipb.fixed(ipb.rounded(impactPrice));
+	document.getElementById('ip-full-span').innerHTML = impactPrice.toFixed(3);
+}
+
+function atm(buying, price, volatility, hours) {
+	var delta = price * 0.4 * volatility * Math.sqrt(hours);
+	return buying ? price + delta : price - delta;
+}
+
+function impact(buying, price, volatility, hours, participation) {
+	var delta = price * volatility * Math.sqrt(hours) * Math.sqrt(participation);
+	return buying ? price + delta : price - delta;
+}
+
+</script>
+
+<body onload="setNav(); setMain();">
+
+<header>
+Limit prices
+</header>
+
+<nav>
+<ul>
+<li><a href="../../../index.html">Home</a></li>
+<li><a href="index.html">Utilities home</a></li>
+<li><a href="#" onclick="onNavClick()">Calculate</a></li>
+</ul>
+<form id="nav-form">
+<input id="nav-input" type="text" maxlength="80" onchange="onNavInput()" style="visibility:hidden;">
+<div id="nav-div"></div>
+</form>
+</nav>
+
+<article>
+<p>A number of methods for estimating a limit price for execution.</p>
+
+<form id="main-form">
+<fieldset>
+	<legend>Order</legend>
+		<span id="market-span"></span>
+		<select id="direction-select">Direction
+			<option selected>Buy</option>
+			<option>Sell</option>
+		</select>
+		<input id="quantity-input" type="number" min="1" value="250000" class="large-number">
+		<label>over
+			<input id="hours-input" type="number" min="0.5" step="0.5" value="1" class="small-number"> hours
+		</label>
+		<span id="order-note-span" class="notes"></span>
+</fieldset>
+<fieldset>
+	<legend>Prices</legend>
+		<label>Bid
+			<input id="bid-input" type="number" min="0.01" step="0.01" value="49.5" class="large-number">
+		</label>
+		<label>Ask
+			<input id="ask-input" type="number" min="0.01" step="0.01" value="50.0" class="large-number">
+		</label>
+		<span id="prices-note-span" class="notes"></span>
+</fieldset>
+<fieldset>
+	<legend>Reference</legend>
+		<label>Expected volume
+			<input id="volume-input" type="number" min="1000" step="1000" value="5000000" class="large-number">
+		</label>
+		<label>&nbsp;Daily volatility
+			<input id="volatility-input" type="number" min="0.1" step="0.1" value="2" class="small-number">%
+		</label>
+		<label>&nbsp;Show limits relative to
+			<select id="relative-select">
+				<option selected value="far">Far price</option>
+				<option value="mid">Mid-price</option>
+			</select>
+		</label>
+</fieldset>
+</form>
+<div id="error-div"></div>
+<p id="calculate-link"><a href="#" onclick="calc()">Calculate</a></p>
+<table>
+<tr>
+<td><span id="op-span" class="large"></span><br>
+(<span id="op-full-span"></span>)
+<td>
+The price implied by the at-the-money option. Buying stock is equivalent to buying a put
+option to sell that stock once the order has fully filled <sup><a href="#1">1</a></sup>.
+The premium of the option sets the limit price. This option valuation is an
+approximation for short term options and ignores the risk free interest rate <sup>
+<a href="#2">2</a></sup>.
+<tr>
+<td><span id="ip-span" class="large"></span><br>
+(<span id="ip-full-span"></span>)
+<td>
+The price implied from the impact of trading <span id="participation-span"></span>% of the
+expected market volume. This uses the common 'square root' estimate for market impact,
+the impact being proportional to the participation rate <sup><a href="#3">3</a></sup>.
+</table>
+
+<section id="footnotes">
+<ol>
+<li id="1">My continued thanks to Amaury De Ternay, then at BNP Paribas Asset Management,
+for making this observation in 2004.
+<li id="2">More on this at <a href="http://www.espenhaug.com/black_scholes.html" target="gbkr">
+www.espenhaug.com</a>
+<li id="3">The 'square root' estimate was introduced by Barra in 1997 and has been regarded
+by many as a robust estimate since then. The topic is still being debated: read more
+recent studies on arxiv.org at <a href="http://arxiv.org/pdf/1412.0141.pdf" target="gbkr">
+1412.0141</a>, <a href="http://arxiv.org/pdf/1412.0217.pdf" target="gbkr">
+1412.0217</a> and <a href="http://arxiv.org/pdf/1412.2152.pdf" target="gbkr">
+1412.2152</a>.
+</ol>
+</section>
+</article>
+
+<footer>
+<ul>
+<li>www.gbkr.com</li>
+<li>First published 2014.11.04</li>
+<li>Last revised 2014.12.12</li>
+</ul>
+</footer>
+
+</body>
+
+<!-- Mirrored from www.gbkr.com/main/subjects/util/limits.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:51 GMT -->
+</html>

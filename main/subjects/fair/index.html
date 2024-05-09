@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from www.gbkr.com/main/subjects/fair/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:05 GMT -->
+<meta charset="utf-8">
+
+<title>gbkr.com</title>
+
+<link rel="stylesheet" href="../../style/page.css">
+<style>
+
+svg .axis path,
+svg .axis line {
+	fill:				none;
+	stroke:				black;
+	shape-rendering:	crispEdges;
+}
+
+svg .axis text {
+	font-family:		helvetica,sans serif;
+	font-size:			0.6rem;
+	font-weight:		100;
+}
+
+svg text {
+	font-family:		helvetica,sans serif;
+	font-size:			0.8rem;
+	font-weight:		100;
+}
+
+svg .line {
+	fill:				none;
+	stroke:				dodgerblue;
+	stroke-width:		1px;
+}
+
+svg .fairline {
+	fill:				none;
+	stroke:				chocolate;
+	stroke-width:		1px;
+}
+
+
+</style>
+<script src="../../script/page.js"></script>
+<script src="../../lib/d3.min.js"></script>
+<script src="../../script/g3.js"></script>
+<script>
+
+var margins = { top: 20, right: 50, bottom: 20, left: 50 };
+
+function plot() {
+	var dim = g3.dimensions('chart-div', margins);
+	
+	var xscale = d3.time.scale().range([0, dim.plot.width]);
+	var yscale = d3.scale.linear().range([dim.plot.height, 0]);
+	
+	var xaxis = d3.svg.axis().scale(xscale).orient('bottom');
+	var yaxis = d3.svg.axis().scale(yscale).orient('left');
+
+	var timeformat = d3.time.format('%H:%M');
+	xaxis.tickFormat(timeformat);
+	
+	var line = d3.svg.line()
+		.x(function(d) { return xscale(d.time); })
+		.y(function(d) { return yscale(d.price); });
+	line.defined(function (d) { return d.price > 0; });
+	var fair = d3.svg.line()
+		.x(function(d) { return xscale(d.time); })
+		.y(function(d) { return yscale(d.fp); });
+	fair.defined(function (d) { return d.price > 0;});
+	
+	var svg = g3.makesvg(d3.select('#chart-div'), dim, margins);
+	
+	d3.csv('plot.csv',
+		function(error, data) {
+			data.forEach(
+				function(d) {
+					d.time = timeformat.parse(d.minute);
+					d.price = +d.price;
+					d.fp = +d.fp;
+				}
+			);
+			xscale.domain(d3.extent(data, function(d) { return d.time; })).nice();
+			yscale.domain(d3.extent(data, function(d) { return d.price > 0 ? d.price : null; })).nice();
+			svg.append('g')
+				.attr('class', 'axis')
+				.attr('transform', 'translate(0,' + dim.plot.height + ')')
+				.call(xaxis);
+			svg.append('g')
+				.attr('class', 'axis')
+				.call(yaxis);
+			svg.append('text')
+				.attr('transform','rotate(-90)')
+				.attr('y', -(margins.left + 5))
+				.attr('x', -(dim.plot.height / 2))
+				.attr('dy', '1.2em')
+				.style('text-anchor', 'middle')
+				.text('Price');
+			svg.append('path')
+				.datum(data)
+				.attr('class', 'line')
+				.attr('d', line);
+			svg.append('path')
+				.datum(data)
+				.attr('class', 'fairline')
+				.attr('d', fair);
+		}
+	);
+}
+
+</script>
+
+<body onload="setNav(); plot()">
+
+<header>
+Kalman filtering
+</header>
+
+<nav>
+<ul>
+<li><a href="../../../index.html">Home</a></li>
+<li><a href="vwap.html">Next: VWAP as a fair price</a></li>
+<li><a href="#" onclick="onNavClick()">Calculate</a></li>
+</ul>
+<form id="nav-form">
+<input id="nav-input" type="text" maxlength="80" onchange="onNavInput()" style="visibility:hidden;">
+<div id="nav-div"></div>
+</form>
+</nav>
+
+<article>
+
+<p>Execution algorithms know about order book and traded prices but it is also
+useful for them to know the 'fair' price of the listing being traded. This can
+prevent the algorithms from trading at atypical prices. Often the VWAP price over
+the last few minutes is used for this purpose.</p>
+
+<p>The Kalman filter <sup><a href="#1">1</a></sup> is an algorithm for
+estimating the true signal from noisy input, and has many applications in
+guidance systems and robotics. It can also be used on financial time series,
+such as prices.</p>
+
+<figure>
+<figcaption>Chart 1: HSBC Holdings (0005.HK) through August 29, 2014. The blue line is
+the last traded price at the end of each five minutes of continuous trading. The red line
+is the same price series after applying the Kalman filter.</figcaption>
+<div id="chart-div"></div>
+</figure>
+
+<p>Chart 1 above shows the Kalman filter applied to a sample of prices for HSBC
+Holdings on the HKEx during August 29, 2014. The filtered price series follows
+the underlying last traded price yet the price changes are dampened, making it a
+conservative estimate of the fair price. A nice feature of the Kalman filter is
+that it requires no assumptions, such as the '5 minutes' in the 5 minute VWAP
+fair price: it just runs with the prices given to it and iteratively adjusts its
+output price or forecast based on the variation it sees in the input prices.</p>
+
+<p>Here an implementation of the filter in kdb+/q, adapted from the Python example on
+SciPy <sup><a href="#2">2</a></sup></p>
+
+<pre>
+\d .kalman
+
+filter: {
+    t: ([] x: `float $ x; xh: `float $ x; p: (count x) # R: var x);
+    (first t), iterate[R; R]\[first t; 1 _ t] 
+    }
+
+iterate: {[Q; R; x; y]
+    x[`p]+: Q;
+    k: x[`p] % R + x[`p];
+    `x`xh`p ! (y[`x]; x[`xh] + k * y[`x] - x[`xh]; (1 - k) * x[`p])
+    }
+
+\d .
+</pre>
+
+<p>The variable names follow the Python example. One small change from the
+Python implementation is that both the measurement and process variance, the Q
+and R arguments to the iterate function, are set to the same figure, the
+variance in the input prices. Below is an example of running the filter on a
+table with a price column:</p>
+
+<pre>
+q).kalman.filter table.price
+x     xh       p
+---------------------
+83.55 83.55    905.6062
+83.45 83.48333 603.7375
+83.45 83.4625  566.0039
+83.4  83.42381 560.6134
+83.45 83.44    559.8293
+83.45 83.44618 559.7149
+83.45 83.44854 559.6983
+83.45 83.44944 559.6958
+83.4  83.41889 559.6955
+83.35 83.37631 559.6954
+83.35 83.36005 559.6954
+</pre>
+
+<p>The filter function returns a table with the original input price, x, the forecast
+price, xh, and the process error, p. The process error stabilises after ten
+prices have been filtered.</p>
+
+<section id="footnotes">
+<ol>
+<li id="1">Greg Welch and Gary Bishop <a
+href="http://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf" target="gbkr">An
+Introduction to the Kalman Filter</a>, 2006.
+<li id="2">Andrew Straw <a href="http://www.scipy.org/Cookbook/KalmanFiltering"
+target="gbkr">Kalman Filtering</a>, 2006.
+</ol>
+</section>
+
+</article>
+
+<footer>
+<ul>
+<li>www.gbkr.com</li>
+<li>First published 2006.12.04</li>
+<li>Last revised 2015.01.22</li>
+</ul>
+</footer>
+
+</body>
+
+<!-- Mirrored from www.gbkr.com/main/subjects/fair/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:07 GMT -->
+</html>

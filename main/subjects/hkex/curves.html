@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from www.gbkr.com/main/subjects/hkex/curves.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:12 GMT -->
+<meta charset="utf-8">
+
+<title>gbkr.com</title>
+
+<link rel="stylesheet" href="../../style/page.css">
+<link rel="stylesheet" href="chart.css">
+<style>
+
+svg .dot {
+	fill:				dodgerblue;
+	stroke:				none;
+	opacity:			0.25;
+}
+
+svg .medline {
+	fill:				none;
+	stroke:				black;
+	stroke-width:		1px;
+	opacity:			0.5;
+}
+svg .devline {
+	fill:				none;
+	stroke:				chocolate;
+	stroke-width:		1px;
+	opacity:			0.5;
+}
+
+</style>
+<script src="../../script/page.js"></script>
+<script src="../../lib/d3.min.js"></script>
+<script src="../../script/g3.js"></script>
+<script src="curve.js"></script>
+<script>
+
+var margins = { top: 20, right: 50, bottom: 20, left: 50 };
+var timeformat = d3.time.format('%H:%M');
+
+function plotAll() {
+	plot('0941', margins, timeformat);
+	plot('1928', margins, timeformat);
+	plot('0019', margins, timeformat);
+	plot('0144', margins, timeformat);
+}
+
+</script>
+
+<body onload="setNav(); plotAll()">
+
+<header>
+Volume curves
+</header>
+
+<nav>
+<ul>
+<li><a href="../../../index.html">Home</a></li>
+<li><a href="liquidity.html">Back</a></li>
+<li><a href="#" onclick="onNavClick()">Calculate</a></li>
+</ul>
+<form id="nav-form">
+<input id="nav-input" type="text" maxlength="80" onchange="onNavInput()" style="visibility:hidden;">
+<div id="nav-div"></div>
+</form>
+</nav>
+
+<article>
+
+<p>HSBC is only the 14th most traded listing during August, having a mean 4,625
+trades per day. To show HSBC is not an exception, the charts below show volume curves
+for some other listings.</p>
+
+<figure>
+<figcaption>Chart 1: China Mobile (0941.HK), second most traded listing in August with
+a mean 9, 679 trades per day.</figcaption>
+<div id="chart-0941-div"></div>
+</figure>
+
+<figure>
+<figcaption>Chart 2: Sands China (1928.HK), fourth most traded listing in August with
+a mean 6,706 trades per day.</figcaption>
+<div id="chart-1928-div"></div>
+</figure>
+
+<p>In contrast, charts 3 and 4 show two of the least frequently traded listings
+in the index: Swire Pacific having a mean 1,091 trades per day and China
+Merchants with 886 trades.</p> 
+
+<figure>
+<figcaption>Chart 3: Swire Pacific (0019.HK)</figcaption>
+<div id="chart-0019-div"></div>
+</figure>
+
+<figure>
+<figcaption>Chart 4: China Merchants (0144.HK)</figcaption>
+<div id="chart-0144-div"></div>
+</figure>
+
+</article>
+
+<footer>
+<ul>
+<li>www.gbkr.com</li>
+<li>First published 2014.11.04</li>
+<li>Last revised 2014.12.16</li>
+</ul>
+</footer>
+
+</body>
+
+<!-- Mirrored from www.gbkr.com/main/subjects/hkex/curves.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:04:12 GMT -->
+</html>

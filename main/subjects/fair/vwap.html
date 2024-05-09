@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from www.gbkr.com/main/subjects/fair/vwap.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:41 GMT -->
+<meta charset="utf-8">
+
+<title>gbkr.com</title>
+
+<link rel="stylesheet" href="../../style/page.css">
+<style>
+
+svg .axis path,
+svg .axis line {
+	fill:				none;
+	stroke:				black;
+	shape-rendering:	crispEdges;
+}
+
+svg .axis text {
+	font-family:		helvetica,sans serif;
+	font-size:			0.6rem;
+	font-weight:		100;
+}
+
+svg text {
+	font-family:		helvetica,sans serif;
+	font-size:			0.8rem;
+	font-weight:		100;
+}
+
+svg .line {
+	fill:				none;
+	stroke:				slategray;
+	stroke-width:		1px;
+}
+
+svg .fairline {
+	fill:				none;
+	stroke:				dodgerblue;
+	opacity:			0.4;
+	stroke-width:		1px;
+}
+
+svg .vwapline {
+	fill:				none;
+	stroke:				chocolate;
+	stroke-width:		1px;
+}
+
+
+</style>
+<script src="../../script/page.js"></script>
+<script src="../../lib/d3.min.js"></script>
+<script src="../../script/g3.js"></script>
+<script>
+
+var margins = { top: 20, right: 50, bottom: 20, left: 50 };
+
+function plot() {
+	var dim = g3.dimensions('chart-div', margins);
+	
+	var xscale = d3.time.scale().range([0, dim.plot.width]);
+	var yscale = d3.scale.linear().range([dim.plot.height, 0]);
+	
+	var xaxis = d3.svg.axis().scale(xscale).orient('bottom');
+	var yaxis = d3.svg.axis().scale(yscale).orient('left');
+
+	var timeformat = d3.time.format('%H:%M');
+	xaxis.tickFormat(timeformat);
+	
+	var line = d3.svg.line()
+		.x(function(d) { return xscale(d.time); })
+		.y(function(d) { return yscale(d.price); });
+	line.defined(function (d) { return d.price > 0; });
+	var fair = d3.svg.line()
+		.x(function(d) { return xscale(d.time); })
+		.y(function(d) { return yscale(d.fp); });
+	fair.defined(function (d) { return d.price > 0;});
+	var vwap = d3.svg.line()
+		.x(function(d) { return xscale(d.time); })
+		.y(function(d) { return yscale(d.vwap); });
+	vwap.defined(function (d) { return d.price > 0;});
+	
+	var svg = g3.makesvg(d3.select('#chart-div'), dim, margins);
+	
+	d3.csv('plot.csv',
+		function(error, data) {
+			data.forEach(
+				function(d) {
+					d.time = timeformat.parse(d.minute);
+					d.price = +d.price;
+					d.fp = +d.fp;
+					d.vwap = +d.vwap;
+				}
+			);
+			xscale.domain(d3.extent(data, function(d) { return d.time; })).nice();
+			yscale.domain(d3.extent(data, function(d) { return d.price > 0 ? d.price : null; })).nice();
+			svg.append('g')
+				.attr('class', 'axis')
+				.attr('transform', 'translate(0,' + dim.plot.height + ')')
+				.call(xaxis);
+			svg.append('g')
+				.attr('class', 'axis')
+				.call(yaxis);
+			svg.append('text')
+				.attr('transform','rotate(-90)')
+				.attr('y', -(margins.left + 5))
+				.attr('x', -(dim.plot.height / 2))
+				.attr('dy', '1.2em')
+				.style('text-anchor', 'middle')
+				.text('Price');
+			svg.append('path')
+				.datum(data)
+				.attr('class', 'line')
+				.attr('d', line);
+			svg.append('path')
+				.datum(data)
+				.attr('class', 'fairline')
+				.attr('d', fair);
+			svg.append('path')
+				.datum(data)
+				.attr('class', 'vwapline')
+				.attr('d', vwap);
+		}
+	);
+}
+
+</script>
+
+<body onload="setNav(); plot()">
+
+<header>
+VWAP as a fair price
+</header>
+
+<nav>
+<ul>
+<li><a href="../../../index.html">Home</a></li>
+<li><a href="index.html">Back</a></li>
+<li><a href="#" onclick="onNavClick()">Calculate</a></li>
+</ul>
+<form id="nav-form">
+<input id="nav-input" type="text" maxlength="80" onchange="onNavInput()" style="visibility:hidden;">
+<div id="nav-div"></div>
+</form>
+</nav>
+
+<article>
+
+<p>How does VWAP compare to the Kalman filter? Using the same HSBC trades as the
+previous chart, we calculate the volume weighted average price at each trade
+time, covering all trades in the previous five minutes. Then plot the last VWAP
+figure in each five minute time period to match the previous time series.</p>
+
+<figure>
+<figcaption>Chart 1: HSBC Holdings (0005.HK) through August 29, 2014. The dark
+line is the last traded price at the end of each five minutes of continuous
+trading. The blue line is the Kalman filtered price. The red line is the
+5 minute VWAP.</figcaption>
+<div id="chart-div"></div>
+</figure>
+
+<p>The chart above shows that, like the Kalman filtered price, the moving VWAP
+also tracks the traded price, but the differences are noticeably larger. The
+average absolute difference from the last traded price is HKD 0.0152 for the
+Kalman filter and HKD 0.0235 for the 5 minute VWAP. That is around a third of a
+tick and half a tick respectively. A difference is to be expected, since VWAP is
+accounts for the volume traded at each price. Another point to consider when
+using VWAP is how wide the time window should be: the five minutes figure is
+arbitrary, albeit straightforward for clients to understand, and should instead
+be related to the the trading intensity of the listing. Which, of course, can
+vary during the day.</p>
+
+</article>
+
+<footer>
+<ul>
+<li>www.gbkr.com</li>
+<li>First published 2015.01.26</li>
+<li>Last revised 2015.01.26</li>
+</ul>
+</footer>
+
+</body>
+
+<!-- Mirrored from www.gbkr.com/main/subjects/fair/vwap.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:41 GMT -->
+</html>
