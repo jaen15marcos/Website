@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from www.gbkr.com/main/subjects/fair/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:05 GMT -->
 <meta charset="utf-8">
 
-<title>gbkr.com</title>
+<title>Marcos Jaen - 200 Q Problems</title>
 
 <link rel="stylesheet" href="../../style/page.css">
 <style>
@@ -46,75 +45,12 @@ svg .fairline {
 <script src="../../lib/d3.min.js"></script>
 <script src="../../script/g3.js"></script>
 <script>
-
-var margins = { top: 20, right: 50, bottom: 20, left: 50 };
-
-function plot() {
-	var dim = g3.dimensions('chart-div', margins);
-	
-	var xscale = d3.time.scale().range([0, dim.plot.width]);
-	var yscale = d3.scale.linear().range([dim.plot.height, 0]);
-	
-	var xaxis = d3.svg.axis().scale(xscale).orient('bottom');
-	var yaxis = d3.svg.axis().scale(yscale).orient('left');
-
-	var timeformat = d3.time.format('%H:%M');
-	xaxis.tickFormat(timeformat);
-	
-	var line = d3.svg.line()
-		.x(function(d) { return xscale(d.time); })
-		.y(function(d) { return yscale(d.price); });
-	line.defined(function (d) { return d.price > 0; });
-	var fair = d3.svg.line()
-		.x(function(d) { return xscale(d.time); })
-		.y(function(d) { return yscale(d.fp); });
-	fair.defined(function (d) { return d.price > 0;});
-	
-	var svg = g3.makesvg(d3.select('#chart-div'), dim, margins);
-	
-	d3.csv('plot.csv',
-		function(error, data) {
-			data.forEach(
-				function(d) {
-					d.time = timeformat.parse(d.minute);
-					d.price = +d.price;
-					d.fp = +d.fp;
-				}
-			);
-			xscale.domain(d3.extent(data, function(d) { return d.time; })).nice();
-			yscale.domain(d3.extent(data, function(d) { return d.price > 0 ? d.price : null; })).nice();
-			svg.append('g')
-				.attr('class', 'axis')
-				.attr('transform', 'translate(0,' + dim.plot.height + ')')
-				.call(xaxis);
-			svg.append('g')
-				.attr('class', 'axis')
-				.call(yaxis);
-			svg.append('text')
-				.attr('transform','rotate(-90)')
-				.attr('y', -(margins.left + 5))
-				.attr('x', -(dim.plot.height / 2))
-				.attr('dy', '1.2em')
-				.style('text-anchor', 'middle')
-				.text('Price');
-			svg.append('path')
-				.datum(data)
-				.attr('class', 'line')
-				.attr('d', line);
-			svg.append('path')
-				.datum(data)
-				.attr('class', 'fairline')
-				.attr('d', fair);
-		}
-	);
-}
-
 </script>
 
 <body onload="setNav(); plot()">
 
 <header>
-Kalman filtering
+200 Q Problems
 </header>
 
 <nav>
@@ -136,25 +72,134 @@ useful for them to know the 'fair' price of the listing being traded. This can
 prevent the algorithms from trading at atypical prices. Often the VWAP price over
 the last few minutes is used for this purpose.</p>
 
-<p>The Kalman filter <sup><a href="#1">1</a></sup> is an algorithm for
-estimating the true signal from noisy input, and has many applications in
-guidance systems and robotics. It can also be used on financial time series,
-such as prices.</p>
+<title>Select Difficulty</title>
+<style>
+  .problems { display: none; }
+  .visible { display: block; }
+</style>
+</head>
+<body>
+  <label for="difficulty">Choose a difficulty:</label>
+  <select id="difficulty" onchange="showProblems(this.value)">
+    <option value="easy" selected>Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+    <option value="all">All</option>
+  </select>
 
-<figure>
-<figcaption>Chart 1: HSBC Holdings (0005.HK) through August 29, 2014. The blue line is
-the last traded price at the end of each five minutes of continuous trading. The red line
-is the same price series after applying the Kalman filter.</figcaption>
-<div id="chart-div"></div>
-</figure>
+  <div id="easy" class="problems">
+    <h2>Easy Problems</h2>
+    <p>Problem 1: Create an n x n matrix of random floats between a and b</p>
+    <pre>
+     {[n;a;b] (n;n)#a+(n*n)?b}[5;0;1.0]
+    </pre>
+    <p>Problem 2: Isolate the ith row or jth column</p>
+    <pre>
+    show random_matrix: {[n;a;b] (n;n)#a+(n*n)?b}[5;0;1.0];
+    {[i;j] random_matrix[i;j]}[2;0] /for specific cell - row i, col j 
+    {[j] (flip random_matrix)[j]}[0] /isolate col j
+    {[j] random_matrix[j]}[0] /isolate row i
+   </pre>
+   <p>Problem 3: Isolate the leading diagonal (top left to bottom right)</p>
+    <pre>
+    show random_matrix: {[n;a;b] (n;n)#a+(n*n)?b}[5;0;1.0];
+    random_matrix @' til 5
 
-<p>Chart 1 above shows the Kalman filter applied to a sample of prices for HSBC
-Holdings on the HKEx during August 29, 2014. The filtered price series follows
-the underlying last traded price yet the price changes are dampened, making it a
-conservative estimate of the fair price. A nice feature of the Kalman filter is
-that it requires no assumptions, such as the '5 minutes' in the 5 minute VWAP
-fair price: it just runs with the prices given to it and iteratively adjusts its
-output price or forecast based on the variation it sees in the input prices.</p>
+   </pre>
+   <p>Problem 4: Find the transpose</p>
+    <pre>
+    flip random_matrix
+   </pre>
+   <p>Problem 5: Create identity matrix</p>
+    <pre>
+    {0 1f x =/: x}til 10
+   </pre>
+   <p>Problem 6: Sort each row/column in ascending order</p>
+    <pre>
+    {[x] asc x}each random_matrix /asc rows
+    flip {asc x}each flip random_matrix /asc cols
+   </pre>
+   <p>Problem 7: Find the index of the max/min element in each row</p>
+    <pre>
+    {max x}each random_matrix /max element by row
+    {max x}each flip random_matrix /max element by row
+   </pre>
+   <p>Problem 8: Convert the symbols `rix`mat to the symbol `matrix</p>
+    <pre>
+    `$"" sv (string `mat; string `rix)
+   </pre>
+   <p>Problem 9: Given a string x and a character y, how many times does y occur in x</p>
+    <pre>
+    {[x;y] sum x=y}["fhqwhgads";"h"] 
+   </pre>
+   <p>Problem 10: Given a string x, is it identical when read forwards and backwards?</p>
+    <pre>
+    {[x] (reverse x)~x}["racecar"]
+   </pre>
+   <p>Problem 11: Given a string x, produce a list of characters which appear more than once in x</p>
+    <pre>
+    {[x] where 1< count each group x}["applause"]/group x yields the unique character values and their index  
+   </pre>
+   <p>Problem 12: Given strings x and y, do both strings contain the same letters, possibly in a different order?</p>
+    <pre>
+    {[x;y] (asc x)~(asc y)}["teapot";"toptea"]
+   </pre>
+  </div>
+
+  <div id="medium" class="problems">
+    <h2>Medium Problems</h2>
+    <p>Problem 1: Generate a list of random 3-character symbols</p>
+    <pre>
+    {`$3?.Q.a}each til 100
+   </pre>
+    <p>Problem 2: Replace every letter “a” in a character vector with a space</p>
+    <pre>
+    names: {10?.Q.a}each til 10 /generate character vectors
+    {[names] {ssr[x;"a";" "]} each names}[names]
+   </pre>
+   <p>Problem 3: Replace every 5 th character in a character vector with a space</p>
+    <pre>
+    {[names;n]@[names; -1+n*1+til count[names] div n;:;" "]}[;5]each names
+   </pre>
+   <p>Problem 4: All permutations and combinations of x</p>
+    <pre>
+    perm: {[N;l] $[N=1;l; raze .z.s[N-1;l]{x,/: y except x}\:l]}[3; 2 5 8 9]
+    distinct asc each perm /find all combinations
+   </pre>
+  </div>
+
+  <div id="hard" class="problems">
+    <h2>Hard Problems</h2>
+    <p>Problem 1: Find all subsets of a set.</p>
+    <p>Problem 2: Implement a binary search tree.</p>
+  </div>
+
+  <script>
+    window.onload = function() {
+      showProblems(document.getElementById('difficulty').value);
+    };
+
+    function showProblems(difficulty) {
+      var problems = document.querySelectorAll('.problems');
+      if (difficulty === 'all') {
+        problems.forEach(function(problem) {
+          problem.style.display = 'block';
+        });
+      } else {
+        problems.forEach(function(problem) {
+          problem.style.display = 'none';
+        });
+
+        if (difficulty) {
+          var selectedProblems = document.getElementById(difficulty);
+          selectedProblems.style.display = 'block';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+
 
 <p>Here an implementation of the filter in kdb+/q, adapted from the Python example on
 SciPy <sup><a href="#2">2</a></sup></p>
@@ -218,12 +263,10 @@ target="gbkr">Kalman Filtering</a>, 2006.
 <footer>
 <ul>
 <li>www.gbkr.com</li>
-<li>First published 2006.12.04</li>
-<li>Last revised 2015.01.22</li>
+<li>First published 2024.05.10</li>
+<li>Last revised 2024.05.10</li>
 </ul>
 </footer>
 
 </body>
-
-<!-- Mirrored from www.gbkr.com/main/subjects/fair/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:07 GMT -->
 </html>
