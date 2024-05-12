@@ -211,7 +211,7 @@ sup {
     background-color: #f8f9fa; /* Light gray background */
     color: #333; /* Dark text for better readability */
     text-align: center;
-    padding: 10px 0;
+    padding: 30px 0; /* Increased padding */
     position: fixed;
     width: 100%;
     top: 0;
@@ -223,12 +223,12 @@ sup {
 #desktop-preferred p {
     margin: 0;
     padding: 0 20px; /* Padding for inner spacing */
-    font-size: 1rem; /* Appropriate text size */
+    font-size: 3rem; /* Increased font size, typically triple the default size */
 }
 
 #desktop-preferred button {
-    margin-left: 20px;
-    padding: 2px 8px;
+    font-size: 1.5rem; /* Larger font size for the button */
+    padding: 5px 15px;
     background: #4CAF50; /* Green background for the button */
     color: white;
     border: none;
