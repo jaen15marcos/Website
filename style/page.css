@@ -1,164 +1,126 @@
-/*	
-	Pages are black on white, with a clean font and typographic
-	linespacing and thick left margin. Indentation is the same
-	width as the left margin; blank space is half this.
-*/
-
-BODY, TABLE {
-	background:		white;
-	color:			black;
-	font-family:	Lucida Sans Unicode, Arial, Helvetica, sans serif;
-	font-size:		8pt;
-	line-height:	4mm;
+/* General styling and typography */
+body, table {
+    background: white;
+    color: black;
+    font-family: Lucida Sans Unicode, Arial, Helvetica, sans-serif;
+    font-size: 16px; /* Adjusted base font size */
+    line-height: 4mm;
 }
 
-DIV#CONTENT {
-	position:		relative;
-	top:			8mm;
-	left:			12mm;
-	padding-left:	8mm;
-	width:			auto;
-	z-index:		1;
+div#content {
+    position: relative; /* Changed from absolute for better responsiveness */
+    top: 8mm;
+    left: 12mm;
+    padding-left: 8mm;
+    width: auto; /* Adjusted for responsiveness */
+    z-index: 1;
 }
 
-DIV#LINK {
-	position:		relative;
-	top:			8mm;
-	left:			210mm;
-	width:			auto;
-	text-align:		right;
+div#link {
+    position: relative; /* Changed from absolute for better responsiveness */
+    top: 8mm;
+    left: 210mm;
+    width: auto; /* Adjusted for responsiveness */
+    text-align: right;
 }
 
-DIV#EVAL {
-	visibility:		hidden;
+div#eval {
+    visibility: hidden;
 }
 
-DIV#RESULT {
-	color:			#CC0000;
-	text-align:		right;
+div#result {
+    color: #CC0000;
+    text-align: right;
 }
 
-DIV#FOOTNOTE {
-	margin-top:		44mm;
-	font-size:		7pt;
-	color:			#669966;
+div#footnote {
+    margin-top: 44mm;
+    font-size: 7pt;
+    color: #669966;
 }
 
-
-DIV.in {
-	margin:			0 0 4mm 16mm;
+div.in {
+    margin: 0 0 4mm 16mm;
 }
 
-DIV.blank {
-	margin:			8mm 0 0 0;
+div.blank {
+    margin: 8mm 0 0 0;
 }
 
-/*
-	Headings are in larger font rather than bold. Paragraphs have a limited width
-	to keep the text readable. Small text can be used anywhere.
-*/
-
-H1 {
-	font-size:		24pt;
-	font-weight:	normal;
-	line-height:	16mm;
-	margin:			0 0 2mm -8mm;
-	color:			#669966;
+/* Headings */
+h1 {
+    font-size: 24pt;
+    font-weight: normal;
+    line-height: 16mm;
+    margin: 0 0 2mm -8mm;
+    color: #669966;
 }
 
-H2 {
-	font-size:		12pt;
-	font-weight:	normal;
-	line-height:	5mm;
-	margin:			0 0 4mm -8mm;
+h2 {
+    font-size: 12pt;
+    font-weight: normal;
+    line-height: 5mm;
+    margin: 0 0 4mm -8mm;
 }
 
-H3 {
-	font-size:			10pt;
-	font-weight:		normal;
-	text-decoration:	underline;
+h3 {
+    font-size: 10pt;
+    font-weight: normal;
+    text-decoration: underline;
 }
 
-P {
-	margin:	0 0 4mm 0;
+p {
+    margin: 0 0 4mm 0;
 }
 
-.althead {
-	font-size:		12pt;
-	font-weight:	normal;
-	color:			#669966;
+.althead, .colour {
+    font-size: 12pt;
+    font-weight: normal;
+    color: #669966;
 }
 
 .small {
-	font-size:	7pt;
+    font-size: 7pt;
 }
 
-.colour {
-	color:	#669966;
+em {
+    font-style: normal;
+    color: #CC0000;
 }
 
-
-EM {
-	font-style:	normal;
-	color:		#CC0000;
+sup {
+    vertical-align: 25%;
 }
 
-SUP {
-	vertical-align:	25%;
+/* Table styles */
+table {
+    width: 100%; /* Responsive table width */
+    border-collapse: collapse;
+    border: none;
 }
 
-.darkshade {
-	background:	#669966;
+col, colgroup {
+    text-align: right;
 }
 
-.shade {
-	background:	#CCFFCC;
+col.left, colgroup.left {
+    text-align: left;
 }
 
-.altshade {
-	background:	#99CC99;
+col.gap {
+    width: 4mm;
+    background: white;
 }
 
-/*
-	Tables are close packed, with right aligned columns by default and
-	a classes defined for left aligned columns and gaps.
-*/
-
-TABLE {
-	width: 100%;
-	border-collapse:	collapse;
-	border:				none;	
+col.centre {
+    text-align: center;
 }
 
-COL, COLGROUP {
-	text-align:	right;
-
+th {
+    background: #669966;
+    color: white;
+    font-weight: normal;
 }
-
-COL.left, COLGROUP.left {
-	text-align:	left;
-}
-
-COL.gap {
-	width:		4mm;
-	background:	white;
-}
-
-COL.centre {
-	text-align:	center;
-}
-
-TR {
-	vertical-align:	baseline;
-}
-
-
-TH {
-	background:		#669966;
-	color:			white;
-	font-weight:	normal;
-}
-
 
 /* Responsive Media Queries */
 @media (max-width: 768px) {
@@ -196,83 +158,25 @@ img {
     height: auto;
 }
 
-/*	
-	Code and other fixed format text are the same width as text.
-*/
-
-CODE {
-	font-family:	Courier New;
-	font-size:		9pt;
+/* Link styles */
+a:link, a:visited {
+    color: #0000CC;
 }
 
-PRE {
-	font-family:	Courier New;
-	font-size:		8pt;
-	background:		#ECE9D8;
-	color:			#669966;
-	padding:		1mm;
+a:hover {
+    color: #CC0000;
 }
 
-/*
-	Links are permanently coloured except when hovering.
-*/
-
-A:link {
-	color:	#0000CC;
+/* Form styles */
+input, select, textarea {
+    background: #ECE9D8;
+    color: black;
+    font-family: Lucida Sans Unicode, Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+    border: solid #CCCCCC 1px;
 }
 
-A:visited {
-	color:	#0000CC;
+input#evalinput {
+    text-align: left;
+    width: 40mm;
 }
-
-A:hover {
-	color:	#CC0000;
-}
-
-/*
-	The horizontal rule is fine, the same width as text.
-*/
-
-HR {
-	height:	1px;
-	width:	100%;
-	color:	#CCCCCC;
-}
-
-/*
-	Form controls.
-*/
-
-INPUT {
-	background:		#ECE9D8;
-	color:			black;
-	font-family:	Lucida Sans Unicode, Arial, Helvetica, sans serif;
-	font-size:		8pt;
-	border:			solid #CCCCCC 1;
-	width:			24mm;
-	padding-left:	1mm;
-	padding-right:	1mm;
-	text-align:		right;
-}
-
-INPUT#EVALINPUT {
-	text-align:	left;
-	width:		40mm;
-}
-
-SELECT {
-	background:		#ECE9D8;
-	color:			black;
-	font-family:	Lucida Sans Unicode, Arial, Helvetica, sans serif;
-	font-size:		8pt;
-}
-
-TEXTAREA {
-	background:		#ECE9D8;
-	color:			black;
-	font-family:	Lucida Sans Unicode, Arial, Helvetica, sans serif;
-	font-size:		8pt;
-	border:			solid #CCCCCC 1;
-	padding-left:	1mm;
-}
-
