@@ -159,6 +159,43 @@ TH {
 	font-weight:	normal;
 }
 
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    body, table {
+        font-size: 14px; /* Smaller font size for mobile devices */
+    }
+
+    col, colgroup {
+        text-align: left; /* Default alignment for mobile */
+    }
+
+    nav li {
+        display: block; /* Stack nav items vertically on smaller screens */
+    }
+
+    h1 {
+        font-size: 20pt; /* Smaller heading on mobile */
+    }
+
+    div#content, div#link {
+        padding-left: 3%;
+        margin-left: 10%;
+    }
+}
+
+@media (max-width: 480px) {
+    body, table {
+        font-size: 12px; /* Even smaller font size for very small devices */
+    }
+}
+
+/* Image responsiveness */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 /*	
 	Code and other fixed format text are the same width as text.
 */
