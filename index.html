@@ -11,6 +11,10 @@
 
 <body onload="setNav()">
 
+<div id="desktop-preferred" style="display: none;">
+        <p>This site is best viewed on a desktop computer. Layout could be impacted, please visit using on a desktop computer.  <button onclick="closeMessage()">Dismiss</button></p>
+    </div>
+        
 <style>
         body {
             background-color: #dddddd; /* Hex code for light gray */
@@ -68,6 +72,18 @@ Welcome
 
 </body>
 
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth < 1024) { // Common breakpoint for tablets and smaller devices
+                document.getElementById('desktop-preferred').style.display = 'block';
+            }
+        });
+
+        function closeMessage() {
+            document.getElementById('desktop-preferred').style.display = 'none';
+        }
+</script>
+        
 </html>
 
 
