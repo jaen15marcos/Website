@@ -206,3 +206,37 @@ pre {
 sup {
     vertical-align: baseline;
 }
+
+#desktop-preferred {
+    background-color: #f8f9fa; /* Light gray background */
+    color: #333; /* Dark text for better readability */
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for a layered effect */
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+#desktop-preferred p {
+    margin: 0;
+    padding: 0 20px; /* Padding for inner spacing */
+    font-size: 1rem; /* Appropriate text size */
+}
+
+#desktop-preferred button {
+    margin-left: 20px;
+    padding: 2px 8px;
+    background: #4CAF50; /* Green background for the button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#desktop-preferred button:hover {
+    background: #45a049; /* Slightly darker on hover */
+}
+
