@@ -13,19 +13,19 @@ BODY, TABLE {
 }
 
 DIV#CONTENT {
-	position:		absolute;
+	position:		relative;
 	top:			8mm;
 	left:			12mm;
 	padding-left:	8mm;
-	width:			160mm;
+	width:			auto;
 	z-index:		1;
 }
 
 DIV#LINK {
-	position:		absolute;
+	position:		relative;
 	top:			8mm;
 	left:			210mm;
-	width:			65mm;
+	width:			auto;
 	text-align:		right;
 }
 
@@ -125,6 +125,7 @@ SUP {
 */
 
 TABLE {
+	width: 100%;
 	border-collapse:	collapse;
 	border:				none;	
 }
