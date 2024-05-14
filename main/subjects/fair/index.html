@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
 <meta charset="utf-8">
-
 <title>Marcos Jaen - 200 Q Problems</title>
-
 <link rel="stylesheet" href="../../style/page.css">
 <style>
-
 .pre-wrapper {
   position: relative;
   margin: 10px 0;
@@ -20,48 +17,54 @@
   z-index: 10;
 }
 
-pre{
-	display: none;
+pre {
+  display: none;
 }
-	
+
 svg .axis path,
 svg .axis line {
-	fill:				none;
-	stroke:				black;
-	shape-rendering:	crispEdges;
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
 }
 
 svg .axis text {
-	font-family:		helvetica,sans serif;
-	font-size:			0.6rem;
-	font-weight:		100;
+  font-family: helvetica, sans serif;
+  font-size: 0.6rem;
+  font-weight: 100;
 }
 
 svg text {
-	font-family:		helvetica,sans serif;
-	font-size:			0.8rem;
-	font-weight:		100;
+  font-family: helvetica, sans serif;
+  font-size: 0.8rem;
+  font-weight: 100;
 }
 
 svg .line {
-	fill:				none;
-	stroke:				dodgerblue;
-	stroke-width:		1px;
+  fill: none;
+  stroke: dodgerblue;
+  stroke-width: 1px;
 }
 
 svg .fairline {
-	fill:				none;
-	stroke:				chocolate;
-	stroke-width:		1px;
+  fill: none;
+  stroke: chocolate;
+  stroke-width: 1px;
 }
 
+.problems {
+  display: none;
+}
 
+.visible {
+  display: block;
+}
 </style>
 <script src="../../script/page.js"></script>
 <script src="../../lib/d3.min.js"></script>
 <script src="../../script/g3.js"></script>
 <script>
-	function togglePreVisibility(button) {
+function togglePreVisibility(button) {
     var preElement = button.nextElementSibling;
     if (preElement.style.display === 'block') {
         preElement.style.display = 'none';
@@ -69,8 +72,30 @@ svg .fairline {
         preElement.style.display = 'block';
     }
 }
-</script>
 
+window.onload = function() {
+    showProblems(document.getElementById('difficulty').value);
+};
+
+function showProblems(difficulty) {
+    var problems = document.querySelectorAll('.problems');
+    if (difficulty === 'all') {
+        problems.forEach(function(problem) {
+            problem.style.display = 'block';
+        });
+    } else {
+        problems.forEach(function(problem) {
+            problem.style.display = 'none';
+        });
+
+        if (difficulty) {
+            var selectedProblems = document.getElementById(difficulty);
+            selectedProblems.style.display = 'block';
+        }
+    }
+}
+</script>
+</head>
 <body onload="setNav(); plot()">
 
 <header>
@@ -91,240 +116,211 @@ svg .fairline {
 
 <article>
 
-<p>The more you practice a skill, the more you proficienct you become. Hence, here I bring you a list of problems that I have solved/used/studied 
+<p>The more you practice a skill, the more proficient you become. Hence, here I bring you a list of problems that I have solved/used/studied 
 to improve my q expertise. If you have a better solution for any of the problems, or want to add new problems to the list, don't hesitate to <a href="main/about/resume.html">contact me</a>.
 Credit to all the original authors of these problems, check the footer for my information.</p>
 
 <title>Select Difficulty</title>
-<style>
-  .problems { display: none; }
-  .visible { display: block; }
-</style>
-</head>
-<body>
-  <label for="difficulty">Choose a difficulty:</label>
-  <select id="difficulty" onchange="showProblems(this.value)">
-    <option value="easy" selected>Easy</option>
-    <option value="medium">Medium</option>
-    <option value="hard">Hard</option>
-    <option value="all">All</option>
-  </select>
-  <div id="easy" class="problems">
-    <h2>Easy Problems</h2>
-    <p>Problem 1: Create an n x n matrix of random floats between a and b</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+<label for="difficulty">Choose a difficulty:</label>
+<select id="difficulty" onchange="showProblems(this.value)">
+  <option value="easy" selected>Easy</option>
+  <option value="medium">Medium</option>
+  <option value="hard">Hard</option>
+  <option value="all">All</option>
+</select>
+
+<div id="easy" class="problems">
+  <h2>Easy Problems</h2>
+  <p>Problem 1: Create an n x n matrix of random floats between a and b</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[n;a;b] (n;n)#a+(n*n)?b}[5;0;1.0]</pre>
-    <p>Problem 2: Isolate the ith row or jth column</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 2: Isolate the ith row or jth column</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>show random_matrix: {[n;a;b] (n;n)#a+(n*n)?b}[5;0;1.0];
 {[i;j] random_matrix[i;j]}[2;0] /for specific cell - row i, col j 
 {[j] (flip random_matrix)[j]}[0] /isolate col j
 {[j] random_matrix[j]}[0] /isolate row i</pre>
-   <p>Problem 3: Isolate the leading diagonal (top left to bottom right)</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 3: Isolate the leading diagonal (top left to bottom right)</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>
 show random_matrix: {[n;a;b] (n;n)#a+(n*n)?b}[5;0;1.0];
 random_matrix @' til 5</pre>
-   <p>Problem 4: Find the transpose</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 4: Find the transpose</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>flip random_matrix</pre>
-   <p>Problem 5: Create identity matrix</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 5: Create identity matrix</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{0 1f x =/: x}til 10</pre>
-   <p>Problem 6: Sort each row/column in ascending order</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 6: Sort each row/column in ascending order</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[x] asc x}each random_matrix /asc rows
-flip {asc x}each flip random_matrix /asc cols
-    </pre>
-   <p>Problem 7: Find the index of the max/min element in each row</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+flip {asc x}each flip random_matrix /asc cols</pre>
+  </div>
+  <p>Problem 7: Find the index of the max/min element in each row</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{max x}each random_matrix /max element by row
-{max x}each flip random_matrix /max element by row
-   </pre>
-    <p>Problem 8: Convert the symbols `rix`mat to the symbol `matrix</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+{max x}each flip random_matrix /max element by row</pre>
+  </div>
+  <p>Problem 8: Convert the symbols `rix`mat to the symbol `matrix</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>`$"" sv (string `mat; string `rix)</pre>
-   <p>Problem 9: Given a string x and a character y, how many times does y occur in x</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-    <pre>{[x;y] sum x=y}["fhqwhgads";"h"] </pre>
-   <p>Problem 10: Given a string x, is it identical when read forwards and backwards?</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 9: Given a string x and a character y, how many times does y occur in x</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{[x;y] sum x=y}["fhqwhgads";"h"]</pre>
+  </div>
+  <p>Problem 10: Given a string x, is it identical when read forwards and backwards?</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[x] (reverse x)~x}["racecar"]</pre>
-   <p>Problem 11: Given a string x, produce a list of characters which appear more than once in x</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-    <pre>{[x] where 1< count each group x}["applause"]/group x yields the unique character values and their index  </pre>
-   <p>Problem 12: Given strings x and y, do both strings contain the same letters, possibly in a different order?</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 11: Given a string x, produce a list of characters which appear more than once in x</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{[x] where 1< count each group x}["applause"]</pre>
+  </div>
+  <p>Problem 12: Given strings x and y, do both strings contain the same letters, possibly in a different order?</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[x;y] (asc x)~(asc y)}["teapot";"toptea"]</pre>
-    <p>Problem 13: Given a string x, find all the characters which occur exactly once, in the order they appear.</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 13: Given a string x, find all the characters which occur exactly once, in the order they appear.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[x] where 1=count each group x}["somewhat heterogenous"]</pre>
-    <p>Problem 14: Given strings x and y, is x a rotation of the characters in y?</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 14: Given strings x and y, is x a rotation of the characters in y?</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[x;y] x in (1 rotate) scan y}["foobar";"barfoo"]</pre>
-   <p>Problem 15: Given a list of strings x, sort the strings by length, ascending.</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-    <pre>{x iasc count each x}[("books";"apple";"peanut";"aardvark";"melon";"pie")] /iasc: Where x is a list or dictionary, returns the indexes needed to sort list x in ascending order.</pre>
-    <p>Problem 16: Given a string x, identify the character which occurs most frequently. </p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 15: Given a list of strings x, sort the strings by length, ascending.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{x iasc count each x}[("books";"apple";"peanut";"aardvark";"melon";"pie")]</pre>
+  </div>
+  <p>Problem 16: Given a string x, identify the character which occurs most frequently.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>x: "abdbbac";first key desc count each group x
-(raze/) x where (value count each group x)=(max desc count each group x) /select all characters that occur max amount of times 
-   </pre>
-	  
+(raze/) x where (value count each group x)=(max desc count each group x)</pre>
   </div>
+</div>
 
-  <div id="medium" class="problems">
-    <h2>Medium Problems</h2>
-    <p>Problem 1: Generate a list of random 3-character symbols</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+<div id="medium" class="problems">
+  <h2>Medium Problems</h2>
+  <p>Problem 1: Generate a list of random 3-character symbols</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{`$3?.Q.a}each til 100</pre>
-    <p>Problem 2: Replace every letter “a” in a character vector with a space</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+  </div>
+  <p>Problem 2: Replace every letter “a” in a character vector with a space</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>names: {10?.Q.a}each til 10 /generate character vectors
-{[names] {ssr[x;"a";" "]} each names}[names]
-   </pre>
-   <p>Problem 3: Replace every 5 th character in a character vector with a space</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+{[names] {ssr[x;"a";" "]} each names}[names]</pre>
+  </div>
+  <p>Problem 3: Replace every 5th character in a character vector with a space</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[names;n]@[names; -1+n*1+til count[names] div n;:;" "]}[;5]each names</pre>
-   <p>Problem 4: All permutations and combinations of x</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-    <pre>
-perm: {[N;l] $[N=1;l; raze .z.s[N-1;l]{x,/: y except x}\:l]}[3; 2 5 8 9]
-distinct asc each perm /find all combinations
-   </pre>
- <p>Problem 5: Given a string x consisting of words (one or more non-space characters) which are separated by spaces, reverse the order of the characters in each word.</p>
- <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-    <pre>
-x: "a few words in a sentence"
+  </div>
+  <p>Problem 4: All permutations and combinations of x</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>perm: {[N;l] $[N=1;l; raze .z.s[N-1;l]{x,/: y except x}\:l]}[3; 2 5 8 9]
+distinct asc each perm</pre>
+  </div>
+  <p>Problem 5: Given a string x consisting of words (one or more non-space characters) which are separated by spaces, reverse the order of the characters in each word.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>x: "a few words in a sentence"
 "a wef sdrow ni a ecnetnes"
-reverse each " "vs x /separate strings by spaces and reverses them 
-" "sv reverse each " "vs x /join strings in list by adding spaces to them 
-{" "sv reverse each " "vs x} 
-/sv: partition a symbol, string, or bytestream, ex: "," vs "one,two,three" yields "one" "two" "three"
-/vs: join a symbol, string, or bytestream, ex: "," sv ("one";"two";"three") yields "one,two,three"
-   </pre>
-<p>Problem 6: Given a string x and a boolean vector y of the same length, extract the characters of x corresponding to a 1 in y</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+reverse each " "vs x
+" "sv reverse each " "vs x</pre>
+  </div>
+  <p>Problem 6: Given a string x and a boolean vector y of the same length, extract the characters of x corresponding to a 1 in y</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
     <pre>{[x;y] x where y}["foobar";100101b]</pre>
-<p>Problem 7: Given a string x and a boolean vector y, spread the characters of x to the positions of 1s in y, filling intervening characters with underscores.</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>{("_",x)y*sums y}["bigger";0011110011b] /y*sums y gets the indexes where one adds _. ("_",x) adds "_" where index is 0
-/("_","bigger")0 0 1 1 1 1 0 0 1 1 yields "__bbbb__bb"
-/("_","bigger")0 0 1 2 3 4 0 0 5 6i yields "__bigg__er"
-   </pre>
-<p>Problem 8: Given a string x, replace all the vowels (a, e, i, o, u, or y) with underscores</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>{("_",x)y*sums y}["bigger";0011110011b] /y*sums y gets the indexes where one adds _. ("_",x) adds "_" where index is 0
-{@[x; where x in "AEIOUYaeiouy";:;"_"]}["FLAPJACKS"]
-   </pre>
-<p>Problem 9: Given a string x, remove all the vowels entirely.</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>"Several normal words" except "AEIOUYaeiouy"</pre>
-<p>Problem 10: Given a string x consisting of words separated by spaces (as above), and a string y, replace all words in x which are the same as y with a series of xs.</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>{ssr[x;y;count[y]#"X"]}["a few words in a sentence";"words"]</pre>
-<p>Problem 11: Given a string x, generate a list of all possible re-orderings of the characters in x.</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>{[N;l] $[N=1;l; raze .z.s[N-1;l]{x,/: y except x}\:l]}[3; "xyz"]</pre>
-<p>Problem 12: Eliminate white spaces in string.</p>
-<div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>trim x 
-{{y _ x}/[x;] 1 -1*?'[;0b]1 reverse\null x}["   abc def  "] /alternative to trim
-   </pre>
   </div>
+  <p>Problem 7: Given a string x and a boolean vector y, spread the characters of x to the positions of 1s in y, filling intervening characters with underscores.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{("_",x)y*sums y}["bigger";0011110011b]</pre>
+  </div>
+  <p>Problem 8: Given a string x, replace all the vowels (a, e, i, o, u, or y) with underscores</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{@[x; where x in "AEIOUYaeiouy";:;"_"]}["FLAPJACKS"]</pre>
+  </div>
+  <p>Problem 9: Given a string x, remove all the vowels entirely.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>"Several normal words" except "AEIOUYaeiouy"</pre>
+  </div>
+  <p>Problem 10: Given a string x consisting of words separated by spaces (as above), and a string y, replace all words in x which are the same as y with a series of xs.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{ssr[x;y;count[y]#"X"]}["a few words in a sentence";"words"]</pre>
+  </div>
+  <p>Problem 11: Given a string x, generate a list of all possible re-orderings of the characters in x.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{[N;l] $[N=1;l; raze .z.s[N-1;l]{x,/: y except x}\:l]}[3; "xyz"]</pre>
+  </div>
+  <p>Problem 12: Eliminate white spaces in string.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>trim x 
+{{y _ x}/[x;] 1 -1*?'[;0b]1 reverse\null x}["   abc def  "]</pre>
+  </div>
+</div>
 
-  <div id="hard" class="problems">
-    <h2>Hard Problems</h2>
-    <p>Problem 1:  Armstrong number: An n-digit number equal to the sum of the nth powers of its digits.EX1: 123 is a three-digit number, raise each digit to the third power, and add: 1^3 + 2^3 + 3^3 = 36, which shows that it is not an Armstrong number number. EX2: 1634 is Armstrong number as 14 + 64 + 34 + 44 = 1634. Get all Amstrong numbers up to 10k.</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>
-isArmsNum:{[no] no=sum {[c;n] ("I"$n) xexp c }[count string no]each string no}
+<div id="hard" class="problems">
+  <h2>Hard Problems</h2>
+  <p>Problem 1: Armstrong number: An n-digit number equal to the sum of the nth powers of its digits. EX1: 123 is a three-digit number, raise each digit to the third power, and add: 1^3 + 2^3 + 3^3 = 36, which shows that it is not an Armstrong number. EX2: 1634 is Armstrong number as 1^4 + 6^4 + 3^4 + 4^4 = 1634. Get all Armstrong numbers up to 10k.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>isArmsNum:{[no] no=sum {[c;n] ("I"$n) xexp c }[count string no]each string no}
 isArmsNum 1634 
-/get all Armstrong numbers up to 10k
-(2 + til 10000000) where (isArmsNum'[2 + til 10000000])
-   </pre>
-    <p>Problem 2: Each new term in the Fibonacci sequence is generated by adding the previous two terms. By starting with 1 and 2. By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.</p>
-    <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>
-fibSeq:-1_{x,sum reverse[x]0 1}/[{(4000000)>last x};1 2] 
-sum fibSeq where not fibSeq mod 2
-/or 
-fibonnaci: {[N;l] N {x, sum -2#x}/l}[N; 1 2] /N=30
-sum fibonnaci where not fibonnaci mod 2
-   </pre>
-   <p>Problem 3: Find the greatest product of five consecutive digits in the 1000-digit number.</p>
-   <div class="pre-wrapper">
-	<button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
-   <pre>
-number: raze string 1000?1 + 10 /create number
-number: ((1000 - count[number])_number) /ensures there are 1000 digits
-max {prd{"I"$ x}each number x+til 5}each til 1000 /prd stands for product
-{{"I"$ x}each number x+til 5}each til 1000 /gets cosecutive digits in list form 
-   </pre>
+(2 + til 10000000) where (isArmsNum'[2 + til 10000000])</pre>
   </div>
-
-  <script>
-    window.onload = function() {
-      showProblems(document.getElementById('difficulty').value);
-    };
-
-    function showProblems(difficulty) {
-      var problems = document.querySelectorAll('.problems');
-      if (difficulty === 'all') {
-        problems.forEach(function(problem) {
-          problem.style.display = 'block';
-        });
-      } else {
-        problems.forEach(function(problem) {
-          problem.style.display = 'none';
-        });
-
-        if (difficulty) {
-          var selectedProblems = document.getElementById(difficulty);
-          selectedProblems.style.display = 'block';
-        }
-      }
-    }
-  </script>
-</body>
-</html>
+  <p>Problem 2: Each new term in the Fibonacci sequence is generated by adding the previous two terms. By starting with 1 and 2. By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>fibSeq:-1_{x,sum reverse[x]0 1}/[{(4000000)>last x};1 2] 
+sum fibSeq where not fibSeq mod 2
+fibonnaci: {[N;l] N {x, sum -2#x}/l}[N; 1 2] /N=30
+sum fibonnaci where not fibonnaci mod 2</pre>
+  </div>
+  <p>Problem 3: Find the greatest product of five consecutive digits in the 1000-digit number.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>number: raze string 1000?1 + 10
+number: ((1000 - count[number])_number)
+max {prd{"I"$ x}each number x+til 5}each til 1000</pre>
+  </div>
+</div>
 
 <section id="footnotes">
 <ol>
-<li id="1">Challenges and some medium-style questions from <a
-href="https://qkdb.wordpress.com/" target="gbkr">Kdb/q Exercises</a>.
-<li id="2">String Problems (mostly easy-style questions) from <a href="https://code.kx.com/q/learn/reading/strings/"
-target="gbkr">Cats cradle – fun with strings</a>.
+<li id="1">Challenges and some medium-style questions from <a href="https://qkdb.wordpress.com/" target="gbkr">Kdb/q Exercises</a>.</li>
+<li id="2">String Problems (mostly easy-style questions) from <a href="https://code.kx.com/q/learn/reading/strings/" target="gbkr">Cats cradle – fun with strings</a>.</li>
 </ol>
 </section>
 
