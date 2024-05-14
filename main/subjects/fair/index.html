@@ -53,7 +53,7 @@ svg .fairline {
 }
 
 .problems {
-  display: none;
+  display: block;
 }
 
 .visible {
@@ -123,10 +123,10 @@ Credit to all the original authors of these problems, check the footer for my in
 <title>Select Difficulty</title>
 <label for="difficulty">Choose a difficulty:</label>
 <select id="difficulty" onchange="showProblems(this.value)">
-  <option value="easy" selected>Easy</option>
+  <option value="easy">Easy</option>
   <option value="medium">Medium</option>
   <option value="hard">Hard</option>
-  <option value="all">All</option>
+  <option value="all" selected>All</option>
 </select>
 
 <div id="easy" class="problems">
