@@ -59,14 +59,26 @@ svg .vwapline {
 .img-wrapper {
     display: inline-block;
     overflow: hidden;
+    
+    border: 1px solid gray;
 }
 
-img:hover {
-    transform:scale(1.5);
-    -ms-transform:scale(1.5); /* IE 9 */
-    -moz-transform:scale(1.5); /* Firefox */
+.img-wrapper img {
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -ms-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+    
+    vertical-align: middle;
+}
+
+.img-wrapper img:hover {
     -webkit-transform:scale(1.5); /* Safari and Chrome */
+    -moz-transform:scale(1.5); /* Firefox */
+    -ms-transform:scale(1.5); /* IE 9 */
     -o-transform:scale(1.5); /* Opera */
+    transform:scale(1.5);
 }
 	
 </script>
@@ -93,10 +105,8 @@ Creating a Dataset for Comprehensive Market Research and Surveillance
 <p>The dashboard shown below, which I developed to share trading metrics and characteristics of Canada's ETF universe with a wide audience, serves as an example. It contains daily intraday liquidity metrics and market data, with over 200 columns, for the entire universe of Canadian-listed ETFs, which encompass more than 20% of the market in terms of tickers. By extending this concept to the entire universe of Canadian-listed equities, I aim to create a dataset for comprehensive market-wide surveillance and research. My organization would like to publish some derivative of the dashboard below to the public to promote transparency in the public markets.</p>
 
 <div class="img-wrapper">
-	<figure style="text-align: center;">
-    		<img src="../../images/dashboard.PNG" style="transform: scale(0.9) />
-		<figcaption>Image 1: Time series of main liquidity metrics for the Canadian ETF market from January 1, 2019, to December 31, 2022. The original dashboard contains over 100 sheets and is interactive, allowing users to view various data cuts. It is connected to many other dashboards to provide a comprehensive view of the market. For confidentiality reasons, only an image is included here.</figcaption>
-	</figure>
+    <img src="../../images/dashboard.PNG" />
+	<figcaption>Image 1: Time series of main liquidity metrics for the Canadian ETF market from January 1, 2019, to December 31, 2022. The original dashboard contains over 100 sheets and is interactive, allowing users to view various data cuts. It is connected to many other dashboards to provide a comprehensive view of the market. For confidentiality reasons, only an image is included here.</figcaption>
 </div>
 
 <p>Connecting to this dashboard will allow anyone to visualize and understand market activities in an accessible manner. Additionally, this pipeline, like my ETF pipeline, will integrate third-party sources beyond exchange market data to enrich the information with qualitative data points, such as dates of mergers and acquisitions, ownership changes, and more. I plan to host and automate the process in Azure to ensure up-to-date information.</p>
