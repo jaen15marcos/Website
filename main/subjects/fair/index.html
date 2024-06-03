@@ -218,6 +218,26 @@ flip {asc x}each flip random_matrix /asc cols</pre>
     <pre>x: "abdbbac";first key desc count each group x
 (raze/) x where (value count each group x)=(max desc count each group x)</pre>
   </div>
+  <p>Problem 17: Get the max value of two vectors by position without using an if-else statment.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>x: inp1:1 30 2 6 5; inp2:10 20 30 40 50; inp1|inp2
+    inp1&inp2 /for the min</pre>
+  </div>
+  <p>Problem 18: Swap the first occurance of an specific element in an array with the element preceding such element.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>array: 10?10; /create random array of integers
+      element: 1?til 9; /get random index from array
+      @[array;array?element;:;array[(array?element)-1]]; /amend at operator</pre>
+  </div>
+    <p>Problem 19: Create a table, then insert a new observation to that table and lastly add a new column.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>l:([] sym:`a`b`c; time:0D00:00 0D00:01 0D00:02; price:10 20 30f); 
+      `l insert ([]sym:enlist `a;time:enlist 0D00:03;price:enlist 15f) /alternative l, ([]sym:enlist `a;time:enlist 0D00:03;price:enlist 15f)
+      l: update size: 100 200 300 400 from l</pre>
+  </div>
 </div>
 
 <div id="medium" class="problems">
@@ -288,6 +308,16 @@ reverse each " "vs x
     <pre>trim x 
 {{y _ x}/[x;] 1 -1*?'[;0b]1 reverse\null x}["   abc def  "]</pre>
   </div>
+  <p>Problem 13: Write <a href="https://en.wikipedia.org/wiki/Leibniz_formula_for_%CF%80">Leibniz formula for π</a></p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>sum {[n] -4*((-1) xexp n)%((2*n)-1)} 1+ til 1000</pre>
+  </div>
+  <p>Problem 14: Built an Exponential Moving Average. Given a vector x0, x1, ..., xi, ..., xn and a weight 𝜆, the EMA at point i is defined as: EMAi(𝜆) = xi−1 × (1 − 𝜆) + EMAi−1 × 𝜆, where EMA0 = x0.</p>
+  <div class="pre-wrapper">
+    <button class="toggle-button" onclick="togglePreVisibility(this)">Show Answer</button>
+    <pre>{[lambda;vector] (first vector)(1-lambda)\vector*lambda}[0.2;10 20 30]</pre>
+  </div>
 </div>
 
 <div id="hard" class="problems">
@@ -330,7 +360,7 @@ max {prd{"I"$ x}each number x+til 5}each til 1000</pre>
 <ul>
 <li>www.jaenmarcos.com</li>
 <li>First published 2024.05.10</li>
-<li>Last revised 2024.05.10</li>
+<li>Last revised 2024.06.03</li>
 </ul>
 </footer>
 
