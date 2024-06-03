@@ -51,15 +51,25 @@ svg .vwapline {
 </style>
 	
 <style>
+  .zoom-container {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+
   .zoom {
     transform: scale(0.8);
-    transition: transform 0.2s ease;
+    transition: transform 0.5s ease, transform-origin 0.5s ease;
     margin: auto;
     display: block;
   }
 
-  .zoom:hover {
-    transform: scale(1);
+  .zoom-container:hover .zoom {
+    transform: scale(1.5);
+  }
+
+  .zoom-container:hover .zoom {
+    transform-origin: center;
   }
 
 </style>
