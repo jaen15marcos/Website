@@ -468,7 +468,7 @@ options(max.print=999999)
 pacman::p_load(dplyr, janitor, tidyr, tidyverse, fuzzyjoin, stringr, zoo, data.table, xts, urca, tseries)
 
 # Read the data
-filename &lt;- &#39;T:\\Strategy_Operations\\Economics Analysis\\Data Sources folder mirrored on OSCER\\Research and Analysis Policy Projects\\CSA ETF Research\\MCortes\\MAP Data\\full.data.final.csv&#39;
+filename &lt;- &#39;file1.csv&#39;
 data &lt;- fread(filename)
 
 # Filter and prepare the data
@@ -589,7 +589,7 @@ for (i in 1:nrow(df_pairs)) {
 
 ## Warning in tseries::adf.test(s): p-value smaller than printed p-value</code></pre>
 <pre class="r"><code># Merge cointegrated_pairs with external df with additional benchmark data and filter the results
-join.key &lt;- fread(&#39;T:\\Strategy_Operations\\Economics Analysis\\Data Sources folder mirrored on OSCER\\Research and Analysis Policy Projects\\CSA ETF Research\\MCortes\\join.key.csv&#39;)
+join.key &lt;- fread(&#39;file2.csv&#39;)
 cointegrated_pairs.final &lt;- merge(cointegrated_pairs, join.key[,c(1,39,41)], by.x = &quot;pair1&quot;, by.y = &quot;sym&quot;, all.x = TRUE) %&gt;%
   rename(&quot;Benchmark.1&quot; = &quot;Primary Prospectus Benchmark&quot;, &quot;Currency.1&quot; = &quot;Mornigstar.Currency&quot;)
 
