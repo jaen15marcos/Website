@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from www.gbkr.com/main/about/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:16 GMT -->
 <meta charset="utf-8">
 
-<title>gbkr.com</title>
+<title>www.jaenmarcos.com</title>
 
 <link rel="stylesheet" href="../style/page.css">
 
@@ -13,12 +12,13 @@
 <body onload="setNav()">
 
 <header>
-About gbkr.com
+Q Library
 </header>
 
 <nav>
 <ul>
 <li><a href="../../index.html">Home</a></li>
+<li><a href="../subjects/fair/dashboard.html">Application of Library</a></li>
 <li><a href="#" onclick="onNavClick()">Calculate</a></li>
 </ul>
 <form id="nav-form">
@@ -29,35 +29,204 @@ About gbkr.com
 
 <article>
 
-<p>We often get labelled with acronyms to make life in HR interesting. UBS
-excelled in this by reducing everyone to a three letter code. Mine was BAR
-which, perhaps, now has too many memories of the champagne lifestyle in
-investment banking in the 1990s. At Capco my acronym was GBKR, so that became
-the domain name by default.</p>
+<h1 id="MAPQ-Library-Documentation">MAPQ Library Documentation<a class="anchor-link" href="#MAPQ-Library-Documentation">&#182;</a></h1><h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>In this documentation, you will find detailed information about the core functions of CSAQ. Our goal is to equip you with the knowledge and tools necessary to leverage the full potential of CSAQ in your quantitative and analytical endeavors.</p>
+<p>Key Features of MAPQ:</p>
+<ul>
+<li>Intuitive Syntax: MAPQ offers a clean and intuitive syntax, making it accessible to both novice and experienced programmers.</li>
+<li>High Performance: Optimized for speed and efficiency, MAPQ ensures that your computations are executed swiftly, even with large datasets.</li>
+</ul>
+<h1 id="Getting-Started">Getting Started<a class="anchor-link" href="#Getting-Started">&#182;</a></h1><p>To begin your journey with CSAQ, please refer to the following sections of this documentation:</p>
+<ul>
+<li>Installation: Step-by-step instructions for setting up MAPQ on KX Analyst.</li>
+<li>Functions Reference: An overview of the functions and in MAPQ.</li>
+<li>Examples and Use Cases: Practical examples and use cases to demonstrate the application of MAPQ in real-world scenarios.</li>
+</ul>
+<p>Happy coding!</p>
+<p>Marcos Jaen</p>
 
-<hr>
+     </div>
+</div>
+</div>
+</div>
 
-<p>I have been working with software since 1976 and working in electronic
-execution since 2002. You can find a short r&eacute;sum&eacute; <a
-href="resume.html">here</a>. And, yes, I still code.</p>
+<div class="jp-Cell-outputWrapper">
 
-<p>I prefer my designs to look clean and purposeful. I've long admired the
-work of <a href="http://www.edwardtufte.com/tufte/" target="gbkr">Edward
-Tufte</a> and hopefully you will see that influence in this site.
-However, content quickly gets complicated, so I have a <a href="mock.html">mock
-page</a> for checking that layout remains consistent</p>
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg"> </span></pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Function:-QuotedSpreads">Function: <code>QuotedSpreads</code><a class="anchor-link" href="#Function:-QuotedSpreads">&#182;</a></h2><h3 id="Description">Description<a class="anchor-link" href="#Description">&#182;</a></h3><p>The <code>QuotedSpreads</code> function processes a table of market quotes to calculate the dollar quoted spread (<code>dqs</code>) and the midpoint (<code>mt</code>) between the national best bid (<code>nat_best_bid</code>) and the national best offer (<code>nat_best_offer</code>) or bid (<code>bid_price</code>) and ask_price (<code>ask_price</code>). It then calculates the weighted average of these spreads over time.</p>
+<h3 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h3><ul>
+<li><code>input.table</code>: A table containing market quote data with the following columns:<ul>
+<li><code>nat_best_bid</code> : National best bid price.</li>
+<li><code>nat_best_offer</code>: National best offer price.</li>
+<li><code>time</code>: Timestamp of the quote.</li>
+<li><code>sym</code>: Symbol of the security.</li>
+</ul>
+</li>
+<li><code>input.columns</code>: A list of minimum length 2 and maximum length 3 containing the following column names in the predefined order:<ul>
+<li><code>nat_best_bid</code> : National best bid price.</li>
+<li><code>nat_best_offer</code>: National best offer price.</li>
+<li><code>mkt</code>(Optional): Venue where trade took place, only add if granularity is desired.</li>
+</ul>
+</li>
+<li><code>input.start.time</code>: Start time to be considered (i.e., quotes before this time are not taken into account).</li>
+<li><code>input.end.time</code>: End time to be considered (i.e., quotes after this time are not taken into account).</li>
+</ul>
+<h3 id="Returns">Returns<a class="anchor-link" href="#Returns">&#182;</a></h3><p>A table with the following columns, grouped by <code>sym</code> and <code>date</code>:</p>
+<ul>
+<li><code>sym</code>: Symbol of the security.</li>
+<li><code>date</code>: Date of the quote.</li>
+<li><code>dqs</code>: Dollar quoted spread for the given time period.</li>
+<li><code>pqs</code>: Percentage quoted spread for the given time period.</li>
+</ul>
+<h3 id="Syntax">Syntax<a class="anchor-link" href="#Syntax">&#182;</a></h3><p>input.table: input.table;
+input.columns: <code>bid_price</code>ask_price or <code>bid_price</code>ask_price`mkt;
+input.start.time: 09:30:00.000;
+input.end.time: 16:00:00.000;
+result = QuotedSpreads[input.table;input.columns;input.start.time;input.end.time)];</p>
+<h3 id="Example-1-with-Syntetic-Data-(Function-Code-Included)">Example 1 with Syntetic Data (Function Code Included)<a class="anchor-link" href="#Example-1-with-Syntetic-Data-(Function-Code-Included)">&#182;</a></h3>
+<pre>show input.table :`sym`venue xcols update venue:(`AAPL`GOOGL`MSFT!`OQ`N`Z)[sym] from ([]sym:100?`AAPL`GOOGL`MSFT;time:asc 100?.z.t;bid_size:1+0N?100;bid_price:100?100f;ask_price:100?100f;ask_size:1+0N?100);
+QuotedSpreads: {[input.table; input.columns; input.start.time; input.end.time)]
+    input.table: update bid_price: input.columns[0], update ask_price: input.columns[1] from input.table; /standarize column names
+    $[2=count[input.columns]; 
+             select dqs: deltas time wavg (ask_price- bid_price), pqs: deltas time wavg ((ask_price- bid_price)%(0.5*(ask_price+bid_price))) by sym, date:`date$time from input.table where time within (input.start.time;input.end.time); 
+             select dqs: deltas time wavg (ask_price- bid_price), pqs: deltas time wavg ((ask_price- bid_price)%(0.5*(ask_price+bid_price))) by sym, date:`date$time, `input.columns[2] from input.table where time within (input.start.time;input.end.time)]
+    }[input.table;`bid_price`ask_price;09:30:00.000;16:00:00.000];
+</pre>
+
+
+
+<h3 id="Example-2-with-MAP-Data-(Function-Code-Not-Included)">Example 2 with MAP Data (Function Code Not Included)<a class="anchor-link" href="#Example-2-with-MAP-Data-(Function-Code-Not-Included)">&#182;</a></h3>
+
+<pre>/Getting NBB and NBO data for all tickers for the enterity of Dec 2023, within intraday trading hours. 
+input.symbols : `
+input.startDate :  2023.12.01
+input.endDate : 2023.12.31
+input.startTime : 09:30:00.000
+input.endTime : 16:00:00.000
+input.columns : `sym`time`listing_mkt`mkt`nat_best_bid`nat_best_offer
+input.table : `quote
+
+
+show getData.edwQ : `..getTicks[`assetClass`dataType`symList`startDate`endDate`startTime`endTime`columns!(`equity;
+        input.table;
+        input.symbols;
+        input.startDate;input.endDate;
+        input.startTime;input.endTime;
+        input.columns)];
+/Get Quoted Spreads for the first 30 minutes of trading by marketplace.
+qs_dec2023: QuotedSpreads[getData.edwQ;`nat_best_bid`nat_best_offer`mkt;09:30:00.000;10:00:00.000];
+</pre>
+
+     
+<h2 id="Function:-EffectiveSpreads">Function: <code>EffectiveSpreads</code><a class="anchor-link" href="#Function:-EffectiveSpreads">&#182;</a></h2><h3 id="Description">Description<a class="anchor-link" href="#Description">&#182;</a></h3><p>The <code>EffectiveSpread</code> function processes a table of trade and quote data to calculate the effective spreads for each trade. It updates the table with the midpoint price, determines the tick test (whether the trade is a buy or sell), computes the effective spread in both dollar and percentage terms, and then aggregates these effective spreads using a volume-weighted average.</p>
+<h3 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h3><ul>
+<li><code>input.table</code>: A table containing trade and quote data with the following columns:<ul>
+<li><code>nat_best_bid</code>: National best bid price.</li>
+<li><code>nat_best_offer</code>: National best offer price.</li>
+<li><code>price</code>: Trade price.</li>
+<li><code>volume</code>: Trade volume.</li>
+<li><code>sym</code>: Symbol of the security.</li>
+<li><code>time</code>: Timestamp of the trade.</li>
+<li><code>listing_mkt</code>: Listing market of the security.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Returns">Returns<a class="anchor-link" href="#Returns">&#182;</a></h3><p>A table with the following columns, grouped by <code>sym</code>, <code>date</code>, and <code>listing_mkt</code>:</p>
+<ul>
+<li><code>sym</code>: Symbol of the security.</li>
+<li><code>date</code>: Date of the trade.</li>
+<li><code>listing_mkt</code>: Listing market of the security.</li>
+<li><code>des_k</code>: Volume-weighted average of the dollar effective spread.</li>
+<li><code>pes_k</code>: Volume-weighted average of the percentage effective spread.</li>
+</ul>
+<h3 id="Syntax">Syntax<a class="anchor-link" href="#Syntax">&#182;</a></h3><p>input.table: input.table;
+input.columns: <code>bid_price</code>ask_price or <code>bid_price</code>ask_price`mkt;
+input.start.time: 09:30:00.000;
+input.end.time: 16:00:00.000;
+result = EffectiveSpread[input.table;input.columns;input.start.time;input.end.time)];</p>
+<h3 id="Notes">Notes<a class="anchor-link" href="#Notes">&#182;</a></h3><ul>
+<li>The <code>tick_test</code> calculation uses conditional logic to determine whether each trade is a buy or sell based on the comparison of trade prices to the midpoint.</li>
+<li>Effective spreads are calculated and then aggregated using volume-weighted averages to provide a meaningful summary for each symbol, date, and listing market.</li>
+</ul>
+<h3 id="Example-1-with-MAP-Data-(Function-Code-Included)">Example 1 with MAP Data (Function Code Included)<a class="anchor-link" href="#Example-1-with-MAP-Data-(Function-Code-Included)">&#182;</a></h3>
+
+<pre>/Getting NBB and NBO data for all tickers listed in the Toronto Stock Exchange for 2023-01-01, within intraday trading hours. 
+input.symbols : `;
+input.startDate :  2023.12.01;
+input.endDate : 2023.12.01;
+input.startTime : 09:30:00.000;
+input.endTime : 16:00:00.000;
+input.columns : `sym`time`listing_mkt`mkt`nat_best_bid`nat_best_offer`ask_price`bid_price;
+input.table : `quote;
+input.filter: (in;`listing_mkt;enlist(`TSE));
+
+show getData.edwQ : `..getTicks[`assetClass`dataType`symList`startDate`endDate`startTime`endTime`columns`applyFilter!(`equity;
+        input.table;
+        input.symbols;
+        input.startDate;input.endDate;
+        input.startTime;input.endTime;
+        input.columns;
+        input.filter)];
+
+/Getting trade data for all tickers listed in the Toronto Stock Exchange for 2023-01-01, within intraday trading hours. 
+input.columns : `sym`time`listing_mkt`mkt`price`volume`total_value`sequence_number;
+input.table : `trade;
+
+show getData.edwT : `..getTicks[`assetClass`dataType`symList`startDate`endDate`startTime`endTime`columns`applyFilter!(`equity;
+        input.table;
+        input.symbols;
+        input.startDate;input.endDate;
+        input.startTime;input.endTime;
+        input.columns; input.filter)];
+
+joinQQandtt:{[tt;QQ]
+    x: aj[`sym`time;tt;update time_quote:time from QQ]; /standard aj between quote table and trade table
+    x: update delta: `time$time - `time$time_quote from x; /add new column to x where we calculate time difference between quote and trade times for sanity check
+    x: update date_quote: `date$time_quote, date_trade: `date$time from x;
+    x:  delete from x where date_quote&lt;&gt;date_trade;
+    select from x where delta &lt; 17:30:00.000
+    }[filterTrades; filterQuotes];
+
+/Get Quoted Spreads for the first 30 minutes of trading by marketplace.
+EffectiveSpread:{[input.table; input.columns; input.start.time; input.end.time] 
+    input.table: update bid_price: input.columns[0], update ask_price: input.columns[1] from input.table; /standarize column names
+    input.table: update mt:0.5*(nat_best_bid + nat_best_offer), update tick_test:?[(price&gt;mt) or (price=mt and price &gt; prev price and sym = prev sym);1;-1] from input.table;
+    $[2=count[input.columns]; 
+             select des_k: volume wavg (2*tick_test*(price-mt)), pes_k:volume wavg (2*tick_test*(price-mt))%mt by sym, listing_mkt, date:`date$time from input.table where time within (input.start.time;input.end.time); /calculate effective spread for kth trade and aggregate using volume weighted avg
+             select des_k: volume wavg (2*tick_test*(price-mt)), pes_k:volume wavg (2*tick_test*(price-mt))%mt by sym, listing_mkt, date:`date$time, `input.columns[2] from input.table where time within (input.start.time;input.end.time)]
+    }[input.table;`bid_price`ask_price;09:30:00.000;16:00:00.000];
+</pre>
+
 
 </article>
 
 <footer>
 <ul>
-<li>www.gbkr.com</li>
-<li>First published 2004.09.29</li>
-<li>Last revised 2014.12.11</li>
+<li>www.jaenmarcos.com</li>
+<li>First published 2023.06.03</li>
+<li>Last revised 2023.06.03</li>
 </ul>
 </footer>
 
 </body>
-
-<!-- Mirrored from www.gbkr.com/main/about/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 May 2024 02:01:17 GMT -->
 </html>
