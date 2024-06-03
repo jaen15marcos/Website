@@ -51,26 +51,19 @@ svg .vwapline {
 </style>
 	
 <style>
-  .zoom-container {
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-  }
-
-  .zoom {
-    transform: scale(0.8);
-    transition: transform 0.5s ease, transform-origin 0.5s ease;
-    margin: auto;
-    display: block;
-  }
-
-  .zoom-container:hover .zoom {
-    transform: scale(1.5);
-  }
-
-  .zoom-container:hover .zoom {
-    transform-origin: center;
-  }
+  body {
+   user-select: none;    
+   -moz-user-select: none;    
+}
+.zoomables {
+    pointer-events: none;
+    border: 1px solid black;
+}
+#zoomMe {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
 
 </style>
 	
@@ -109,10 +102,8 @@ Creating a Dataset for Comprehensive Market Research and Surveillance
   <table>
     <tr>
       <td style="width:100%; vertical-align: middle;">
-	<h1 style="color:blue;">Trading and Liquidity Dashboard for ETFs</h1>
-      <div class="zoom-container">
-	<img src="../../images/dashboard.PNG" class="zoom" alt="Trading and Liquidity Dashboard for ETFs" style="max-width:100%"/>
-      </div>
+	<h1 style="color:skyblue;">Trading and Liquidity Dashboard for ETFs</h1>
+	<img id="zoomMe" class="zoomables" src="../../images/dashboard.PNG" alt="Trading and Liquidity Dashboard for ETFs" style="max-width:100%"/>
 	<figcaption>Image 1: Time series of main liquidity metrics for the Canadian ETF market from January 1, 2019, to December 31, 2022. The original dashboard contains over 100 sheets and is interactive, allowing users to view various data cuts. It is connected to many other dashboards to provide a comprehensive view of the market. For confidentiality reasons, only an image is included here.</figcaption>
       </td>
     </tr>
@@ -133,6 +124,136 @@ Creating a Dataset for Comprehensive Market Research and Surveillance
 </ul>
 </footer>
 
+
+<script>
+  var margins = { top: 20, right: 50, bottom: 20, left: 50 };
+  function plot() {
+    var dim = g3.dimensions('chart-div', margins);
+    var xscale = d3.time.scale().range([0, dim.plot.width]);
+    var yscale = d3.scale.linear().range([dim.plot.height, 0]);
+    var xaxis = d3.svg.axis().scale(xscale).orient('bottom');
+    var yaxis = d3.svg.axis().scale(yscale).orient('left');
+    var timeformat = d3.time.format('%H:%M');
+    xaxis.tickFormat(timeformat);
+    var line = d3.svg.line()
+      .x(function(d) { return xscale(d.time); })
+      .y(function(d) { return yscale(d.price); });
+    line.defined(function(d) { return d.price > 0; });
+    var fair = d3.svg.line()
+      .x(function(d) { return xscale(d.time); })
+      .y(function(d) { return yscale(d.fp); });
+    fair.defined(function(d) { return d.price > 0; });
+    var vwap = d3.svg.line()
+      .x(function(d) { return xscale(d.time); })
+      .y(function(d) { return yscale(d.vwap); });
+    vwap.defined(function(d) { return d.price > 0; });
+    var svg = g3.makesvg(d3.select('#chart-div'), dim, margins);
+    d3.csv('plot.csv', function(error, data) {
+      data.forEach(function(d) {
+        d.time = timeformat.parse(d.minute);
+        d.price = +d.price;
+        d.fp = +d.fp;
+        d.vwap = +d.vwap;
+      });
+      xscale.domain(d3.extent(data, function(d) { return d.time; })).nice();
+      yscale.domain(d3.extent(data, function(d) { return d.price > 0 ? d.price : null; })).nice();
+      svg.append('g')
+        .attr('class', 'axis')
+        .attr('transform', 'translate(0,' + dim.plot.height + ')')
+        .call(xaxis);
+      svg.append('g')
+        .attr('class', 'axis')
+        .call(yaxis);
+      svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', -(margins.left + 5))
+        .attr('x', -(dim.plot.height / 2))
+        .attr('dy', '1.2em')
+        .style('text-anchor', 'middle')
+        .text('Price');
+      svg.append('path')
+        .datum(data)
+        .attr('class', 'line')
+        .attr('d', line);
+      svg.append('path')
+        .datum(data)
+        .attr('class', 'fairline')
+        .attr('d', fair);
+      svg.append('path')
+        .datum(data)
+        .attr('class', 'vwapline')
+        .attr('d', vwap);
+    });
+  }
+</script>
+<script>
+  const view = (() => {
+    const matrix = [1, 0, 0, 1, 0, 0]; // current view transform
+    var m = matrix;             // alias 
+    var scale = 1;              // current scale
+    const pos = { x: 0, y: 0 }; // current position of origin
+    var dirty = true;
+    const API = {
+      applyTo(el) {
+        if (dirty) { this.update() }
+        el.style.transform = `matrix(${m[0]},${m[1]},${m[2]},${m[3]},${m[4]},${m[5]})`;
+      },
+      update() {
+        dirty = false;
+        m[3] = m[0] = scale;
+        m[2] = m[1] = 0;
+        m[4] = pos.x;
+        m[5] = pos.y;
+      },
+      pan(amount) {
+        if (dirty) { this.update() }
+        pos.x += amount.x;
+        pos.y += amount.y;
+        dirty = true;
+      },
+      scaleAt(at, amount) { // at in screen coords
+        if (dirty) { this.update() }
+        scale *= amount;
+        pos.x = at.x - (at.x - pos.x) * amount;
+        pos.y = at.y - (at.y - pos.y) * amount;
+        dirty = true;
+      },
+    };
+    return API;
+  })();
+
+  document.addEventListener("mousemove", mouseEvent, {passive: false});
+  document.addEventListener("mousedown", mouseEvent, {passive: false});
+  document.addEventListener("mouseup", mouseEvent, {passive: false});
+  document.addEventListener("mouseout", mouseEvent, {passive: false});
+  document.addEventListener("wheel", mouseWheelEvent, {passive: false});
+  const mouse = {x: 0, y: 0, oldX: 0, oldY: 0, button: false};
+  function mouseEvent(event) {
+      if (event.type === "mousedown") { mouse.button = true }
+      if (event.type === "mouseup" || event.type === "mouseout") { mouse.button = false }
+      mouse.oldX = mouse.x;
+      mouse.oldY = mouse.y;
+      mouse.x = event.pageX;
+      mouse.y = event.pageY;
+      if(mouse.button) { // pan
+          view.pan({x: mouse.x - mouse.oldX, y: mouse.y - mouse.oldY});
+          view.applyTo(document.getElementById('zoomMe'));
+      }
+      event.preventDefault();
+  }
+  function mouseWheelEvent(event) {
+      const x = event.pageX - (document.getElementById('zoomMe').width / 2);
+      const y = event.pageY - (document.getElementById('zoomMe').height / 2);
+      if (event.deltaY < 0) { 
+          view.scaleAt({x, y}, 1.1);
+          view.applyTo(document.getElementById('zoomMe'));
+      } else { 
+          view.scaleAt({x, y}, 1 / 1.1);
+          view.applyTo(document.getElementById('zoomMe'));
+      }
+      event.preventDefault();
+  }
+</script>
 </body>
 
 </html>
