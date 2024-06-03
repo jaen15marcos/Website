@@ -49,6 +49,25 @@ svg .vwapline {
 
 
 </style>
+	
+<style>
+        .geeks {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .geeks img {
+            width: 100%;
+            transition: 0.5s all ease-in-out;
+        }
+
+        .geeks:hover img {
+            transform: scale(1.5);
+        }
+</style>
+	
 <script src="../../script/page.js"></script>
 <script src="../../lib/d3.min.js"></script>
 <script src="../../script/g3.js"></script>
@@ -110,8 +129,11 @@ Creating a Dataset for Comprehensive Market Research and Surveillance
   <table>
     <tr>
       <td style="width:80%; vertical-align: middle;">
-        <img src="../../images/dashboard.PNG" style="max-width:100%;">
-	<figcaption>Image 1: Time series of main liquidity metrics for the Canadian ETF market from January 1, 2019, to December 31, 2022. The original dashboard contains over 100 sheets and is interactive, allowing users to view various data cuts. It is connected to many other dashboards to provide a comprehensive view of the market. For confidentiality reasons, only an image is included here.</figcaption>
+	<div class="geeks">
+		<h1>Trading and Liquidity Dashboard for ETFs</h1>
+		<img src="../../images/dashboard.PNG" alt="Trading and Liquidity Dashboard for ETFs" style="max-width:100%"/>
+		<figcaption>Image 1: Time series of main liquidity metrics for the Canadian ETF market from January 1, 2019, to December 31, 2022. The original dashboard contains over 100 sheets and is interactive, allowing users to view various data cuts. It is connected to many other dashboards to provide a comprehensive view of the market. For confidentiality reasons, only an image is included here.</figcaption>
+      	</div>
       </td>
     </tr>
   </table>
