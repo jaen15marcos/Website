@@ -34,18 +34,125 @@ Pair Trading in KDB+
 
 <hr>
 
-<!-- <p>The pages above use information on market structure which has been coded into a JSON 
-file, <a href="../../data/markets.json">markets.json</a>. This structural information
-can be read and used in a variety of languages.</p>
+<p>Now we will implement a pair trading between two ETFs, but the implementation below will work for any financial instruments
+which are cointegrated. In other words, we will be bulding a strategy a statistical arbitrage strategy. The basic idea behind this strategy
+is that two or more cointegrated securities should mantain their relationship (e.g., move together), so when we see a spread, or a difference between the prices of
+these securities, we can capture such spread by going long one of the securities and short the other one. There is some rigurous statistical theory behind this type of trade, which should
+hold for the trade to be successful. Given that I ahve already explained all the mathematics behind pair trading in the <a href="pair-trading-r.html">R implementation of this algorithm</a>, we won't do so here.
+I will just provide clean code that should execute this strategy. For future iterations, I will be creating an orderbook multi-order type orderbook, which will be integrated 
+with this strategy and other future strategies I have in mind (trading "affordable luxuries", Mexico's peso carry trade and momentum strategies) to implement using kdb+ in this site in upcoming weeks.</p>
 
-<p>With Javascript:</p>
+<p>First we start by defining the functions we would use throughout the project.</p>
 <pre>
-var x = JSON.parse(jsonString);
-</pre>
-<p>The variable x will be an object with properties for each of the top level
-attributes in the JSON structure.</p>
+  // Function for standard linear regression 
+.quantQ.ols.fit:{[y;x]
+    // y -- array of dependent variables
+    // x -- array of arrays of independent variables, constants has to be included 
+    whereMissing:raze (where y=0n; raze {where x=0n} each x);
+    // remove the missing values
+    y:y[(til count y) except whereMissing];
+    x:{[whereMissing;x] x[(til count x) except whereMissing]}[whereMissing;] each x;
+    // y^T X
+    ytx: enlist y mmu flip[x];
+    // X^T X
+    xtx: x mmu flip[x];
+    // solve the OLS equation
+    solution: ytx lsq xtx;
+    // beta
+    beta:first solution;
+    // var cov matrix
+    varcov:(inv flip[xtx])*sum (1.0%(count[y]-count[beta]))*t*t:y-sum[beta*x];
+    // errors for every estimation (sample standard deviation)
+    errors:{sqrt x[y;y]}[varcov;] each til count varcov;
+    // t-stat for every beta
+    tStats:beta%errors;
+    // TSS or Total Sum of Squares
+    TSS: sum t*t:y-avg[y];
+    // RSS or Residual Sum of Squars
+    RSS: sum t*t:y-sum beta*x;
+    // R-squared
+    Rsquared:1.0-RSS%TSS;
+    // adjusted R-squared
+    adjRsquared:1-(1-Rsquared)*(count[y]-1.0)%(count[y]-(count[beta]-1)-1.0);
+    // significance level in normal approximation (econometric)
+    convertPDict:((0j;1j;2j;3j;4j)!("-";"* (90% c.l.)";"** (95% c.l.) ";"*** (99% c.l.)"; "**** (99.9% c.l.)"));
+    signLevels: convertPDict each binr[(1.282;1.645;2.326;3.091);abs tStats];
+    // log-likelihood
+    logL:neg[log[2*acos -1]*count[y]%2.0]+neg[log[sqrt[RSS%count[y]]]*count[y]]+ neg[(1.0%(2.0%count[y]))];
+    // AIC from log-likelihood
+    aic:(2.0*count[beta])-2.0*logL;
+    // AIC with small sample correction - depends upon heavy assumptions
+    aicc:aic+("f"$2*(k*k)+k)%("f"$count[y]-1-k:count[beta]);
+    // output bucket
+    bucket:(`beta`errors`varcov`nObservations`dfn`tStats`TSS`RSS`Rsquared`adjRsquared`signLevels`logL`aic`aicc!(beta;
+            errors;varcov;count[y];count[beta];tStats;TSS;RSS;Rsquared;adjRsquared;signLevels;logL;aic;aicc));
+    :bucket;
+    };
+  
+  //Function to get linear regression results in the console in a standarized and easy to comprehend matter
+  .quantQ.ols.olsTab:{[tab]
+    // tab -- table with data
+    // names
+    yName:first cols tab;
+    xNames:1_cols tab;
+    // running regressions
+    reg:.quantQ.ols.fit[tab[yName];tab[xNames]];
+    // regression part of table
+    tabReg:([] name:xNames; coeff:reg[`beta];error:reg[`errors];tStat:reg[`tStats];
+    significance:reg[`signLevels]);
+    // stats part of table
+    tabStats:([] name:`STATISTICS`nObservations`nParameters`TSS`RSS`Rsquared`RsquaredAdjusted`logLikelihood`AIC`AICC; coeff:(0nf;"f"$count[y];"f"$reg[`dfn];
+            "f"$reg[`TSS];"f"$reg[`RSS];reg[`Rsquared];reg[`adjRsquared];reg[`logL];reg[`aic];reg[`aicc]));
+    // return the table with results
+    :tabReg uj tabStats;
+    };
 
-<p>With kdb+ version 3.2:</p>
+  /https://code.kx.com/q/kb/pivoting-tables/
+/ pivot t, keyed by k, on p, exposing v
+/ f, a function of v and pivot values, names the columns
+/ g, a function of k, pivot values, and the return of f, orders the columns
+/ either can be defaulted with (::)
+/ conceptually, this is
+/ exec f\[v;P\]!raze((flip(p0;p1;.))!/:(v0;v1;..))\[;P\]by k0,k1,.. from t
+/ where P~exec distinct flip(p0;p1;..)from t
+/ followed by reordering the columns and rekeying
+piv:{[t;k;p;v;f;g]
+ v:(),v;
+ G:group flip k!(t:.Q.v t)k;
+ F:group flip p!t p;
+ count[k]!g[k;P;C]xcols 0!key[G]!flip(C:f[v]P:flip value flip key F)!raze
+  {[i;j;k;x;y]
+   a:count[x]#x 0N;
+   a[y]:x y;
+   b:count[x]#0b;
+   b[y]:1b;
+   c:a i;
+   c[k]:first'[a[j]@'where'[b j]];
+   c}[I[;0];I J;J:where 1<>count'[I:value G]]/:\:[t v;value F]};
+  
+  // Kalman Filtering in kdb+
+  filter: {
+    t: ([] x: `float $ x; xh: `float $ x; p: (count x) # R: var x);
+    (first t), iterate[R; R]\[first t; 1 _ t] 
+    }
+
+iterate: {[Q; R; x; y]
+    x[`p]+: Q;
+    k: x[`p] % R + x[`p];
+    `x`xh`p ! (y[`x]; x[`xh] + k * y[`x] - x[`xh]; (1 - k) * x[`p])
+    }
+     
+</pre>
+<p>Now that we have defined the functions we will use, we can start playing with our data. We will assume the pre-defined table `trade contains all the intraday data we need to make this startegy work.
+Moreover, for the purposes of this case, I will assume we only have 1 data point per minute. Lastly, same as we did for our R implementation, I will use ETFs VCN and XIC for this startegy, but as I have mentioned earlier,
+this shouldn't matter as the code is made to be as general as possible for all type of implementations.</p>
+
+<p>prices: piv[0! select last price by sym, 1 xbar `minute$time, date: `date$time from trade;
+  (), `date`time;(), `sym; `price;{y[;0]};{x,z}]; /call pivot fucntion to get prices of VCN and XIC by date and time
+  prices: 0!(![`time`date xasc prices;();(enlist`date)!enlist`date;{x!fills,'x}cols prices]); /filling null values with preceding non-nulls
+  show pairwise_corr: x cor/:\:x:flip (select VCN, XIC from prices); /pairwise correlation between equities
+
+</p>
 <pre>
 x: .j.k raze read0 jsonFilename;
 </pre>
