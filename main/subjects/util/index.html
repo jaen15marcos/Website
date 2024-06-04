@@ -147,26 +147,23 @@ iterate: {[Q; R; x; y]
 Moreover, for the purposes of this case, I will assume we only have 1 data point per minute. Lastly, same as we did for our R implementation, I will use ETFs VCN and XIC for this startegy, but as I have mentioned earlier,
 this shouldn't matter as the code is made to be as general as possible for all type of implementations.</p>
 
-<p>prices: piv[0! select last price by sym, 1 xbar `minute$time, date: `date$time from trade;
+<pre>
+prices: piv[0! select last price by sym, 1 xbar `minute$time, date: `date$time from trade;
   (), `date`time;(), `sym; `price;{y[;0]};{x,z}]; /call pivot fucntion to get prices of VCN and XIC by date and time
   prices: 0!(![`time`date xasc prices;();(enlist`date)!enlist`date;{x!fills,'x}cols prices]); /filling null values with preceding non-nulls
   show pairwise_corr: x cor/:\:x:flip (select VCN, XIC from prices); /pairwise correlation between equities
 
-</p>
-<pre>
-x: .j.k raze read0 jsonFilename;
 </pre>
-<p>The variable x will be a dictionary with keys for each of the top level attributes.</p>
 
 </article>
 
 <footer>
 <ul>
-<li>www.gbkr.com</li>
-<li>First published 2014.11.21</li>
-<li>Last revised 2015.01.30</li>
+<li>www.jaenmarcos.com</li>
+<li>First published 2024.06.03</li>
+<li>Last revised 2024.06.03</li>
 </ul>
-</footer>-->
+</footer>
 
 </body>
 
