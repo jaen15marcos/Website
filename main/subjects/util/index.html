@@ -34,15 +34,8 @@ Pair Trading in KDB+
 
 <hr>
 
-<p>Now we will implement a pair trading between two ETFs, but the implementation below will work for any financial instruments
-which are cointegrated. In other words, we will be bulding a strategy a statistical arbitrage strategy. The basic idea behind this strategy
-is that two or more cointegrated securities should mantain their relationship (e.g., move together), so when we see a spread, or a difference between the prices of
-these securities, we can capture such spread by going long one of the securities and short the other one. There is some rigurous statistical theory behind this type of trade, which should
-hold for the trade to be successful. Given that I ahve already explained all the mathematics behind pair trading in the <a href="pair-trading-r.html">R implementation of this algorithm</a>, we won't do so here.
-I will just provide clean code that should execute this strategy. For future iterations, I will be creating an orderbook multi-order type orderbook, which will be integrated 
-with this strategy and other future strategies I have in mind (trading "affordable luxuries", Mexico's peso carry trade and momentum strategies) to implement using kdb+ in this site in upcoming weeks.</p>
-
-<p>First we start by defining the functions we would use throughout the project.</p>
+<p>Now we will implement a pair trading strategy between two ETFs, but the implementation below will work for any financial instruments which are cointegrated. In other words, we will be building a statistical arbitrage strategy. The basic idea behind this strategy is that two or more cointegrated securities should maintain their relationship (e.g., move together), so when we see a spread, or a difference between the prices of these securities, we can capture such a spread by going long one of the securities and short the other one. There is some rigorous statistical theory behind this type of trade, which should hold for the trade to be successful. Given that I have already explained all the mathematics behind pair trading in the <a href="pair-trading-r.html">R implementation of this algorithm</a>, we won't do so here. I will just provide clean code that should execute this strategy. For future iterations, I will be creating an order book with multiple order types, which will be integrated with this strategy and other future strategies I have in mind (trading "affordable luxuries," Mexico's peso carry trade, and momentum strategies) to implement using kdb+ on this site in the upcoming weeks.</p>
+<p>First, we start by defining the functions we will use throughout the project.</p>
 <pre>
   // Function for standard linear regression 
 .quantQ.ols.fit:{[y;x]
@@ -143,9 +136,7 @@ iterate: {[Q; R; x; y]
     }
      
 </pre>
-<p>Now that we have defined the functions we will use, we can start playing with our data. We will assume the pre-defined table `trade contains all the intraday data we need to make this startegy work.
-Moreover, for the purposes of this case, I will assume we only have 1 data point per minute. Lastly, same as we did for our R implementation, I will use ETFs VCN and XIC for this startegy, but as I have mentioned earlier,
-this shouldn't matter as the code is made to be as general as possible for all type of implementations.</p>
+<p>Now that we have defined the functions we will use, we can start playing with our data. We will assume the pre-defined table `trade` contains all the intraday data we need to make this strategy work. Moreover, for the purposes of this case, I will assume we only have 1 data point per minute. Lastly, same as we did for our R implementation, I will use ETFs VCN and XIC for this strategy, but as I have mentioned earlier, this shouldn't matter as the code is made to be as general as possible for all types of implementations.</p>
 
 <pre>
 prices: piv[0! select last price by sym, 1 xbar `minute$time, date: `date$time from trade;
