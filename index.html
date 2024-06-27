@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="main/style/page.css">
     <script src="main/script/page.js"></script>
 
+    
     <style>
         :root {
             --primary-color: #3399ff;
-            --background-color: rgba(26, 26, 26, 0.8);
             --text-color: #ffffff;
         }
 
         body, html {
-            font-family: Arial, sans-serif;
+            font-family: Lucida Sans Unicode, Arial, Helvetica, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             margin: 0;
@@ -67,6 +67,7 @@
             line-height: 1.6;
             margin-bottom: 1rem;
         }
+        
 
         a {
             color: var(--primary-color);
@@ -205,7 +206,7 @@
                 <img src="main/images/me.png" alt="Marcos profile picture" id="profile-pic">
             </div>
             <div class="profile-content">
-                <p>Hi, I'm Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w" id="video-link">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
+                <p>Hi, I'm Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w" target="_blank">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
                 <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
             </div>
         </div>
@@ -227,33 +228,27 @@
     </div>
 
     <script>
-        // Fade-in animation for content
         document.addEventListener('DOMContentLoaded', () => {
-            document.body.style.opacity = 0;
-            let opacity = 0;
-            const fadeIn = setInterval(() => {
-                if (opacity >= 1) {
-                    clearInterval(fadeIn);
-                }
-                document.body.style.opacity = opacity;
-                opacity += 0.1;
-            }, 100);
-        });
+        document.body.style.opacity = 0;
+        let opacity = 0;
+        const fadeIn = setInterval(() => {
+            if (opacity >= 1) {
+                clearInterval(fadeIn);
+            }
+            document.body.style.opacity = opacity;
+            opacity += 0.1;
+        }, 100);
+    });
 
-        // Interactive profile picture
-        const profilePic = document.getElementById('profile-pic');
-        profilePic.addEventListener('mouseover', () => {
-            profilePic.style.transform = 'scale(1.1)';
-        });
-        profilePic.addEventListener('mouseout', () => {
-            profilePic.style.transform = 'scale(1)';
-        });
+    // Interactive profile picture
+    const profilePic = document.getElementById('profile-pic');
+    profilePic.addEventListener('mouseover', () => {
+        profilePic.style.transform = 'scale(1.1)';
+    });
+    profilePic.addEventListener('mouseout', () => {
+        profilePic.style.transform = 'scale(1)';
+    });
 
-        // Popup for video link
-        document.getElementById('video-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Video content is not available at the moment. Check back later!');
-        });
-    </script>
+</script>
 </body>
 </html>
