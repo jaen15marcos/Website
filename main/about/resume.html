@@ -1,121 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<meta charset="utf-8" content="width=device-width">
-
-<title>Marcos Jaen - CV</title>
-
-<link rel="stylesheet" href="../style/page.css">
-<style>
-
-table {
-	margin-top:		2rem;
-	margin-bottom:	2rem;
-}
-
-th {
-	font-weight:	100;
-	text-align:		left;
-	padding-right:	1rem;
-	padding-bottom:	0.5rem;
-    font-size: 20px;
-}
-
-td {
-	padding-right:	1rem;
-	padding-bottom:	0.5rem;
-	font-weight:	100;
-}
-
-tr td:first-child {
-	font-weight:	normal;
-}
-
-</style>
-
-<script src="../script/page.js"></script>
-
-<body onload="setNav()">
-
-<header>
-R&eacute;sum&eacute;
-</header>
-
-<nav>
-<ul>
-<li><a href="../../index.html">Home</a></li>
-<li><a href="#" onclick="onNavClick()">Calculator</a></li>
-</ul>
-<form id="nav-form">
-<input id="nav-input" type="text" maxlength="200" onchange="onNavInput()" style="visibility:hidden;">
-<div id="nav-div"></div>
-</form>
-</nav>
-
-<article>
-
-<p><a href="mailto:jaenmarcos15@gmail.com">Mail me</a> if you have any questions.</p>
-<title>Marcos Jaen - CV</title>
-<style>
-    body { font-family: Arial, sans-serif; }
-    table { width: 100%; border-collapse: collapse; }
-    td, th { text-align: left; padding: 8px; }
-    ul { padding-left: 20px; }
-    
-</style>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcos Jaen - CV</title>
+    <link rel="stylesheet" href="../style/page.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .contact-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .contact-info a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+    <script src="../script/page.js"></script>
 </head>
-<body>
-<h2><center>Marcos Jaen</center></h2>
-<p><center><a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a> | 647-806-8653 | <a href="https://linkedin.com/in/jaencort/">linkedin.com/in/jaencort/</a> | <a href="https://github.com/jaen15marcos">github.com/jaen15marcos</a></center></p>
+<body onload="setNav()">
+    <header>
+        <h1>Marcos Jaen</h1>
+    </header>
 
-<h3>Technical Skills</h3>
-<ul>
-	<li><strong>Programming Languages:</strong> Kdb+/Q, R, Python, VBA, C#, LaTeX, SQL, and JavaScript.</li>
-	<li><strong>Technologies:</strong> Kx Analyst, Azure, Git/GitHub, MongoDB, Docker, Apache Spark, HTML/CSS, X Code, and Tableau.</li>
-	<li><strong>Data Sources & Platforms:</strong> Refinitiv Eikon/Workspace, S&P Capital IQ, Bloomberg, and Morningstar. </li>
-</ul>
-	
-<h3>Professional Experiences</h3>
-<p><strong>Research Analyst | Ontario Security Commission | Market & Economic Analysis |  Jan/2023 – Present</strong><p>
-<ul>
-    <li>Became the go-to expert for real-time analysis of intraday trade, quote, and order data from Canadian marketplaces in KDB+/Q, conducting collaborative research on market microstructures, and sector trends.</li>
-    <li>Productionized liquidity metric calculations for market surveillance (effective spread, time at top of book, total depth, etc.) and statistical data checks on data to correct discrepancies in incoming data for thinly traded stocks, working closely with the product owner, enhancing data quality, and resolving systematic errors.</li>
-    <li>Designed, managed, and productionized an end-to-end solution using KDB+, Azure, and various third-party APIs to create a database containing T-2 daily relevant datapoints for all Canadian listed equities, enabling a first-of-its-kind enterprise dataset for comprehensive market-wide surveillance and research. (ongoing).</li>
-    <li>Developed, maintained, and productionized the CSAQ (Canadian Securities Commission Q) kdb+ library, featuring over 100 functions for market quality, surveillance, and statistical analysis, enabling developers and data scientists across CSA jurisdictions to utilize kdb+ without needing to know Q.</li>
-    <li>Actively monitored and reported on capital market dynamics with KDB+/Q, and capital flow patterns, providing management with key insights on the impact of macroeconomic, and other developments on investor sentiment.</li>
-    <li>Initiated a study on pump-and-dump schemes in the mining sector, analyzing over 650 million rows of account level trade data in KDB+/Q looking a PnL with Monte Carlo simulations to refine unsupervised density-based clustering analysis technique HDBSCAN for anomaly detection, improving the efficacy of prior models.</li>
-    <li>Led the CSA’s ETF review’s research initial phase, working with over 150 billion rows and 200 terabytes of data in KDB+/Q, identifying Authorized Participants' trading via supervised ML classification technique SVM and authored and presented an interactive dashboard with the findings to the stakeholders including executive management.</li>
-    <li>Co-led CSA’s ETF review’s research final phase, designing and implementing a variety of mixed-effects regression models to assess the influence of APs' involvement on liquidity metrics, contributing to the development of a new regulatory framework for ETFs, with analysis pending publication upon external revision by industry experts.</li>
-    <li>Streamlined existing data pipelines to reduce processing times by 50% and extend data coverage, in addition to sourcing external data and engineering ETL processes using Q/KDB+, Python, and R, providing prepared data for analysis across branches for macroeconomic and market monitoring.</li>
-    <li>Crafted and presented slide decks, and dashboards to pitch ideas and share preliminary research findings with external stakeholders including senior management of Vanguard and Blackrock, effectively communicating complex concepts and data-driven insights to a wide array of audiences.</li>
-    <li>Collaborating with TMX group and trading specialists to assess the impact of the introduction of Alpha’s new order books, order types, and changes in speed bumps to Alpha and other marketplaces in KDB+/Q (ongoing).</li>
-</ul>
+    <nav>
+        <ul>
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="#" onclick="onNavClick()">Calculator</a></li>
+        </ul>
+        <form id="nav-form">
+            <input id="nav-input" type="text" maxlength="200" onchange="onNavInput()" style="visibility:hidden;">
+            <div id="nav-div"></div>
+        </form>
+    </nav>
 
-<h3>Education</h3>
-<p><strong>Mathematics; Minor in Statistics & Economics | University of Toronto | Jan/2020 ‑ Nov/2022</strong><p>
-<ul>
-    <li><strong>Relevant coursework:</strong> Numerical Methods, Multivariate Analysis, Statistical Inference, Stochastic Processes, Risk, Basic Option Pricing, Hedging, Time Series Analysis, Partial Differential Equations, and Modern Portfolio Theory.</li>
-</ul>
+    <div class="contact-info">
+        <p>
+            <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a> | 647-806-8653 | 
+            <a href="https://linkedin.com/in/jaencort/">linkedin.com/in/jaencort/</a> | 
+            <a href="https://www.jaenmarcos.com">www.jaenmarcos.com</a>
+        </p>
+    </div>
 
-<h3>Project Experiences & Interests</h3>
-<ul>
-    <li>Predicting Realized Volatility with Machine Learning.</li>
-    <li>Fast Fourier Transform (FFT) Signal Processing for Correlated Signals.</li>
-    <li>Dynamic ETF Pair Trading Strategy.</li>
-    <li>Multi-order Type Orderbook.</li>
-    <li>Other Relevant Personal Projects: 50 q Functions, 200 q Problems & Solutions, Quantifying Risk, YTM Calculator, Forecasting US Unemployment Rate.</li>
-</ul>
+    <div class="section">
+        <h2>Technical Skills</h2>
+        <ul>
+            <li><strong>Programming Languages:</strong> KDB+/Q, R, Python, VBA, C#, LaTeX, SQL, JavaScript, and HTML/CSS.</li>
+            <li><strong>Technologies:</strong> Microsoft Azure, Git/GitHub, MongoDB, Docker, Apache Spark, Linux, and Tableau.</li>
+            <li><strong>Data Sources & Platforms:</strong> Refinitiv Eikon/Workspace, S&P Capital IQ, Bloomberg, and Morningstar.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Professional Experiences</h2>
+        <h3>Research Analyst | Ontario Securities Commission | Market & Economic Analysis | 01/2023 – Present</h3>
+        <ul>
+            <li>Became the go-to expert for real-time analysis of Canadian market data in KDB+/Q, conducting collaborative research and analysis on market microstructures, and sector trends.</li>
+            <li>Designed and maintained a first-of-its-kind enterprise database containing T-2 daily ticker-level trading statistics, liquidity metrics and important events for market-wide surveillance and research.</li>
+            <li>Developed and maintained a KDB+ library, featuring over 100 functions for market quality, surveillance, and statistical analysis, enabling cross-jurisdictional use without Q expertise.</li>
+            <li>Monitored capital market dynamics, capital flow patterns and investor sentiment, providing management with key insights on the impact of macroeconomic, and other developments.</li>
+            <li>Initiated a study on pump-and-dump schemes in the mining sector, analyzing over 650 million rows of account level data in KDB+/Q looking at PnL with Monte Carlo simulations to refine unsupervised density-based clustering analysis technique HDBSCAN for anomaly detection, improving the efficacy of prior models.</li>
+            <li>Co-led the CSA's ETF review, analyzing over 150+ billion, identifying Authorized Participants' (AP) trading via supervised ML classification technique SVM, designing and implementing mixed-effects regression models to assess the influence of APs' involvement on liquidity metrics, with results contributing to the development of a new regulatory framework for ETFs, and analysis pending publication upon external review.</li>
+            <li>Streamlined data pipelines, reducing processing times by 50%, in addition to sourcing external data and engineering ETL processes using Q/KDB+, Python, and R, providing prepared data for analysis across.</li>
+            <li>Crafted and presented slide decks, and dashboards with external and internal stakeholders including senior management of Vanguard and Blackrock, and executive management.</li>
+            <li>Collaborating with TMX group and trading specialists to assess the impact of the introduction of Alpha's new order books, order types, and changes in speed bumps to Alpha and other marketplaces in KDB+/Q (ongoing).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        <h3>Mathematics; Minor in Statistics & Economics | University of Toronto | 01/2020 ‑ 11/2022</h3>
+        <p><strong>Relevant coursework:</strong> Numerical Methods, Multivariate Analysis, Statistical Inference, Stochastic Processes, Risk, Option Pricing, Time Series Analysis, Partial Differential Equations, and Modern Portfolio Theory.</p>
+    </div>
+
+    <div class="section">
+        <h2>Project Experiences & Interests</h2>
+        <ul>
+            <li>Dynamic ETF Pair Trading Strategy using Cointegration and Kalman Filtering in KDB/q and R.</li>
+            <li>A Multi-Order Type Orderbook in KDB+ and Python.</li>
+            <li>Predicting Realized Volatility with Machine Learning (ongoing).</li>
+            <li>Fast Fourier Transform (FFT) Signal Processing for Correlated Signals (ongoing).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Other Relevant Personal Projects</h2>
+        <ul>
+            <li>Quantifying Risk via Black-Scholes-Merton and CreditMetrics-type Model (Risk Modelling)</li>
+            <li>YTM Calculator of Canadian Govt. Bonds via Bootstrapping (Mathematical Modelling & Data Mining)</li>
+            <li>Forecasting US Unemployment Rate via Time Series Analysis, 1948-2016 (Predictive Times Series)</li>
+        </ul>
+    </div>
+
+    <footer>
+        <ul>
+            <li>www.jaenmarcos.com</li>
+            <li>First published 2024.05.08</li>
+            <li>Last revised 2024.06.27</li>
+        </ul>
+    </footer>
 </body>
 </html>
-
-</article>
-
-<footer>
-<ul>
-<li>www.jaenmarcos.com</li>
-<li>First published 2024.05.08</li>
-<li>Last revised 2024.05.08</li>
-</ul>
-</footer>
-
-</body>
