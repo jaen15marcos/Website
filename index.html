@@ -32,6 +32,7 @@
         padding: 2rem;
         position: absolute;
         z-index: 2;
+        padding-top: 120px;
     	}
 
         header {
@@ -90,8 +91,12 @@
         }
 
         .navbar {
-            min-width: 700px;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+            z-index: 1000;
         }
 
         .nav--list {
@@ -233,8 +238,7 @@
         <div class="gradient gradient-3"></div>
     </div>
     
-    <div class="container">
-        <nav class="navbar">
+       	<nav class="navbar">
             <ul class="nav--list">
                 <li class="active"></li>
                 <li class="item"><a href="#">Home</a></li>
@@ -244,7 +248,7 @@
                 <li class="item"><a href="#">Contact</a></li>
             </ul>
         </nav>
-
+	<div class="container">
         <header>Welcome</header>
 
         <div class="content-wrapper">
@@ -252,7 +256,7 @@
                 <img src="main/images/me.png" alt="Marcos profile picture" id="profile-pic">
             </div>
             <div class="profile-content">
-                <p>Hi, I'm Marcos, a KDB+ programmer based in Toronto. My current role primarily involves in-depth research and analysis of data from Canadian marketplaces. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w" target="_blank">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
+                <p>Hi, I'm Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w" target="_blank">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
                 <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
             </div>
         </div>
