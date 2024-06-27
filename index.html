@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcos Jaen - Home</title>
-<link rel="stylesheet" href="main/style/page.css">
-<script src="main/script/page.js"></script>
+    <link rel="stylesheet" href="main/style/page.css">
+    <script src="main/script/page.js"></script>
 
     <style>
         :root {
             --primary-color: #3399ff;
-            --background-color: #1a1a1a;
+            --background-color: rgba(26, 26, 26, 0.8);
             --text-color: #ffffff;
         }
 
@@ -20,7 +20,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            height: 100%;
+            min-height: 100vh;
             font-size: 16px;
         }
 
@@ -28,12 +28,11 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            position: relative;
+            z-index: 2;
         }
 
-        h1 {
+        header {
             color: var(--primary-color);
             text-align: center;
             font-size: 4rem;
@@ -42,7 +41,6 @@
 
         .content-wrapper {
             display: flex;
-            flex: 1;
             gap: 2rem;
         }
 
@@ -79,6 +77,88 @@
         a:hover {
             color: #66b3ff;
         }
+
+        .wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            filter: blur(106px);
+            z-index: -1;
+        }
+
+        .gradient {
+            position: absolute;
+            border-radius: 100%;
+            opacity: 0.6;
+            mix-blend-mode: screen;
+            animation-iteration-count: infinite;
+            animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
+        }
+
+        .gradient-1 {
+            background: rgb(156, 114, 105);
+            width: 700px;
+            height: 700px;
+            animation-duration: 9s;
+            opacity: 0.2;
+            left: 60%;
+            top: 40%;
+            z-index: -2;
+            animation-name: animation-gradient-1;
+        }
+
+        .gradient-2 {
+            background: rgb(237, 174, 96);
+            width: 600px;
+            height: 600px;
+            animation-duration: 9s;
+            opacity: 0.1;
+            left: 40%;
+            top: 60%;
+            z-index: -1;
+            animation-name: animation-gradient-2;
+        }
+
+        .gradient-3 {
+            background: rgb(146, 149, 176);
+            width: 500px;
+            height: 500px;
+            animation-duration: 9s;
+            opacity: 0.4;
+            left: 50%;
+            top: 50%;
+            z-index: -3;
+            animation-name: animation-gradient-3;
+        }
+
+        @keyframes animation-gradient-1 {
+            0% { transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%); }
+            25% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%); }
+            50% { transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%); }
+            75% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%); }
+            100% { transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%); }
+        }
+
+        @keyframes animation-gradient-2 {
+            0% { transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%); }
+            25% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%); }
+            50% { transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%); }
+            75% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%); }
+            100% { transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%); }
+        }
+
+        @keyframes animation-gradient-3 {
+            0% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
+            20% { transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%); }
+            40% { transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%); }
+            60% { transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%); }
+            80% { transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%); }
+            100% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
+        }
+
         @media (max-width: 768px) {
             .content-wrapper {
                 flex-direction: column;
@@ -89,187 +169,64 @@
                 margin-bottom: 2rem;
             }
 
-            h1 {
+            header {
                 font-size: 3rem;
             }
 
-            .profile-content p{
+            .profile-content p {
                 font-size: 0.9rem;
             }
         }
 
         @media (max-width: 480px) {
-            h1 {
+            header {
                 font-size: 2.5rem;
             }
 
-            .profile-content p{
+            .profile-content p {
                 font-size: 0.8rem;
             }
         }
     </style>
-
-/Background Interactive Image
-
-  .wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    filter: blur(106px);
-    z-index: -1;
-  }
-
-  .gradient {
-    position: absolute;
-    border-radius: 100%;
-    opacity: 0.6;
-    mix-blend-mode: screen;
-    animation-iteration-count: infinite;
-    animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
-  }
-
-  .gradient-1 {
-    background: rgb(156, 114, 105);
-    width: 700px;
-    height: 700px;
-    animation-duration: 9s;
-    opacity: 0.2;
-    left: 60%;
-    top: 40%;
-    z-index: -2;
-    animation-name: animation-gradient-1;
-  }
-
-  .gradient-2 {
-    background: rgb(237, 174, 96);
-    width: 600px;
-    height: 600px;
-    animation-duration: 9s;
-    opacity: 0.1;
-    left: 40%;
-    top: 60%;
-    z-index: -1;
-    animation-name: animation-gradient-2;
-  }
-
-  .gradient-3 {
-    background: rgb(146, 149, 176);
-    width: 500px;
-    height: 500px;
-    animation-duration: 9s;
-    opacity: 0.4;
-    left: 50%;
-    top: 50%;
-    z-index: -3;
-    animation-name: animation-gradient-3;
-  }
-
-  @keyframes animation-gradient-1 {
-    0% {
-      transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%);
-    }
-    25% {
-      transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%);
-    }
-    50% {
-      transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%);
-    }
-    75% {
-      transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%);
-    }
-    100% {
-      transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%);
-    }
-  }
-
-  @keyframes animation-gradient-2 {
-    0% {
-      transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%);
-    }
-    25% {
-      transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%);
-    }
-    50% {
-      transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%);
-    }
-    75% {
-      transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%);
-    }
-    100% {
-      transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%);
-    }
-  }
-
-  @keyframes animation-gradient-3 {
-    0% {
-      transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
-    }
-    20% {
-      transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%);
-    }
-    40% {
-      transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%);
-    }
-    60% {
-      transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%);
-    }
-    80% {
-      transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%);
-    }
-    100% {
-      transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
-    }
-  }
-  header, nav, article, ul, li, p, table, td, img {
-    position: relative;
-    z-index: 1; /* Ensure the text and links are above the gradients */
-  }
-</style>
 </head>
-
-<div class="wrapper">
-  <div class="gradient gradient-1"></div>
-  <div class="gradient gradient-2"></div>
-  <div class="gradient gradient-3"></div>
-</div>
-<div class="container">
+<body>
+    <div class="wrapper">
+        <div class="gradient gradient-1"></div>
+        <div class="gradient gradient-2"></div>
+        <div class="gradient gradient-3"></div>
+    </div>
+    <div class="container">
         <header>
             Welcome
         </header>
 
         <div class="content-wrapper">
             <div class="profile-image">
-                <img src="main/images/me.png" alt="Marcos profile picture">
+                <img src="main/images/me.png" alt="Marcos profile picture" id="profile-pic">
             </div>
-<article>
-  	<table>
-	    <tr>
-	<p>Hi, I’m Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w">video</a> which led me to the paper “Randomized Matrix Decompositions using R” by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
-        <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
-      </td>
-    </tr>
-  </table>
-</article>
-<hr>
+            <div class="profile-content">
+                <p>Hi, I'm Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w" id="video-link">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
+                <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
+            </div>
+        </div>
 
-<p>Some of my most recent projects:</p>
+        <hr>
 
-<ul>
-  <li><a href="main/subjects/fair/index.html">200 kdb+/q interview style</a> problems and solutions to have fun with.</li>
-  <li><a href="main/subjects/util/index.html">Dynamic ETF Pair Trading Strategy</a> in kdb+ and R.</li>
-  <li><a href="main/about/index.html">q Library</a> for basic intraday market analysis with a focus on market quality, systemic risk and anomaly detection targeted to novice q users.</li>
-  <li><a href="main/subjects/hkex/index.html">A Multi-order type orderbook</a> in kdb+ and python.</li>
-  <!-- <li><a href="main/about/index.html">Predicting Realized Volatility with Machine Learning</a> in Python.</li>
-  <!-- <li><a href="main/about/index.html">Fast Fourier Transform (FFT) Signal Processing for Correlated Signals</a> in kbd+.</li> -->
-</ul>
+        <p>Some of my most recent projects:</p>
 
-<hr>
+        <ul>
+            <li><a href="main/subjects/fair/index.html">200 kdb+/q interview style</a> problems and solutions to have fun with.</li>
+            <li><a href="main/subjects/util/index.html">Dynamic ETF Pair Trading Strategy</a> in kdb+ and R.</li>
+            <li><a href="main/about/index.html">q Library</a> for basic intraday market analysis with a focus on market quality, systemic risk and anomaly detection targeted to novice q users.</li>
+            <li><a href="main/subjects/hkex/index.html">A Multi-order type orderbook</a> in kdb+ and python.</li>
+        </ul>
 
-<p><center>Design is intended to be clean, purposeful and easy to maintain, crafted from the ground up.</center></p>
-<script>
+        <hr>
+
+        <p style="text-align: center;">Design is intended to be clean, purposeful and easy to maintain, crafted from the ground up.</p>
+    </div>
+
+    <script>
         // Fade-in animation for content
         document.addEventListener('DOMContentLoaded', () => {
             document.body.style.opacity = 0;
@@ -297,10 +254,6 @@
             e.preventDefault();
             alert('Video content is not available at the moment. Check back later!');
         });
-</script>
+    </script>
 </body>
 </html>
-
-
-
-
