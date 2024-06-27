@@ -8,189 +8,184 @@
     <script src="main/script/page.js"></script>
 
     <style>
-        :root {
-            --primary-color: #3399ff;
-            --background-color: rgba(26, 26, 26, 0.7);
-            --text-color: #ffffff;
-        }
+    :root {
+        --primary-color: #3399ff;
+        --background-color: rgba(0, 0, 0, 0.8);
+        --text-color: #ffffff;
+    }
 
-        body, html {
-            font-family: Lucida Sans Unicode, Arial, Helvetica, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            font-size: 16px;
-            overflow-x: hidden;
-        }
+    body, html, .container, .profile-content, .profile-content p {
+        font-family: Lucida Sans Unicode, Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 4mm;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 2;
-            background-color: rgba(26, 26, 26, 0.7);
-        }
+    body, html {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
 
-        header {
-            color: var(--primary-color);
-            text-align: center;
-            font-size: 4rem;
-            margin-bottom: 2rem;
-        }
+    .container {
+        max-width: 100vh;
+        height: 100vh;
+        margin: 0 auto;
+        padding: 2rem;
+        position: absolute;
+        z-index: 2;
+        background-color: rgba(26, 26, 26, 0.7);
+    }
 
+    header {
+        color: var(--primary-color);
+        text-align: center;
+        font-size: 24pt;
+        font-weight: normal;
+        line-height: 16mm;
+        margin: 0 0 2mm -8mm;
+    }
+
+    .content-wrapper {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .profile-image {
+        flex: 0 0 40%;
+        max-width: 400px;
+    }
+
+    .profile-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+        transition: transform 0.3s;
+    }
+
+    .profile-content {
+        flex: 1;
+    }
+
+    .profile-content p {
+        margin: 0 0 4mm 0;
+    }
+
+    a:link, a:visited {
+        color: #0000CC;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #CC0000;
+    }
+
+    .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -1;
+    }
+
+    .gradient {
+        position: absolute;
+        border-radius: 100%;
+        opacity: 0.6;
+        mix-blend-mode: screen;
+        animation-iteration-count: infinite;
+        animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
+    }
+
+    .gradient-1 {
+        background: rgb(156, 114, 105);
+        width: 700px;
+        height: 700px;
+        animation-duration: 9s;
+        opacity: 0.3;
+        left: 60%;
+        top: 40%;
+        z-index: -2;
+        animation-name: animation-gradient-1;
+    }
+
+    .gradient-2 {
+        background: rgb(237, 174, 96);
+        width: 600px;
+        height: 600px;
+        animation-duration: 9s;
+        opacity: 0.1;
+        left: 40%;
+        top: 60%;
+        z-index: -1;
+        animation-name: animation-gradient-2;
+    }
+
+    .gradient-3 {
+        background: rgb(230, 224, 200);
+        width: 500px;
+        height: 500px;
+        animation-duration: 9s;
+        opacity: 0.26;
+        left: 50%;
+        top: 50%;
+        z-index: -3;
+        animation-name: animation-gradient-3;
+    }
+
+    @keyframes animation-gradient-1 {
+        0% { transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%); }
+        25% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%); }
+        50% { transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%); }
+        75% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%); }
+        100% { transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%); }
+    }
+
+    @keyframes animation-gradient-2 {
+        0% { transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%); }
+        25% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%); }
+        50% { transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%); }
+        75% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%); }
+        100% { transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%); }
+    }
+
+    @keyframes animation-gradient-3 {
+        0% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
+        20% { transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%); }
+        40% { transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%); }
+        60% { transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%); }
+        80% { transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%); }
+        100% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
+    }
+
+    @media (max-width: 768px) {
         .content-wrapper {
-            display: flex;
-            gap: 2rem;
+            flex-direction: column;
         }
 
         .profile-image {
-            flex: 0 0 40%;
-            max-width: 400px;
+            max-width: 100%;
+            margin-bottom: 2rem;
         }
 
-        .profile-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 50%;
-            object-fit: cover;
-            aspect-ratio: 1 / 1;
-            transition: transform 0.3s;
+        header {
+            font-size: 20pt;
         }
+    }
 
-        .profile-content {
-              flex: 1;
-            font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-            font-size: 16px;
+    @media (max-width: 480px) {
+        header {
+            font-size: 18pt;
         }
+    }
+</style> 
 
-        .profile-content p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: #66b3ff;
-        }
-
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .gradient {
-            position: absolute;
-            border-radius: 100%;
-            opacity: 0.6;
-            mix-blend-mode: screen;
-            animation-iteration-count: infinite;
-            animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
-        }
-
-        .gradient-1 {
-            background: rgb(156, 114, 105);
-            width: 700px;
-            height: 700px;
-            animation-duration: 9s;
-            opacity: 0.3;
-            left: 60%;
-            top: 40%;
-            z-index: -2;
-            animation-name: animation-gradient-1;
-        }
-
-        .gradient-2 {
-            background: rgb(237, 174, 96);
-            width: 600px;
-            height: 600px;
-            animation-duration: 9s;
-            opacity: 0.6;
-            left: 40%;
-            top: 60%;
-            z-index: -1;
-            animation-name: animation-gradient-2;
-        }
-
-        .gradient-3 {
-            background: rgb(230, 224, 200);
-            width: 500px;
-            height: 500px;
-            animation-duration: 9s;
-            opacity: 0.6;
-            left: 50%;
-            top: 50%;
-            z-index: -3;
-            animation-name: animation-gradient-3;
-        }
-
-        @keyframes animation-gradient-1 {
-            0% { transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%); }
-            25% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%); }
-            50% { transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%); }
-            75% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%); }
-            100% { transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%); }
-        }
-
-        @keyframes animation-gradient-2 {
-            0% { transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%); }
-            25% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%); }
-            50% { transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%); }
-            75% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%); }
-            100% { transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%); }
-        }
-
-        @keyframes animation-gradient-3 {
-            0% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
-            20% { transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%); }
-            40% { transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%); }
-            60% { transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%); }
-            80% { transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%); }
-            100% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
-        }
-
-        @media (max-width: 768px) {
-            .content-wrapper {
-                flex-direction: column;
-            }
-
-            .profile-image {
-                max-width: 100%;
-                margin-bottom: 2rem;
-            }
-
-            header {
-                font-size: 3rem;
-            }
-
-            .profile-content p {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                font-size: 2.5rem;
-            }
-
-            .profile-content p {
-                font-size: 0.8rem;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="background">
