@@ -10,26 +10,49 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 10px;
-            font-size: 16px;
+            padding: 20px;
+            font-size: 18px;
+        }
+        header {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-left: 15px;
+        }
+        .mail-me {
+            margin-top: 60px;
+            margin-bottom: 20px;
         }
         h1, h2, h3 {
             color: #2c3e50;
         }
         h1 {
-            font-size: 2em;
+            font-size: 2.2em;
+            text-align: center;
         }
         h2 {
-            font-size: 1.5em;
+            font-size: 1.8em;
         }
         h3 {
-            font-size: 1.2em;
+            font-size: 1.4em;
         }
         .contact-info {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .contact-info a {
             color: #3498db;
@@ -39,38 +62,51 @@
             text-decoration: underline;
         }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         ul {
             padding-left: 20px;
         }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+        }
         @media (max-width: 768px) {
             body {
-                padding: 10px;
-                font-size: 20px;
+                font-size: 16px;
+                padding: 15px;
+            }
+            nav {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .mail-me {
+                margin-top: 20px;
             }
             h1 {
-                font-size: 2.0em;
+                font-size: 2em;
             }
             h2 {
-                font-size: 1.8em;
+                font-size: 1.6em;
             }
             h3 {
-                font-size: 1.6em;
+                font-size: 1.3em;
             }
         }
         @media (max-width: 480px) {
             body {
-                font-size: 16px;
+                font-size: 14px;
             }
             h1 {
-                font-size: 1.6em;
+                font-size: 1.8em;
             }
             h2 {
-                font-size: 1.2em;
+                font-size: 1.4em;
             }
             h3 {
-                font-size: 1em;
+                font-size: 1.2em;
             }
         }
     </style>
@@ -78,7 +114,7 @@
 </head>
 <body onload="setNav()">
     <header>
-     R&eacute;sum&eacute;
+        R&eacute;sum&eacute;
     </header>
 
     <nav>
@@ -92,16 +128,16 @@
         </form>
     </nav>
 
-    <article>
+    <div class="mail-me">
         <p><a href="mailto:jaenmarcos15@gmail.com">Mail me</a> if you have any questions.</p>
-    </article>
+    </div>
 
-    <h1><center>Marcos Jaen</center></h1>
+    <h1>Marcos Jaen</h1>
     
     <div class="contact-info">
         <p>
             <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a> | 
-            <a href="https://linkedin.com/in/jaencort/">linkedin.com/in/jaencort/</a> 
+            <a href="https://linkedin.com/in/jaencort/">linkedin.com/in/jaencort/</a>
         </p>
     </div>
 
