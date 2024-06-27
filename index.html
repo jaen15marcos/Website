@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcos Jaen - Home</title>
+<link rel="stylesheet" href="main/style/page.css">
+<script src="main/script/page.js"></script>
+
     <style>
         :root {
             --primary-color: #3399ff;
@@ -76,76 +79,6 @@
         a:hover {
             color: #66b3ff;
         }
-
-        .projects {
-            margin-top: 2rem;
-        }
-
-        .projects h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .projects ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .projects li {
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .project-title {
-            cursor: pointer;
-            color: var(--primary-color);
-        }
-
-        .project-details {
-            display: none;
-            margin-top: 0.5rem;
-            padding-left: 1rem;
-            border-left: 2px solid var(--primary-color);
-        }
-
-        .contact-form {
-            margin-top: 2rem;
-        }
-
-        .contact-form h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact-form form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            padding: 0.5rem;
-            border: 1px solid var(--primary-color);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-        }
-
-        .contact-form button {
-            padding: 0.5rem 1rem;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .contact-form button:hover {
-            background-color: #66b3ff;
-        }
-
         @media (max-width: 768px) {
             .content-wrapper {
                 flex-direction: column;
@@ -160,7 +93,7 @@
                 font-size: 3rem;
             }
 
-            .profile-content p, .projects li {
+            .profile-content p{
                 font-size: 0.9rem;
             }
         }
@@ -170,16 +103,139 @@
                 font-size: 2.5rem;
             }
 
-            .profile-content p, .projects li {
+            .profile-content p{
                 font-size: 0.8rem;
             }
         }
     </style>
-</head>
-<body>
-    <button class="theme-toggle" id="theme-toggle">Switch to Light Mode</button>
 
-    <div class="container">
+/Background Interactive Image
+
+  .wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    filter: blur(106px);
+    z-index: -1;
+  }
+
+  .gradient {
+    position: absolute;
+    border-radius: 100%;
+    opacity: 0.6;
+    mix-blend-mode: screen;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
+  }
+
+  .gradient-1 {
+    background: rgb(156, 114, 105);
+    width: 700px;
+    height: 700px;
+    animation-duration: 9s;
+    opacity: 0.2;
+    left: 60%;
+    top: 40%;
+    z-index: -2;
+    animation-name: animation-gradient-1;
+  }
+
+  .gradient-2 {
+    background: rgb(237, 174, 96);
+    width: 600px;
+    height: 600px;
+    animation-duration: 9s;
+    opacity: 0.1;
+    left: 40%;
+    top: 60%;
+    z-index: -1;
+    animation-name: animation-gradient-2;
+  }
+
+  .gradient-3 {
+    background: rgb(146, 149, 176);
+    width: 500px;
+    height: 500px;
+    animation-duration: 9s;
+    opacity: 0.4;
+    left: 50%;
+    top: 50%;
+    z-index: -3;
+    animation-name: animation-gradient-3;
+  }
+
+  @keyframes animation-gradient-1 {
+    0% {
+      transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%);
+    }
+    25% {
+      transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%);
+    }
+    50% {
+      transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%);
+    }
+    75% {
+      transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%);
+    }
+    100% {
+      transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%);
+    }
+  }
+
+  @keyframes animation-gradient-2 {
+    0% {
+      transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%);
+    }
+    25% {
+      transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%);
+    }
+    50% {
+      transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%);
+    }
+    75% {
+      transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%);
+    }
+    100% {
+      transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%);
+    }
+  }
+
+  @keyframes animation-gradient-3 {
+    0% {
+      transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
+    }
+    20% {
+      transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%);
+    }
+    40% {
+      transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%);
+    }
+    60% {
+      transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%);
+    }
+    80% {
+      transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%);
+    }
+    100% {
+      transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
+    }
+  }
+  header, nav, article, ul, li, p, table, td, img {
+    position: relative;
+    z-index: 1; /* Ensure the text and links are above the gradients */
+  }
+</style>
+</head>
+
+<div class="wrapper">
+  <div class="gradient gradient-1"></div>
+  <div class="gradient gradient-2"></div>
+  <div class="gradient gradient-3"></div>
+</div>
+<div class="container">
         <header>
             Welcome
         </header>
@@ -188,29 +244,32 @@
             <div class="profile-image">
                 <img src="main/images/me.png" alt="Marcos profile picture">
             </div>
-            <div class="profile-content">
-                <p>Hi, I'm Marcos, a KDB+ programmer based in Toronto. My current role primarily involves in-depth research and analysis of data from Canadian marketplaces. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
-                <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
-            </div>
-        </div>
+<article>
+  	<table>
+	    <tr>
+	<p>Hi, I’m Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w">video</a> which led me to the paper “Randomized Matrix Decompositions using R” by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
+        <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
+      </td>
+    </tr>
+  </table>
+</article>
+<hr>
 
-        <hr>
+<p>Some of my most recent projects:</p>
 
-        <p>Some of my most recent projects:</p>
+<ul>
+  <li><a href="main/subjects/fair/index.html">200 kdb+/q interview style</a> problems and solutions to have fun with.</li>
+  <li><a href="main/subjects/util/index.html">Dynamic ETF Pair Trading Strategy</a> in kdb+ and R.</li>
+  <li><a href="main/about/index.html">q Library</a> for basic intraday market analysis with a focus on market quality, systemic risk and anomaly detection targeted to novice q users.</li>
+  <li><a href="main/subjects/hkex/index.html">A Multi-order type orderbook</a> in kdb+ and python.</li>
+  <!-- <li><a href="main/about/index.html">Predicting Realized Volatility with Machine Learning</a> in Python.</li>
+  <!-- <li><a href="main/about/index.html">Fast Fourier Transform (FFT) Signal Processing for Correlated Signals</a> in kbd+.</li> -->
+</ul>
 
-        <ul>
-            <li><a href="main/subjects/fair/index.html">200 kdb+/q interview style</a> problems and solutions to have fun with.</li>
-            <li><a href="main/subjects/util/index.html">Dynamic ETF Pair Trading Strategy</a> in kdb+ and R.</li>
-            <li><a href="main/about/index.html">q Library</a> for basic intraday market analysis with a focus on market quality, systemic risk and anomaly detection targeted to novice q users.</li>
-            <li><a href="main/subjects/hkex/index.html">A Multi-order type orderbook</a> in kdb+ and python.</li>
-        </ul>
+<hr>
 
-        <hr>
-
-        <p style="text-align: center;">Design is intended to be clean, purposeful and easy to maintain, crafted from the ground up.</p>
-    </div>
-
-    <script>
+<p><center>Design is intended to be clean, purposeful and easy to maintain, crafted from the ground up.</center></p>
+<script>
         // Fade-in animation for content
         document.addEventListener('DOMContentLoaded', () => {
             document.body.style.opacity = 0;
@@ -238,54 +297,10 @@
             e.preventDefault();
             alert('Video content is not available at the moment. Check back later!');
         });
-
-        // Download CV
-        document.getElementById('cv-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('CV download started. (This is a simulation)');
-        });
-
-        // Add new project dynamically
-        const addProject = (title, description, link) => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span class="project-title">${title}</span>
-                <div class="project-details">
-                    <p>${description}</p>
-                    <a href="${link}">Learn more</a>
-                </div>
-            `;
-            document.getElementById('project-list').appendChild(li);
-            addExpandListener(li.querySelector('.project-title'));
-        };
-
-        // Expandable project sections
-        const addExpandListener = (title) => {
-            title.addEventListener('click', () => {
-                const details = title.nextElementSibling;
-                details.style.display = details.style.display === 'none' ? 'block' : 'none';
-            });
-        };
-
-        document.querySelectorAll('.project-title').forEach(addExpandListener);
-
-
-        // Theme toggle functionality
-        const themeToggle = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        themeToggle.addEventListener('click', () => {
-            if (htmlElement.getAttribute('data-theme') === 'dark') {
-                htmlElement.setAttribute('data-theme', 'light');
-                themeToggle.textContent = 'Switch to Dark Mode';
-            } else {
-                htmlElement.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = 'Switch to Light Mode';
-            }
-        });
-
-        // Example usage of addProject:
-        // addProject('New Project', 'Description of the new project', '#');
-    </script>
+</script>
 </body>
 </html>
+
+
+
+
