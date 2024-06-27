@@ -8,226 +8,223 @@
     <script src="main/script/page.js"></script>
 
     <style>
-    :root {
+        :root {
         --primary-color: #3399ff;
         --background-color: rgba(0, 0, 0, 1);
         --text-color: #ffffff;
-    }
+    	}
 
-    body, html, .container, .profile-content, .profile-content p {
+    	body, html, .container, .profile-content, .profile-content p {
         font-family: Lucida Sans Unicode, Arial, Helvetica, sans-serif;
        
-    }
+    	}
 
-    body, html {
+    	body, html {
         background-color: var(--background-color);
         color: var(--text-color);
         margin: 0;
         padding: 0;
         overflow-x: hidden;
-    }
+    	}
 
-    .container {
+    	.container {
         margin: 0 auto;
         padding: 2rem;
         position: absolute;
         z-index: 2;
-    }
+    	}
 
-    header {
-        color: var(--primary-color);
-        text-align: center;
-        font-size: 34pt;
-        font-weight: normal;
-        line-height: 16mm;
-        margin: 0 0 2mm -8mm;
-    }
+        header {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 34pt;
+            font-weight: normal;
+            line-height: 16mm;
+            margin: 0 0 2mm -8mm;
+        }
 
-    .content-wrapper {
-        display: flex;
-        gap: 2rem;
-    }
-
-    .profile-image {
-        flex: 0 0 40%;
-        max-width: 400px;
-    }
-
-    .profile-image img {
-        width: 100%;
-        height: auto;
-        border-radius: 50%;
-        object-fit: cover;
-        aspect-ratio: 1 / 1;
-        transition: transform 0.3s;
-    }
-
-    .profile-content {
-        flex: 1;
-    }
-
-    .profile-content p {
-        margin: 0 0 4mm 0;
-    }
-
-    a:link, a:visited {
-        color: #0000CC;
-        text-decoration: none;
-    }
-
-    a:hover {
-        color: #CC0000;
-    }
-
-    .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        z-index: -1;
-    }
-    
-    * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-	}
-
-	.navbar {
-  min-width: 700px;
-  width: 100%;
-	}
-
-.nav--list {
-  position: relative;
-  width: 100%;
-  height: 100px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  list-style: none;
-	}
-
-.active {
-  position: absolute;
-  z-index: 1;
-  width: 0%;
-  height: 0%;
-  background: #000;
-  border-radius: 5px;
-  transition: left 300ms ease, width 200ms 200ms ease;
-}
-
-.item {
-  padding: 10px;
-  margin: 10px;
-  z-index: 20;
-}
-
-.item a {
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 20px;
-  color: #fff;
-  letter-spacing: 3px;
-  text-shadow: 4px 3px 3px #1b365d;
-}
-
-    .gradient {
-        position: absolute;
-        border-radius: 100%;
-        opacity: 0.6;
-        mix-blend-mode: screen;
-        animation-iteration-count: infinite;
-        animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
-    }
-
-    .gradient-1 {
-        background: rgb(156, 114, 105);
-        width: 700px;
-        height: 700px;
-        animation-duration: 9s;
-        opacity: 0.3;
-        left: 60%;
-        top: 40%;
-        z-index: -2;
-        animation-name: animation-gradient-1;
-    }
-
-    .gradient-2 {
-        background: rgb(237, 174, 96);
-        width: 600px;
-        height: 600px;
-        animation-duration: 9s;
-        opacity: 0.1;
-        left: 40%;
-        top: 60%;
-        z-index: -1;
-        animation-name: animation-gradient-2;
-    }
-
-    .gradient-3 {
-        background: rgb(230, 224, 200);
-        width: 500px;
-        height: 500px;
-        animation-duration: 9s;
-        opacity: 0.26;
-        left: 50%;
-        top: 50%;
-        z-index: -3;
-        animation-name: animation-gradient-3;
-    }
-
-    @keyframes animation-gradient-1 {
-        0% { transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%); }
-        25% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%); }
-        50% { transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%); }
-        75% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%); }
-        100% { transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%); }
-    }
-
-    @keyframes animation-gradient-2 {
-        0% { transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%); }
-        25% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%); }
-        50% { transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%); }
-        75% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%); }
-        100% { transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%); }
-    }
-
-    @keyframes animation-gradient-3 {
-        0% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
-        20% { transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%); }
-        40% { transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%); }
-        60% { transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%); }
-        80% { transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%); }
-        100% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
-    }
-
-    @media (max-width: 768px) {
         .content-wrapper {
-            flex-direction: column;
+            display: flex;
+            gap: 2rem;
         }
 
         .profile-image {
-            max-width: 100%;
-            margin-bottom: 2rem;
+            flex: 0 0 40%;
+            max-width: 400px;
         }
 
-        header {
-            font-size: 42pt;
+        .profile-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            transition: transform 0.3s;
         }
-    }
 
-    @media (max-width: 480px) {
-        header {
-            font-size: 32pt;
+        .profile-content {
+            flex: 1;
         }
-    }
-</style> 
 
+        .profile-content p {
+            margin: 0 0 1rem 0;
+        }
+
+        a:link, a:visited {
+            color: #0000CC;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #CC0000;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .navbar {
+            min-width: 700px;
+            width: 100%;
+        }
+
+        .nav--list {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+        }
+
+        .active {
+            position: absolute;
+            z-index: 1;
+            width: 0%;
+            height: 0%;
+            background: #000;
+            border-radius: 5px;
+            transition: left 300ms ease, width 200ms 200ms ease;
+        }
+
+        .item {
+            padding: 10px;
+            margin: 10px;
+            z-index: 20;
+        }
+
+        .item a {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 3px;
+            text-shadow: 4px 3px 3px #1b365d;
+        }
+
+        .gradient {
+            position: absolute;
+            border-radius: 100%;
+            opacity: 0.6;
+            mix-blend-mode: screen;
+            animation-iteration-count: infinite;
+            animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
+        }
+
+        .gradient-1 {
+            background: rgb(156, 114, 105);
+            width: 700px;
+            height: 700px;
+            animation-duration: 9s;
+            opacity: 0.3;
+            left: 60%;
+            top: 40%;
+            z-index: -2;
+            animation-name: animation-gradient-1;
+        }
+
+        .gradient-2 {
+            background: rgb(237, 174, 96);
+            width: 600px;
+            height: 600px;
+            animation-duration: 9s;
+            opacity: 0.1;
+            left: 40%;
+            top: 60%;
+            z-index: -1;
+            animation-name: animation-gradient-2;
+        }
+
+        .gradient-3 {
+            background: rgb(230, 224, 200);
+            width: 500px;
+            height: 500px;
+            animation-duration: 9s;
+            opacity: 0.26;
+            left: 50%;
+            top: 50%;
+            z-index: -3;
+            animation-name: animation-gradient-3;
+        }
+
+        @keyframes animation-gradient-1 {
+            0% { transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%); }
+            25% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%); }
+            50% { transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%); }
+            75% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%); }
+            100% { transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%); }
+        }
+
+        @keyframes animation-gradient-2 {
+            0% { transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%); }
+            25% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%); }
+            50% { transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%); }
+            75% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%); }
+            100% { transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%); }
+        }
+
+        @keyframes animation-gradient-3 {
+            0% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
+            20% { transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%); }
+            40% { transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%); }
+            60% { transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%); }
+            80% { transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%); }
+            100% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .profile-image {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            header {
+                font-size: 42pt;
+            }
+
+            .navbar {
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 32pt;
+            }
+        }
+    </style> 
 </head>
 <body>
     <div class="background">
@@ -237,26 +234,25 @@
     </div>
     
     <div class="container">
-  <nav class="navbar">
-    <ul class="nav--list">
-      <li class="active"></li>
-      <li class="item"><a href="#">Home</a></li>
-      <li class="item"><a href="#">About</a></li>
-      <li class="item"><a href="#">Products</a></li>
-      <li class="item"><a href="#">Blog</a></li>
-      <li class="item"><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-</div>
+        <nav class="navbar">
+            <ul class="nav--list">
+                <li class="active"></li>
+                <li class="item"><a href="#">Home</a></li>
+                <li class="item"><a href="#">About</a></li>
+                <li class="item"><a href="#">Products</a></li>
+                <li class="item"><a href="#">Blog</a></li>
+                <li class="item"><a href="#">Contact</a></li>
+            </ul>
+        </nav>
 
-    <div class="container">
+        <header>Welcome</header>
 
         <div class="content-wrapper">
             <div class="profile-image">
                 <img src="main/images/me.png" alt="Marcos profile picture" id="profile-pic">
             </div>
             <div class="profile-content">
-                <p>Hi, I'm Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w" target="_blank">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
+                <p>Hi, I'm Marcos, a KDB+ programmer based in Toronto. My current role primarily involves in-depth research and analysis of data from Canadian marketplaces. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w" target="_blank">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
                 <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
             </div>
         </div>
@@ -286,41 +282,41 @@
                 document.body.style.opacity = opacity;
                 opacity += 0.1;
             }, 100);
+
+            const profilePic = document.getElementById('profile-pic');
+            profilePic.addEventListener('mouseover', () => {
+                profilePic.style.transform = 'scale(1.1)';
+            });
+            profilePic.addEventListener('mouseout', () => {
+                profilePic.style.transform = 'scale(1)';
+            });
+            
+            const items = document.querySelectorAll(".item");
+            const active = document.querySelector(".active");
+
+            function reset() {
+                active.style.left = `${items[0].offsetLeft}px`;
+                active.style.top = `${items[0].offsetTop}px`;
+                active.style.width = `${items[0].clientWidth}px`;
+                active.style.height = `${items[0].clientHeight}px`;
+            }
+
+            reset();
+
+            items.forEach((elem) => {
+                elem.addEventListener("click", (e) => {
+                    const distanceLeft = elem.offsetLeft;
+                    const distanceTop = elem.offsetTop;
+                    const elemWidth = elem.clientWidth;
+                    const elemHeight = elem.clientHeight;
+
+                    active.style.width = `${elemWidth}px`;
+                    active.style.height = `${elemHeight}px`;
+                    active.style.left = `${distanceLeft}px`;
+                    active.style.top = `${distanceTop}px`;
+                });
+            });
         });
-
-        const profilePic = document.getElementById('profile-pic');
-        profilePic.addEventListener('mouseover', () => {
-            profilePic.style.transform = 'scale(1.1)';
-        });
-        profilePic.addEventListener('mouseout', () => {
-            profilePic.style.transform = 'scale(1)';
-        });
-        
-        const items = document.querySelectorAll(".item");
-	const active = document.querySelector(".active");
-	let distanceLeft, distanceTop, elemWidth, elemHeight;
-
-	(function reset() {
-  		active.style.left = `${items[0].offsetLeft}px`;
-  		active.style.top = `${items[0].offsetTop}px`;
-  		active.style.width = `${items[0].clientWidth}px`;
-  		active.style.height = `${items[0].clientHeight}px`;
-	})();
-
-	items.forEach((elem) => {
-  	elem.addEventListener("click", (e) => {
-    distanceLeft = elem.offsetLeft;
-    distanceTop = elem.offsetTop;
-    elemWidth = elem.clientWidth;
-    elemHeight = elem.clientHeight;
-
-    active.style.width = `${elemWidth}px`;
-    active.style.height = `${elemHeight}px`;
-    active.style.left = `${distanceLeft}px`;
-    active.style.top = `${distanceTop}px`;
-  });
-});
-
     </script>
 </body>
 </html>
