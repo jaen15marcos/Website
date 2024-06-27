@@ -88,6 +88,53 @@
         overflow: hidden;
         z-index: -1;
     }
+    
+    * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+	}
+
+	.navbar {
+  min-width: 700px;
+  width: 100%;
+	}
+
+.nav--list {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+	}
+
+.active {
+  position: absolute;
+  z-index: 1;
+  width: 0%;
+  height: 0%;
+  background: #000;
+  border-radius: 5px;
+  transition: left 300ms ease, width 200ms 200ms ease;
+}
+
+.item {
+  padding: 10px;
+  margin: 10px;
+  z-index: 20;
+}
+
+.item a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 3px;
+  text-shadow: 4px 3px 3px #1b365d;
+}
 
     .gradient {
         position: absolute;
@@ -188,11 +235,21 @@
         <div class="gradient gradient-2"></div>
         <div class="gradient gradient-3"></div>
     </div>
+    
+    <div class="container">
+  <nav class="navbar">
+    <ul class="nav--list">
+      <li class="active"></li>
+      <li class="item"><a href="#">Home</a></li>
+      <li class="item"><a href="#">About</a></li>
+      <li class="item"><a href="#">Products</a></li>
+      <li class="item"><a href="#">Blog</a></li>
+      <li class="item"><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</div>
 
     <div class="container">
-        <header>
-        Welcome
-        </header>
 
         <div class="content-wrapper">
             <div class="profile-image">
@@ -238,6 +295,32 @@
         profilePic.addEventListener('mouseout', () => {
             profilePic.style.transform = 'scale(1)';
         });
+        
+        const items = document.querySelectorAll(".item");
+	const active = document.querySelector(".active");
+	let distanceLeft, distanceTop, elemWidth, elemHeight;
+
+	(function reset() {
+  		active.style.left = `${items[0].offsetLeft}px`;
+  		active.style.top = `${items[0].offsetTop}px`;
+  		active.style.width = `${items[0].clientWidth}px`;
+  		active.style.height = `${items[0].clientHeight}px`;
+	})();
+
+	items.forEach((elem) => {
+  	elem.addEventListener("click", (e) => {
+    distanceLeft = elem.offsetLeft;
+    distanceTop = elem.offsetTop;
+    elemWidth = elem.clientWidth;
+    elemHeight = elem.clientHeight;
+
+    active.style.width = `${elemWidth}px`;
+    active.style.height = `${elemHeight}px`;
+    active.style.left = `${distanceLeft}px`;
+    active.style.top = `${distanceTop}px`;
+  });
+});
+
     </script>
 </body>
 </html>
