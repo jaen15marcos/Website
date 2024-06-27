@@ -7,13 +7,8 @@
     <style>
         :root {
             --primary-color: #3399ff;
-            --background-color: #000;
-            --text-color: #fff;
-        }
-
-        [data-theme="light"] {
-            --background-color: #f0f0f0;
-            --text-color: #333;
+            --background-color: #1a1a1a;
+            --text-color: #ffffff;
         }
 
         body, html {
@@ -24,37 +19,52 @@
             padding: 0;
             height: 100%;
             font-size: 16px;
-            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        header {
+        h1 {
+            color: var(--primary-color);
             text-align: center;
-            font-size: 2rem;
+            font-size: 4rem;
             margin-bottom: 2rem;
         }
 
         .content-wrapper {
             display: flex;
+            flex: 1;
             gap: 2rem;
         }
 
         .profile-image {
-            flex: 0 0 30%;
+            flex: 0 0 40%;
+            max-width: 400px;
         }
 
         .profile-image img {
-            max-width: 100%;
-            border-radius: 10px;
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            transition: transform 0.3s;
         }
 
         .profile-content {
             flex: 1;
+        }
+
+        .profile-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
         a {
@@ -67,124 +77,73 @@
             color: #66b3ff;
         }
 
-        ul {
+        .projects {
+            margin-top: 2rem;
+        }
+
+        .projects h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .projects ul {
             list-style-type: none;
             padding: 0;
         }
 
-        li {
+        .projects li {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .project-title {
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .project-details {
+            display: none;
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--primary-color);
+        }
+
+        .contact-form {
+            margin-top: 2rem;
+        }
+
+        .contact-form h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
             margin-bottom: 1rem;
         }
 
-        .theme-toggle {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 0.5rem;
+            border: 1px solid var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        .contact-form button {
+            padding: 0.5rem 1rem;
             background-color: var(--primary-color);
             color: var(--text-color);
             border: none;
-            padding: 0.5rem 1rem;
             cursor: pointer;
-            border-radius: 5px;
             transition: background-color 0.3s;
         }
 
-        .theme-toggle:hover {
+        .contact-form button:hover {
             background-color: #66b3ff;
-        }
-
-        .wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            filter: blur(106px);
-            z-index: -1;
-        }
-
-        .gradient {
-            position: absolute;
-            border-radius: 100%;
-            opacity: 0.6;
-            mix-blend-mode: screen;
-            animation-iteration-count: infinite;
-            animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
-        }
-
-        .gradient-1 {
-            background: rgb(156, 114, 105);
-            width: 700px;
-            height: 700px;
-            animation-duration: 9s;
-            opacity: 0.2;
-            left: 60%;
-            top: 40%;
-            z-index: -2;
-            animation-name: animation-gradient-1;
-        }
-
-        .gradient-2 {
-            background: rgb(237, 174, 96);
-            width: 600px;
-            height: 600px;
-            animation-duration: 9s;
-            opacity: 0.1;
-            left: 40%;
-            top: 60%;
-            z-index: -1;
-            animation-name: animation-gradient-2;
-        }
-
-        .gradient-3 {
-            background: rgb(146, 149, 176);
-            width: 500px;
-            height: 500px;
-            animation-duration: 9s;
-            opacity: 0.4;
-            left: 50%;
-            top: 50%;
-            z-index: -3;
-            animation-name: animation-gradient-3;
-        }
-
-        @keyframes animation-gradient-1 {
-            0% { transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%); }
-            25% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%); }
-            50% { transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%); }
-            75% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%); }
-            100% { transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%); }
-        }
-
-        @keyframes animation-gradient-2 {
-            0% { transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%); }
-            25% { transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%); }
-            50% { transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%); }
-            75% { transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%); }
-            100% { transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%); }
-        }
-
-        @keyframes animation-gradient-3 {
-            0% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
-            20% { transform: translateY(-50%) translateX(-50%) translateX(20%) translateY(-30%); }
-            40% { transform: translateY(-50%) translateX(-50%) translateX(-25%) translateY(-15%); }
-            60% { transform: translateY(-50%) translateX(-50%) translateX(30%) translateY(20%); }
-            80% { transform: translateY(-50%) translateX(-50%) translateX(5%) translateY(35%); }
-            100% { transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%); }
-        }
-
-        #desktop-preferred {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            text-align: center;
-            padding: 10px;
-            z-index: 1000;
         }
 
         @media (max-width: 768px) {
@@ -196,18 +155,29 @@
                 max-width: 100%;
                 margin-bottom: 2rem;
             }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .profile-content p, .projects li {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .profile-content p, .projects li {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <button class="theme-toggle" id="theme-toggle">Switch to Light Mode</button>
-
-
-    <div class="wrapper">
-        <div class="gradient gradient-1"></div>
-        <div class="gradient gradient-2"></div>
-        <div class="gradient gradient-3"></div>
-    </div>
 
     <div class="container">
         <header>
@@ -219,7 +189,7 @@
                 <img src="main/images/me.png" alt="Marcos profile picture">
             </div>
             <div class="profile-content">
-                <p>Hi, I'm Marcos, an analyst based in Toronto. My current role primarily involves in-depth analysis of data from Canadian marketplaces using Kdb+. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
+                <p>Hi, I'm Marcos, a KDB+ programmer based in Toronto. My current role primarily involves in-depth research and analysis of data from Canadian marketplaces. I mainly work on collaborative research concerning market microstructures and sector trends. With a background in pure mathematics, I am passionate about applying pure maths, statistics, and linear algebra to optimize algorithms in space-time. I also leverage mathematical theories to create trading strategies and to understand the market. I recently came across this <a href="https://www.youtube.com/watch?v=6htbyY3rH1w">video</a> which led me to the paper "Randomized Matrix Decompositions using R" by N. Benjamin Erichson et al., an excellent example of how mathematical theory can enhance software capabilities.</p>
                 <p>Born and raised in Panama, my passion for quant finance has brought me to Toronto. I'm always open to chat. My CV can be found <a href="main/about/resume.html">here</a>, and feel free to reach out to me for anything at <a href="mailto:jaenmarcos15@gmail.com">jaenmarcos15@gmail.com</a>.</p>
             </div>
         </div>
@@ -238,19 +208,6 @@
         <hr>
 
         <p style="text-align: center;">Design is intended to be clean, purposeful and easy to maintain, crafted from the ground up.</p>
-    </div>
-
-                    <div class="contact-form">
-                    <h2>Contact Me</h2>
-                    <form id="contact-form">
-                        <input type="text" name="name" placeholder="Your Name" required>
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
-                        <button type="submit">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -312,19 +269,6 @@
 
         document.querySelectorAll('.project-title').forEach(addExpandListener);
 
-        // Contact form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const formObject = Object.fromEntries(formData.entries());
-            
-            // Here you would typically send the form data to a server
-            // For this example, we'll just log it to the console
-            console.log('Form submitted:', formObject);
-            
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
-        });
 
         // Theme toggle functionality
         const themeToggle = document.getElementById('theme-toggle');
